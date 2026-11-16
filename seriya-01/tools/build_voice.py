@@ -9,8 +9,11 @@ SR = 44100
 TEMPO = 1.14
 # паузы: (после какого слова по счёту с конца текста искать — задаём текстом, длина сек)
 PAUSES = [("сбили».", 0.7), ("разом.", 0.5), ("свет.", 1.3)]
-# заплатки: слово в тексте -> файл с перезаписанным словом
-PATCHES = [("Полбака.", "audio/patch/polbaka-g")]
+# заплатки: (первое слово, сколько слов, файл, подгонять ли длину под исходную)
+import sys
+POMADA = sys.argv[1] if len(sys.argv) > 1 else "a2"
+PATCHES = [("Полбака.", 1, "audio/patch/polbaka-g", False),
+           ("Она", 6, "audio/patch/pomadoj-" + POMADA, True)]
 
 def load(path):
     tmp = tempfile.mktemp(suffix=".wav")
@@ -35,19 +38,34 @@ def fade(seg, n=int(0.004 * SR)):
 x = load("audio/golos.mp3")
 words = words_of(json.load(open("audio/golos-simvoly.json")))
 
-for target, base in PATCHES:
+for target, n, base, fit in PATCHES:
     i = next(k for k, w in enumerate(words) if w[0] == target)
+    j = i + n - 1
     c1 = (words[i - 1][2] + words[i][1]) / 2
-    c2 = (words[i][2] + words[i + 1][1]) / 2
+    c2 = (words[j][2] + words[j + 1][1]) / 2
     al = json.load(open(base + ".json")); p = load(base + ".mp3")
-    letters = [(b, e) for c, b, e in zip(al["characters"], al["character_start_times_seconds"], al["character_end_times_seconds"]) if c.isalpha()]
-    ps, pe = letters[0][0], letters[-1][1]
-    a, b = max(0, ps - 0.15), min(len(p) / SR, pe + 0.22)
-    seg = fade(p[int(a * SR):int(b * SR)])
+    pw = words_of(al)
+    ps, pe = pw[0][1], pw[-1][2]
+    a, b = max(0, ps - 0.12), min(len(p) / SR, pe + 0.2)
+    seg = p[int(a * SR):int(b * SR)]
+    k = 1.0
+    if fit:  # растягиваем/сжимаем заплатку ровно под исходное место, чтобы тайминг дальше не поехал
+        k = (b - a) / (c2 - c1)
+        tmp1, tmp2 = tempfile.mktemp(suffix=".wav"), tempfile.mktemp(suffix=".wav")
+        o = wave.open(tmp1, "w"); o.setnchannels(1); o.setsampwidth(2); o.setframerate(SR); o.writeframes(seg.astype(np.int16).tobytes()); o.close()
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", tmp1, "-af", f"atempo={k}", tmp2], check=True)
+        seg = load(tmp2); os.remove(tmp1); os.remove(tmp2)
+        want = int(c2 * SR) - int(c1 * SR)
+        seg = seg[:want] if len(seg) >= want else np.concatenate([seg, np.zeros(want - len(seg), np.float32)])
+        print("заплатка", base, "темп", round(k, 3))
+    seg = fade(seg)
     x = np.concatenate([fade(x[:int(c1 * SR)]), seg, fade(x[int(c2 * SR):])])
-    delta = (b - a) - (c2 - c1)
-    words[i][1], words[i][2] = c1 + (ps - a), c1 + (pe - a)
-    for w in words[i + 1:]: w[1] += delta; w[2] += delta
+    delta = len(seg) / SR - (c2 - c1)
+    if len(pw) == n:
+        for q in range(n): words[i + q][1], words[i + q][2] = c1 + (pw[q][1] - a) / k, c1 + (pw[q][2] - a) / k
+    else:
+        words[i][1], words[j][2] = c1 + (ps - a) / k, c1 + (pe - a) / k
+    for w in words[j + 1:]: w[1] += delta; w[2] += delta
 
 ins = []
 for target, d in PAUSES:
