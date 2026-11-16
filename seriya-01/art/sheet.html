@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><title>Лист персонажей и фонов</title>
+<style>
+  body{margin:0;background:#05070f;color:#f3e6c8;font-family:Inter,"DejaVu Sans",sans-serif}
+  #sheet{width:1920px;padding:36px 32px 40px;box-sizing:border-box}
+  h1{font-size:40px;margin:0 0 4px;letter-spacing:2px} h1 span{color:#e8743b}
+  .sub{opacity:.6;font-size:20px;margin-bottom:22px}
+  h2{font-size:22px;letter-spacing:4px;color:#e8743b;margin:26px 0 12px;text-transform:uppercase}
+  .row{display:flex;gap:18px}
+  .card{min-width:0;background:#0c1122;border:2px solid #232c4a;border-radius:14px;flex:1;text-align:center;padding:10px 6px 12px}
+  .card b{display:block;font-size:22px;margin-top:4px}.card i{font-style:normal;font-size:15px;opacity:.6}
+  .bgs .card{padding:8px}.card svg{width:100%;height:auto;display:block}.bgs svg{border-radius:8px;display:block;margin:auto}
+  .pal{display:flex;gap:0;margin-top:22px;border-radius:10px;overflow:hidden;height:38px}.pal div{flex:1}
+</style></head><body><div id="sheet"></div>
+<script src="art.js"></script>
+<script>
+const A = ART, D = A.defs();
+const svg = (w,h,vb,inner)=>`<svg width="${w}" height="${h}" viewBox="${vb}" xmlns="http://www.w3.org/2000/svg">${D}${inner}</svg>`;
+const card=(s,name,note)=>`<div class="card">${s}<b>${name}</b><i>${note}</i></div>`;
+const ch=(inner,name,note)=>card(svg(300,400,'-190 -520 380 540',`<rect x="-190" y="-520" width="380" height="540" fill="#0c1122"/><ellipse cx="0" cy="-200" rx="170" ry="260" fill="url(#gGlow)" opacity=".12"/>`+inner),name,note);
+const pr=(inner,vb,name,note,w)=>card(svg(w||260,190,vb,inner),name,note);
+const bgc=(inner,name,note)=>card(svg(243,432,'0 0 1080 1920',inner),name,note);
+const at=(x,y,s,inner)=>`<g transform="translate(${x},${y}) scale(${s})">${inner}</g>`;
+
+document.getElementById('sheet').innerHTML = `
+<h1>ПАДЕНИЕ МЕТЕОРИТА <span>· серия 1 · «Куда упадёт»</span></h1>
+<div class="sub">Лист персонажей, предметов и фонов. Плоский 2D, всё нарисовано кодом (SVG).</div>
+<h2>Герои</h2><div class="row">
+${ch(A.anya({keys:true,aR:28,aR2:75}),'Аня, 59','таксистка, рассказчица')}
+${ch(A.anya({mouth:'down',worry:1,phone:true,aR:35,aR2:165,look:3}),'Аня — тревога','звонит дочке')}
+${ch(A.zina({}),'Баба Зина','вахтёрша с 1-го этажа')}
+${ch(A.zina({lipstick:true,aR:105,aR2:150,keys:true,mouth:'open',look:3}),'Зина — метки','помада на стекле')}
+${ch(A.engineer({keys:true,aR:30,aR2:85}),'Пассажир','инженер «Орбиты»')}
+${ch(A.engineer({shadow:true,walk:1}),'Пассажир — силуэт','уходит в башню')}
+</div>
+<h2>Предметы и «монстр»</h2><div class="row">
+${pr(at(0,0,.42,A.satellite({rot:-20})),'-130 -100 260 190','Сбитый спутник','то, что все зовут «осколком»')}
+${pr(A.car({kind:'taxi',blink:true,lights:false}),'-330 -260 660 330','Такси Ани','бак пуст',300)}
+${pr(A.car({kind:'sedan',lights:false}),'-330 -260 660 330','Машина пассажира','полбака',300)}
+${pr(A.heli({}),'-300 -150 600 260','Вертолёт','уходит с крыши')}
+${pr(at(0,-40,2.2,A.keys()),'-130 -70 260 190','Чужие ключи','залог')}
+${pr(at(0,-92,1,A.badge()),'-130 -100 260 200','Пропуск','висит на зеркале')}
+${pr(A.phone(true),'-160 -120 320 240','Телефон','сети нет')}
+</div>
+<h2>Фоны · 9:16</h2><div class="row bgs">
+${bgc(A.bg.sky({}),'1. Небо','точка растёт')}
+${bgc(A.bg.street({})+at(640,1700,1,A.car({kind:'taxi',blink:true}))+at(300,1640,.9,A.engineer({shadow:true,walk:1,bag:true})),'2. У башни','залог — ключи')}
+${bgc(A.bg.lift({})+at(450,1700,1.9,A.anya({}))+at(700,1700,1.9,A.zina({})),'3. Лифт','до 25-го')}
+${bgc(A.bg.office({marks:4.6})+at(250,1850,1.5,A.zina({lipstick:true,aR:105,aR2:150,mouth:'open',look:3})),'4. Офис «Орбита»','телевизор, метки')}
+${bgc(A.bg.parking({})+at(480,1560,1.15,A.car({kind:'sedan',blink:true,lights:false}))+at(880,1620,1,A.anya({keys:true,aR:-60,aR2:-100,walk:1})),'5. Парковка','полбака')}
+${bgc(A.bg.highway({}),'6. Трасса','пустая встречная')}
+${bgc(A.bg.hill({glow:.25})+at(640,1470,.75,`<g transform="rotate(-8)">${A.car({kind:'sedan',lights:false})}</g>`)+at(360,1545,.62,A.anya({}))+at(250,1552,.62,A.zina({})),'7. Холм над полем','свет вдалеке')}
+</div>
+<div class="pal">${['night0','night1','night2','night3','haze','rust','ember','amber','pale','tv','red'].map(k=>`<div style="background:${A.P[k]}"></div>`).join('')}</div>`;
+</script></body></html>
