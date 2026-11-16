@@ -434,8 +434,9 @@
     const out = pr(t, 78.5, 79.0);
     const g = ez(pr(t, 82.13, 85.1));     // свет сзади
     let s = A.bg.hill({ dotOn: turn(t), dotR: 18, grass: windK * (.6 + .4 * Math.sin(t * 5)), flap: birdK * Math.max(0, Math.sin(t * 9)), back: 0 });
+    s += `<rect y="1900" width="1080" height="500" fill="#03040a"/>`;
     if (g > 0) {
-      s += `<path d="M-20 1560Q500 1500 1100 1400V1940H-20z" fill="#8a8672" opacity="${f(g * .85)}"/><rect y="900" width="1080" height="1020" fill="url(#gBack)" opacity="${f(g * .55)}"/>`;
+      s += `<path d="M-20 1560Q500 1500 1100 1400V2400H-20z" fill="#8a8672" opacity="${f(g * .85)}"/><rect y="900" width="1080" height="1500" fill="url(#gBack)" opacity="${f(g * .55)}"/>`;
       const L = 60 + g * 520;
       [[240, 1556, 34], [350, 1548, 38], [650, 1478, 150]].forEach(q => { s += `<path d="M${q[0] - q[2]} ${q[1]}L${q[0] + q[2]} ${q[1]}L${f(q[0] + q[2] * .5 + (q[0] - 540) * .25)} ${f(q[1] - L)}L${f(q[0] - q[2] * .5 + (q[0] - 540) * .25)} ${f(q[1] - L)}z" fill="#000" opacity="${f(g * .6)}"/>`; });
     }
@@ -449,10 +450,10 @@
   S.turn = t => {
     const g = pr(t, 85.1, 86.5);
     const s = A.bg.hill({ dotOn: turn(t), dotR: 18, grass: 0, flap: 0 })
-      + `<path d="M-20 1560Q500 1500 1100 1400V1940H-20z" fill="#b8b4a0"/>`
+      + `<path d="M-20 1560Q500 1500 1100 1400V2400H-20z" fill="#b8b4a0"/>`
       + at(700, 2150, 2.6, A.zina({ keys: false, mouth: 'open', look: 0, aL: 20, aR: -20 }))
       + at(360, 2260, 2.6, A.anya({ mouth: 'open', worry: 1, look: 0, aL: 14, aR: -14 }))
-      + `<rect width="1080" height="1920" fill="url(#gBack)" opacity="${f(.5 + g * .5)}"/><rect width="1080" height="1920" fill="#fff" opacity="${f(g * g * g)}"/>`;
+      + `<rect width="1080" height="2400" fill="url(#gBack)" opacity="${f(.5 + g * .5)}"/><rect y="-200" width="1080" height="2700" fill="#fff" opacity="${f(g * g * g)}"/>`;
     return cam(s, 540, lerp(1300, 1240, g), lerp(1.1, 1.35, g));
   };
   S.end = t => {
