@@ -99,6 +99,7 @@
       <path d="M2 -378v12h6" stroke="#9a6a55" stroke-width="3.5" fill="none" stroke-linecap="round"/>
       <path d="M-30 -360q-4 8 0 14M34 -360q4 8 0 14" stroke="#9a6a55" stroke-width="2.5" fill="none" stroke-linecap="round"/>
       ${mouth}
+      ${o.back ? `<circle cx="0" cy="-385" r="50" fill="${P.hair}"/><path d="M-52 -404Q0 -486 52 -404z" fill="#1d2338"/><rect x="-53" y="-414" width="106" height="14" fill="url(#pCheck)"/>` : ''}
       ${armR.svg}${held}
     </g>`;
   }
@@ -137,6 +138,7 @@
       <path d="M12 -284h0" stroke="${P.pale}" stroke-width="3.5"/>
       <path d="M-14 -268q-3 6 1 10M38 -268q3 6 -1 10" stroke="#a87862" stroke-width="2.5" fill="none" stroke-linecap="round"/>
       ${mouth}
+      ${o.back ? `<circle cx="10" cy="-288" r="50" fill="#8e2f3a"/><path d="M-30 -262L10 -196L50 -262z" fill="#7a2733"/>` : ''}
       ${armR.svg}${held}
     </g>`;
   }
@@ -422,7 +424,7 @@
       const vx = 540, vy = 820; let jam = '', dash = '', posts = '';
       const r = rng(61);
       for (let i = 0; i < 26; i++) {
-        const t = Math.pow((i + .5) / 26, 2.2), y = vy + t * 1100, sc = .08 + t * 1.5;
+        const t = Math.pow(((i + .5 + (o.jam || 0) * 26) % 26) / 26, 2.2), y = vy + t * 1100, sc = .08 + t * 1.5;
         for (let lane = 0; lane < 2; lane++) {
           const x = vx - (130 + lane * 250 + (r() - .5) * 30) * sc;
           jam += `<g transform="translate(${f(x)},${f(y)}) scale(${f(sc)})"><rect x="-70" y="-90" width="140" height="90" rx="16" fill="#0a0c16"/><circle cx="-48" cy="-36" r="30" fill="url(#gRed)"/><circle cx="48" cy="-36" r="30" fill="url(#gRed)"/><rect x="-62" y="-46" width="28" height="16" rx="4" fill="${P.red}"/><rect x="34" y="-46" width="28" height="16" rx="4" fill="${P.red}"/></g>`;

@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><title>Серия 1 — Куда упадёт</title>
+<style>html,body{margin:0;background:#000;overflow:hidden}svg{display:block}</style></head>
+<body><svg id="stage" width="1080" height="1920" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg"></svg>
+<script src="../art/art.js"></script><script src="../audio/slova.js"></script><script src="film.js"></script>
+<script>
+// Просмотр в браузере: film.html?play — проигрывает со звуком. Без параметра — первый кадр (для рендера).
+if (location.search.includes('play')) {
+  const a = new Audio('../audio/golos-final.mp3'); document.body.onclick = () => a.paused ? a.play() : a.pause();
+  (function loop(){ FILM.renderAt(a.currentTime); requestAnimationFrame(loop); })();
+} else FILM.renderAt(0);
+</script></body></html>

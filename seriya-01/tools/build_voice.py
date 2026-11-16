@@ -67,5 +67,6 @@ os.remove(tmp)
 remap = lambda t: round((t + sum(d for c, d in ins if t >= c)) / TEMPO, 3)
 out = [{"w": w.replace("́", ""), "s": remap(s), "e": remap(e)} for w, s, e in words]
 json.dump(out, open("audio/slova.json", "w"), ensure_ascii=False, indent=0)
+open("audio/slova.js", "w", encoding="utf-8").write("window.SLOVA=" + json.dumps(out, ensure_ascii=False) + ";\n")
 k = next(k for k, w in enumerate(out) if w["w"] == "Полбака.")
 print("слов:", len(out), "| длина:", round(len(y) / SR / TEMPO, 2), "c | Полбака:", out[k], "| конец:", out[-1])
