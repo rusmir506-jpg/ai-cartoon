@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><title>Обложка — серия 1</title>
+<style>html,body{margin:0;background:#000}svg{display:block}</style></head>
+<body><svg id="cover" width="1080" height="1920" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg"></svg>
+<script src="../art/art.js"></script>
+<script>
+const A = ART, P = A.P, F = 'font-family="Inter, DejaVu Sans, sans-serif"';
+const at = (x, y, s, inner, r = 0) => `<g transform="translate(${x} ${y}) rotate(${r}) scale(${s})">${inner}</g>`;
+let lights = ''; const r = A.rng(71);
+for (let i = 0; i < 520; i++) { const t = Math.pow(r(), 1.8); lights += `<circle cx="${(r() * 1080).toFixed(1)}" cy="${(1190 + t * 330).toFixed(1)}" r="${(1.4 + t * 4.5).toFixed(1)}" fill="${r() < .6 ? P.amber : P.pale}" opacity="${(.35 + r() * .6).toFixed(2)}"/>`; }
+document.getElementById('cover').innerHTML = A.defs() + `
+  <defs><radialGradient id="gVig" cx=".5" cy=".45" r=".8"><stop offset=".5" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".8"/></radialGradient>
+  <linearGradient id="gFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05070f" stop-opacity="0"/><stop offset="1" stop-color="#05070f" stop-opacity=".95"/></linearGradient></defs>
+  <rect width="1080" height="1920" fill="url(#gSky)"/>${A.stars(3, 140, 1200)}
+  <circle cx="760" cy="330" r="620" fill="url(#gGlow)" opacity=".55"/>
+  <path d="M-80 20L700 300" stroke="${P.amber}" stroke-width="26" stroke-linecap="round" opacity=".22"/>
+  <path d="M250 140L720 310" stroke="${P.pale}" stroke-width="12" stroke-linecap="round" opacity=".45"/>
+  <circle cx="760" cy="330" r="260" fill="url(#gWhite)"/><circle cx="760" cy="330" r="46" fill="#fff"/>
+  <path d="M800 400Q1100 780 940 1195" stroke="${P.red}" stroke-width="9" fill="none" stroke-linecap="round" stroke-dasharray="34 24"/>
+  <circle cx="940" cy="1195" r="60" fill="none" stroke="${P.red}" stroke-width="7" opacity=".5"/><circle cx="940" cy="1195" r="30" fill="none" stroke="${P.red}" stroke-width="7"/><circle cx="940" cy="1195" r="10" fill="${P.red}"/>
+  <rect y="1170" width="1080" height="16" fill="${P.rust}" opacity=".6"/><rect y="1180" width="1080" height="760" fill="#0a0b14"/>${lights}
+  <path d="M-20 1560Q500 1470 1100 1420V1940H-20z" fill="#03040a"/>
+  ${at(330, 2010, 2.15, A.anya({ worry: 1, mouth: 'down', look: 4, aR: 6, aR2: 2 }))}
+  ${at(800, 1990, 2.15, A.zina({ look: 3, mouth: 'open', lipstick: true, aR: 110, aR2: 165, keys: false }))}
+  <rect y="1500" width="1080" height="420" fill="url(#gFloor)"/>
+  <rect width="1080" height="1920" fill="url(#gVig)"/>
+  <g text-anchor="middle" ${F} font-weight="900" stroke="#05070f" stroke-linejoin="round" paint-order="stroke">
+    <text x="540" y="640" font-size="150" letter-spacing="2" stroke-width="30" fill="${P.pale}">ПАДЕНИЕ</text>
+    <text x="540" y="790" font-size="132" letter-spacing="2" stroke-width="30" fill="${P.ember}">МЕТЕОРИТА</text>
+  </g>
+  <g transform="translate(540 870)"><rect x="-400" y="-48" width="800" height="92" rx="46" fill="${P.red}"/><text x="0" y="16" text-anchor="middle" ${F} font-weight="900" font-size="50" letter-spacing="4" fill="#fff">СЕРИЯ 1 · КУДА УПАДЁТ</text></g>
+  <text x="540" y="1010" text-anchor="middle" ${F} font-weight="800" font-size="46" fill="${P.pale}" stroke="#05070f" stroke-width="14" stroke-linejoin="round" paint-order="stroke">Осколков больше, чем нам сказали</text>`;
+</script></body></html>
