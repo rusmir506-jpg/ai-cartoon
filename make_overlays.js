@@ -15,7 +15,7 @@ ${face('Cormorant', 'cormorant-garamond', 600)}${face('Montserrat', 'montserrat'
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:1080px;height:1920px;background:transparent;overflow:hidden}
 .cap{position:absolute;left:84px;right:84px;bottom:470px;color:#FBF6EC;text-align:center;
-  text-shadow:0 2px 28px rgba(20,14,6,.45),0 1px 3px rgba(20,14,6,.35)}
+  text-shadow:0 0 44px rgba(16,10,4,.6),0 2px 14px rgba(16,10,4,.45),0 1px 3px rgba(16,10,4,.5)}
 .kick{font:500 25px/1 Montserrat;letter-spacing:.42em;text-transform:uppercase;margin-right:-.42em;opacity:.92}
 .rule{width:64px;height:2px;background:#D9C08A;margin:34px auto 38px}
 .h{font:500 88px/1.08 Cormorant;letter-spacing:.005em}

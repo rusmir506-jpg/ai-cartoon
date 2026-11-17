@@ -31,7 +31,7 @@ SLOTS = [("01", "hook", 3), ("02", "pool", 4), ("03", "rooms", 4),
          ("04", "beach", 4), ("05", "experience", 4), ("06", "highlight", 4)]
 END = 4
 TOTAL = sum(s[2] for s in SLOTS) + END     # 27
-VO_AT = [0.15, 3.45, 7.45, 11.45, 15.45, 19.4, 23.5]
+VO_AT = [0.15, 3.45, 7.45, 11.45, 15.45, 19.4, 23.15]
 VID = (".mp4", ".mov", ".m4v", ".webm", ".mkv")
 IMG = (".jpg", ".jpeg", ".png", ".webp")
 GRADE = "colorbalance=rm=0.025:bm=-0.025:rh=0.015:bh=-0.02,eq=contrast=1.04:saturation=1.06"
@@ -60,6 +60,58 @@ def placeholder(tag, name, path):
     d.text((W // 2, H // 3), f"FOOTAGE NEEDED\nfootage/{tag}_{name}.mp4", fill=(235, 230, 220),
            anchor="mm", align="center", font_size=W // 22)
     im.save(path)
+
+
+# Camera move per slot for still photos: (zoom0, zoom1, cx0, cx1, cy0, cy1).
+# cx/cy = where the 9:16 window sits inside the photo (0 = left/top, 1 = right/bottom).
+MOVES = {"01": (1.00, 1.09, .50, .50, .55, .62), "02": (1.10, 1.00, .50, .50, .60, .50),
+         "03": (1.00, 1.10, .50, .50, .50, .58), "04": (1.00, 1.00, .30, .98, .50, .50),
+         "06": (1.03, 1.03, .15, .95, .50, .50)}
+
+
+def photo_shot(f, n, out, tag):
+    """Animates a still with a sub-pixel pan/zoom. Aspect ratio is never distorted.
+    Photos too small to fill 9:16 are shown as a framed card over their own blur."""
+    from PIL import ImageFilter
+    im = Image.open(f).convert("RGB")
+    iw, ih = im.size
+    card = None
+    if max(W / iw, H / ih) > 3.3:                       # too small to fill the frame
+        cw = int(W * 0.84)
+        card = im.resize((cw, round(ih * cw / iw)), Image.LANCZOS).filter(
+            ImageFilter.UnsharpMask(radius=3, percent=60, threshold=2))
+        im = im.resize((W // 4, round(ih * W / iw / 4)), Image.LANCZOS)
+        bw = round(H * iw / ih)
+        im = im.resize((bw, H), Image.BICUBIC).filter(ImageFilter.GaussianBlur(W // 18))
+        im = Image.eval(im, lambda v: int(v * 0.72))
+        iw, ih = im.size
+        mv = (1.0, 1.12, .5, .5, .5, .5)
+    else:
+        mv = MOVES.get(tag, (1.0, 1.07, .5, .5, .5, .5))
+    z0, z1, x0, x1, y0, y1 = mv
+    bw0, bh0 = (iw, iw * H / W) if iw / ih < W / H else (ih * W / H, ih)   # largest 9:16 window
+    p = subprocess.Popen(["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24",
+                          "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-", "-vf", GRADE + ",setsar=1"]
+                         + ENC + ["-crf", "14", out], stdin=subprocess.PIPE)
+    for k in range(n):
+        u = k / max(1, n - 1)
+        z = z0 + (z1 - z0) * u
+        bw, bh = bw0 / z, bh0 / z
+        x = (iw - bw) * (x0 + (x1 - x0) * u)
+        y = (ih - bh) * (y0 + (y1 - y0) * u)
+        fr = im.resize((W, H), Image.BICUBIC if card else Image.LANCZOS, box=(x, y, x + bw, y + bh))
+        if card:
+            s = 1.0 + 0.035 * u
+            c = card.resize((round(card.width * s), round(card.height * s)), Image.LANCZOS)
+            cx, cy = (W - c.width) // 2, int(H * 0.37) - c.height // 2
+            sh = Image.new("L", (W, H), 0)
+            ImageDraw.Draw(sh).rectangle([cx - 6, cy + 14, cx + c.width + 6, cy + c.height + 34], fill=120)
+            fr.paste((12, 8, 4), (0, 0), sh.filter(ImageFilter.GaussianBlur(28)))
+            fr.paste(c, (cx, cy))
+        p.stdin.write(fr.tobytes())
+    p.stdin.close()
+    if p.wait():
+        sys.exit("ffmpeg failed on " + f)
 
 
 # ---- 1. collect shots -------------------------------------------------------
@@ -92,14 +144,8 @@ for i, (f, dur, slow) in enumerate(shots):
             print(f"!! {f}: only {src:.1f}s, needs {need:.1f}s - last frame will hold")
             vf += f",tpad=stop_mode=clone:stop_duration={length}"
         run(["-ss", f"{start:.3f}", "-i", f, "-an", "-vf", vf, "-t", f"{length:.3f}"] + ENC + ["-crf", "14", out])
-    else:                                                # photo: slow push, no distortion
-        n = int(round(length * FPS))
-        z0, z1 = (1.0, 1.07) if i % 2 == 0 else (1.07, 1.0)
-        zoom = f"{z0}+({z1}-{z0})*on/{n}"
-        vf = (f"scale={W * 3}:{H * 3}:force_original_aspect_ratio=increase:flags=lanczos,crop={W * 3}:{H * 3},"
-              f"zoompan=z='{zoom}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={n}:s={W}x{H}:fps={FPS},"
-              f"{GRADE},setsar=1")
-        run(["-i", f, "-vf", vf, "-frames:v", str(n)] + ENC + ["-crf", "14", out])
+    else:
+        photo_shot(f, int(round(length * FPS)), out, f.split('/')[-1][:2])
     clips.append((out, length))
 
 # ---- 3. brand ending --------------------------------------------------------
@@ -115,12 +161,14 @@ run(["-loop", "1", "-t", f"{end_len}", "-i", "overlays/end_bg.png",
 clips.append((end, end_len))
 
 # ---- 4. scrim for caption legibility ----------------------------------------
-scrim = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-px = scrim.load()
-for y in range(int(H * 0.45), H):
-    a = int(95 * min(1.0, (y - H * 0.45) / (H * 0.3)) ** 1.5)
-    for x in range(W):
-        px[x, y] = (18, 12, 6, a)
+import math
+col = Image.new("L", (1, H))
+for y in range(H):                                  # soft band behind the caption + bottom falloff
+    band = 118 * math.exp(-((y / H - 0.69) / 0.13) ** 2)
+    foot = 70 * max(0.0, (y / H - 0.72) / 0.28)
+    col.putpixel((0, y), int(min(150, band + foot)))
+scrim = Image.new("RGBA", (W, H), (18, 12, 6, 0))
+scrim.putalpha(col.resize((W, H)))
 scrim.save("out/tmp/scrim.png")
 
 # ---- 5. dissolve chain + captions + audio -----------------------------------
