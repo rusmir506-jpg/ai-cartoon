@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><title>Серия 2 — новые герои и фоны</title>
+<style>
+  body{margin:0;background:#05070f;color:#f3e6c8;font-family:Inter,"DejaVu Sans",sans-serif}
+  #sheet{width:1920px;padding:36px 32px 40px;box-sizing:border-box}
+  h1{font-size:40px;margin:0 0 4px;letter-spacing:2px} h1 span{color:#e8743b}
+  .sub{opacity:.6;font-size:20px;margin-bottom:22px}
+  h2{font-size:22px;letter-spacing:4px;color:#e8743b;margin:26px 0 12px;text-transform:uppercase}
+  .row{display:flex;gap:18px}
+  .card{min-width:0;background:#0c1122;border:2px solid #232c4a;border-radius:14px;flex:1;text-align:center;padding:10px 6px 12px}
+  .card svg{width:100%;height:auto;display:block}
+  .card b{display:block;font-size:22px;margin-top:4px}.card i{font-style:normal;font-size:15px;opacity:.6}
+  .bgs .card{padding:8px}.bgs svg{border-radius:8px}
+</style></head><body><div id="sheet"></div>
+<script src="../../seriya-01/art/art.js"></script><script src="art2.js"></script>
+<script>
+const A = ART, D = A.defs();
+const svg = (w,h,vb,inner)=>`<svg width="${w}" height="${h}" viewBox="${vb}" xmlns="http://www.w3.org/2000/svg">${D}${inner}</svg>`;
+const card=(s,name,note)=>`<div class="card">${s}<b>${name}</b><i>${note}</i></div>`;
+const ch=(inner,name,note)=>card(svg(300,400,'-190 -540 380 560',`<rect x="-190" y="-540" width="380" height="560" fill="#0c1122"/><ellipse cx="0" cy="-200" rx="170" ry="260" fill="url(#gGlow)" opacity=".12"/>`+inner),name,note);
+const pr=(inner,vb,name,note)=>card(svg(260,190,vb,inner),name,note);
+const bgc=(inner,name,note)=>card(svg(243,432,'0 0 1080 1920',inner),name,note);
+const at=(x,y,s,inner)=>`<g transform="translate(${x},${y}) scale(${s})">${inner}</g>`;
+document.getElementById('sheet').innerHTML = `
+<h1>ПАДЕНИЕ МЕТЕОРИТА <span>· серия 2 · «Не с той стороны»</span></h1>
+<div class="sub">Новые герои, предметы и фоны. Аня, Зина, седан и вертолёт — из серии 1, без изменений.</div>
+<h2>Герои</h2><div class="row">
+${ch(A.police({torch:true,aR:75,aR2:95,mouth:'open',beam:false}),'Полицейский','на кордоне, с фонарём')}
+${ch(A.police({salute:true}),'Полицейский — отступил','пропуск сработал')}
+${ch(A.engineer({bag:false}),'Пассажир','лицо видно впервые')}
+${ch(A.engineer({bag:false,aR:40,aR2:110,keys:false}),'Пассажир у микрофона','«Его ведут. Сюда»')}
+${ch(A.anya({mouth:'open',worry:1,aR:150,aR2:175}),'Аня — крик','«Уходите с поля!»')}
+${ch(A.zina({look:3,aR:115,aR2:145,keys:true,mouth:'open'}),'Зина — «приказ»','показывает на вышку')}
+</div>
+<h2>Предметы и «свет»</h2><div class="row">
+${pr(at(0,0,.28,A.beacon({rot:-15})),'-130 -95 260 190','«Свет»','его ведут: горят сопла')}
+${pr(at(0,-30,.3,A.watch('7:00')),'-130 -95 260 190','Часы Зины','7 минут → 3')}
+${pr(at(0,60,.36,A.policeCar({phase:0})),'-130 -70 260 190','Полиция','мигалка синий/красный')}
+${pr(at(-110,60,.4,A.barrier(0)),'-130 -70 260 190','Шлагбаум','кордон на грунтовке')}
+${pr(at(0,90,.3,A.paTower(560,1)),'-130 -100 260 190','Вышка с рупорами','«Сохраняйте спокойствие»')}
+${pr(at(0,60,.5,A.tent(260,160,true)),'-130 -100 260 190','Палатка-штаб','светится изнутри')}
+</div>
+<h2>Фоны · 9:16</h2><div class="row bgs">
+${bgc(A.bg.hill({dotOn:true})+`<rect width="1080" height="1920" fill="#fff" opacity=".12"/>`+at(350,1548,.62,A.anya({back:true}))+at(240,1556,.62,A.zina({back:true,keys:false})),'1. Холм','свет со стороны города')}
+${bgc(A.bg.elevator({dust:1})+at(560,1720,.95,A.car({kind:'sedan',lights:true})),'2. Грунтовка','за элеватором')}
+${bgc(A.bg.cordon({phase:0})+at(560,1760,.9,A.police({torch:true,aR:-75,aR2:-95})),'3. Кордон','фонарь: «Назад!»')}
+${bgc(A.bg.field({talk:1}),'4. Поле','тысячи людей, вышка')}
+${bgc(A.bg.field({talk:0})+at(300,1300,1.5,A.tent(360,260,true,'#2c3c30'))+at(720,1240,1.1,A.heli({})),'5. У штаба','вертолёт у палатки')}
+${bgc(A.bg.hq({dotP:.7})+at(540,1920,1.6,A.engineer({bag:false,aR:40,aR2:110})),'6. Штаб','экран «ведение»')}
+${bgc(A.bg.field({shift:1,dotX:540,dotY:600,dotR:26}),'7. Поле — обрыв','свет садится')}
+</div>`;
+</script></body></html>
