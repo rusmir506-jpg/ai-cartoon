@@ -12,8 +12,8 @@ lv, lb, lf = lufs(V), lufs(B), lufs(F)
 gb = (lv - 19) - lb            # фон: на 19 LU тише голоса
 gf = (lv - 11) - lf            # эффекты: тихие, но различимые
 print(f"голос {lv} LUFS | фон {lb} -> {gb:+.1f} дБ | эффекты {lf} -> {gf:+.1f} дБ")
-graph = (f"[0:a]aresample=48000,pan=stereo|c0=c0|c1=c0,apad=whole_dur=88.5[v];"
-         f"[1:a]volume={gb}dB[b];[2:a]volume={gf}dB[f];[v][b][f]amix=inputs=3:normalize=0:duration=longest,atrim=0:88.5[m]")
+graph = (f"[0:a]aresample=48000,pan=stereo|c0=c0|c1=c0,apad=whole_dur=78.5[v];"
+         f"[1:a]volume={gb}dB[b];[2:a]volume={gf}dB[f];[v][b][f]amix=inputs=3:normalize=0:duration=longest,atrim=0:78.5[m]")
 subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", V, "-i", B, "-i", F, "-filter_complex", graph, "-map", "[m]", "audio/zvuk/_premix.wav"], check=True)
 # двухпроходная нормализация громкости
 ln = "loudnorm=I=-14:TP=-1.5:LRA=11"
