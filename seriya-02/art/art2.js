@@ -159,7 +159,7 @@
         ${cars}
         <g transform="translate(200 1300)">${tent(260, 160, true, '#334433')}</g><g transform="translate(560 1260)">${tent(200, 130, false, '#3a3a2a')}</g>
         <g transform="translate(880 1330)">${tent(300, 200, true, '#2c3c30')}</g>
-        <g transform="translate(980 1340)">${paTower(560, o.talk)}</g>
+        ${o.tower === false ? "" : `<g transform="translate(980 1340)">${paTower(560, o.talk)}</g>`}
         ${crowd(17, 1350, 1880, 70, o.shift)}`;
     },
     // штаб внутри палатки
