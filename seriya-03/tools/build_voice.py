@@ -12,7 +12,7 @@ PAUSES = [("увела.", 0.3), ("«Дочка».", 0.4), ("смотреть»."
 # заплатки: (первое слово, сколько слов, файл, подгонять ли длину под исходную)
 import sys
 import sys
-V = sys.argv[1] if len(sys.argv) > 1 else "a"
+V = sys.argv[1] if len(sys.argv) > 1 else "a"  # выбран вариант a (знак ударения)
 # (слово#номер вхождения, сколько слов, файл, подгонять длину)
 PATCHES = [("Зина#1", 5, "audio/patch/z1-" + V, True), ("Зина#2", 7, "audio/patch/z2-" + V, True),
            ("«Две", 5, "audio/patch/z3-" + V, True), ("Только", 5, "audio/patch/p-" + V, True)]
