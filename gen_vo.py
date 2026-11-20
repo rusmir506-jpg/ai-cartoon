@@ -6,7 +6,10 @@ cfg_path = sys.argv[1]
 cfg = json.load(open(cfg_path))
 out = os.path.join(os.path.dirname(cfg_path), "audio")
 os.makedirs(out, exist_ok=True)
+only = {int(a) for a in sys.argv[2:]}      # optional: regenerate just these line numbers
 for i, line in enumerate(cfg["vo"], 1):
+    if only and i not in only:
+        continue
     dst = f"{out}/vo{i}.mp3"
     if line.startswith("@reuse "):
         shutil.copy(line.split(" ", 1)[1], dst)
