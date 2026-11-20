@@ -11,7 +11,11 @@ TEMPO = 1.14
 PAUSES = [("увела.", 0.3), ("«Дочка».", 0.4), ("смотреть».", 0.5), ("вышел».", 1.0)]
 # заплатки: (первое слово, сколько слов, файл, подгонять ли длину под исходную)
 import sys
-PATCHES = []
+import sys
+V = sys.argv[1] if len(sys.argv) > 1 else "a"
+# (слово#номер вхождения, сколько слов, файл, подгонять длину)
+PATCHES = [("Зина#1", 5, "audio/patch/z1-" + V, True), ("Зина#2", 7, "audio/patch/z2-" + V, True),
+           ("«Две", 5, "audio/patch/z3-" + V, True), ("Только", 5, "audio/patch/p-" + V, True)]
 
 def load(path):
     tmp = tempfile.mktemp(suffix=".wav")
@@ -37,7 +41,8 @@ x = load("audio/golos.mp3")
 words = words_of(json.load(open("audio/golos-simvoly.json")))
 
 for target, n, base, fit in PATCHES:
-    i = next(k for k, w in enumerate(words) if w[0] == target)
+    word, occ = (target.split("#") + ["1"])[:2]
+    i = [k for k, w in enumerate(words) if w[0] == word][int(occ) - 1]
     j = i + n - 1
     c1 = (words[i - 1][2] + words[i][1]) / 2
     c2 = (words[j][2] + words[j + 1][1]) / 2
