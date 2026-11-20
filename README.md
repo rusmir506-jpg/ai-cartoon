@@ -21,3 +21,10 @@ python3 gen_vo.py hotels/<name>/config.json
 # put real footage in hotels/<name>/footage/ (see its README.md)
 python3 build.py --hotel <name>
 ```
+
+### Tips format (no hotel footage needed)
+`formats/<name>/config.json` → `node` + `ffmpeg` do the rest:
+```
+python3 gen_vo.py formats/hotel_mistakes/config.json
+python3 build_tips.py formats/hotel_mistakes/config.json   # out/invoyage_hotel_mistakes.mp4
+```
