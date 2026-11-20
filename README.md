@@ -12,3 +12,12 @@ python3 build.py          # out/invoyage_alila_seminyak.mp4 (1080x1920, 30 fps, 
 python3 build.py --4k     # 2160x3840
 python3 build.py --no-vo  # music only
 ```
+
+### Next hotel of the week
+`hotels/<name>/config.json` holds captions and voice-over lines. Then:
+```
+node make_overlays.js hotels/<name>/config.json
+python3 gen_vo.py hotels/<name>/config.json
+# put real footage in hotels/<name>/footage/ (see its README.md)
+python3 build.py --hotel <name>
+```

@@ -18,41 +18,50 @@ html,body{width:1080px;height:1920px;background:transparent;overflow:hidden}
   text-shadow:0 0 44px rgba(16,10,4,.6),0 2px 14px rgba(16,10,4,.45),0 1px 3px rgba(16,10,4,.5)}
 .kick{font:500 25px/1 Montserrat;letter-spacing:.42em;text-transform:uppercase;margin-right:-.42em;opacity:.92}
 .rule{width:64px;height:2px;background:#D9C08A;margin:34px auto 38px}
-.h{font:500 88px/1.08 Cormorant;letter-spacing:.005em}
-.h i{font-style:italic}
+.h{font:500 60px/1.25 Montserrat;letter-spacing:0}
+.h i{font-style:normal;font-weight:400}
 .sub{font:500 31px/1.3 Montserrat;letter-spacing:.2em;text-transform:uppercase;margin-top:34px;margin-right:-.2em}
 .end{position:absolute;inset:0;background:radial-gradient(ellipse 75% 60% at 50% 45%,#fff 0%,#fbfcfc 45%,#f0f4f5 100%)}
 .end img{position:absolute;left:50%;top:330px;width:1010px;transform:translateX(-50%);mix-blend-mode:multiply;
   -webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 62%,transparent 100%)}
 .tag{position:absolute;left:0;right:0;top:1130px;text-align:center;color:#3E9AA3}
 .tag .rule{margin:0 auto 44px;width:72px}
-.tag .h{font:500 italic 70px/1.1 Cormorant;color:#3E9AA3}
+.tag .h{font:500 46px/1.2 Montserrat;color:#3E9AA3}
 .tag .sub{color:#B89A5E;font-size:24px;letter-spacing:.34em;margin-right:-.34em;margin-top:40px}
 `;
 const cap = (kick, h, sub = '') => `<div class="cap"><div class="kick">${kick}</div><div class="rule"></div>` +
   `<div class="h">${h}</div>${sub ? `<div class="sub">${sub}</div>` : ''}</div>`;
-const LAYERS = {
+const ALILA = {
   cap1: cap('Alila Seminyak · Bali', 'Бали, где океан<br><i>прямо у номера</i>'),
   cap2: cap('Pool', '5 бассейнов<br><i>инфинити</i>'),
   cap3: cap('Rooms', 'Терраса или балкон<br><i>с видом на океан</i>'),
   cap4: cap('Beach', 'Прямо на пляже<br><i>Петитенгет</i>'),
   cap5: cap('Experience', 'Spa и ресторан<br><i>Seasalt</i>'),
   cap6: cap('Alila Seminyak', '4,6/5 <i>на Tripadvisor</i>', '3 538 отзывов'),
+};
+// Usage: node make_overlays.js [hotels/<name>/config.json]  (no argument = Alila Seminyak, overlays/)
+const cfgPath = process.argv[2];
+const cfg = cfgPath ? JSON.parse(require('fs').readFileSync(cfgPath, 'utf8')) : null;
+const OUT = cfg ? path.join(path.dirname(path.resolve(cfgPath)), 'overlays') : path.resolve(__dirname, 'overlays');
+const endSub = cfg ? cfg.end_sub : 'Alila Seminyak · Bali';
+const caps = cfg ? Object.fromEntries(cfg.caps.map((c, i) => ['cap' + (i + 1), cap(...c)])) : ALILA;
+const LAYERS = {
+  ...caps,
   end_bg: `<div class="end"><img src="${LOGO}"></div>`,
   end_text: `<div class="tag"><div class="rule"></div><div class="h">Новый отель каждую среду</div>` +
-    `<div class="sub">Alila Seminyak · Bali</div></div>`,
+    `<div class="sub">${endSub}</div></div>`,
 };
 (async () => {
   const b = await chromium.launch();
   const p = await b.newPage({ viewport: { width: 1080, height: 1920 } });
-  const tmp = path.resolve(__dirname, 'overlays/_layer.html');
+  const tmp = path.join(OUT, '_layer.html');
   for (const [name, html] of Object.entries(LAYERS)) {
     require('fs').writeFileSync(tmp, `<meta charset="utf-8"><style>${CSS}</style>${html}`);
     await p.goto('file://' + tmp);
     await p.evaluate(() => document.fonts.ready);
     await p.waitForTimeout(150);
-    await p.screenshot({ path: `overlays/${name}.png`, omitBackground: true });
-    console.log('overlays/' + name + '.png');
+    await p.screenshot({ path: `${OUT}/${name}.png`, omitBackground: true });
+    console.log(OUT + '/' + name + '.png');
   }
   require('fs').unlinkSync(tmp);
   await b.close();

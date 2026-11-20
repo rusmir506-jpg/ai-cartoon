@@ -25,6 +25,8 @@ import sys
 from PIL import Image, ImageDraw
 
 FPS = 30
+HOTEL = sys.argv[sys.argv.index("--hotel") + 1] if "--hotel" in sys.argv else ""
+HD = f"hotels/{HOTEL}/" if HOTEL else ""          # per-hotel folder: footage/, overlays/, audio/vo*.mp3
 W, H = (2160, 3840) if "--4k" in sys.argv else (1080, 1920)
 XF = 0.5                                   # cross-dissolve length
 SLOTS = [("01", "hook", 3), ("02", "pool", 4), ("03", "rooms", 4),
@@ -57,7 +59,7 @@ def placeholder(tag, name, path):
     for y in range(H):
         k = y / H
         d.line([(0, y), (W, y)], fill=(int(70 + 40 * k), int(84 + 30 * k), int(92 + 20 * k)))
-    d.text((W // 2, H // 3), f"FOOTAGE NEEDED\nfootage/{tag}_{name}.mp4", fill=(235, 230, 220),
+    d.text((W // 2, H // 3), f"FOOTAGE NEEDED\n{HD}footage/{tag}_{name}.mp4", fill=(235, 230, 220),
            anchor="mm", align="center", font_size=W // 22)
     im.save(path)
 
@@ -118,7 +120,7 @@ def photo_shot(f, n, out, tag):
 # ---- 1. collect shots -------------------------------------------------------
 shots, preview = [], False                 # (file, duration, slow-mo?)
 for tag, name, dur in SLOTS:
-    files = sorted(f for f in glob.glob(f"footage/{tag}*") if f.lower().endswith(VID + IMG))
+    files = sorted(f for f in glob.glob(f"{HD}footage/{tag}*") if f.lower().endswith(VID + IMG))
     if not files:
         preview = True
         ph = f"out/tmp/ph_{tag}.png"
@@ -152,8 +154,8 @@ for i, (f, dur, slow) in enumerate(shots):
 # ---- 3. brand ending --------------------------------------------------------
 end_len = END + XF / 2
 end = "out/tmp/end.mp4"
-run(["-loop", "1", "-t", f"{end_len}", "-i", "overlays/end_bg.png",
-     "-loop", "1", "-t", f"{end_len}", "-i", "overlays/end_text.png", "-filter_complex",
+run(["-loop", "1", "-t", f"{end_len}", "-i", f"{HD}overlays/end_bg.png",
+     "-loop", "1", "-t", f"{end_len}", "-i", f"{HD}overlays/end_text.png", "-filter_complex",
      f"color=c=0xF6F8F8:s={W}x{H}:r={FPS}:d={end_len}[bg];"
      f"[0:v]scale={W}:{H},format=rgba,fade=in:st=0.15:d=0.9:alpha=1[logo];"
      f"[1:v]scale={W}:{H},format=rgba,fade=in:st=1.15:d=0.9:alpha=1[txt];"
@@ -188,7 +190,7 @@ fc.append(f"[{n_in}:v]format=rgba,fade=in:st=0:d=0.6:alpha=1,fade=out:st={last_c
           f"{cur}[sc]overlay=shortest=0[c0]")
 cur, n_in, t0 = "[c0]", n_in + 1, 0.0
 for k, (_, _, dur) in enumerate(SLOTS, 1):
-    inputs += ["-loop", "1", "-t", str(TOTAL), "-i", f"overlays/cap{k}.png"]
+    inputs += ["-loop", "1", "-t", str(TOTAL), "-i", f"{HD}overlays/cap{k}.png"]
     a, b = t0 + (0.25 if k == 1 else 0.45), t0 + dur - 0.3
     fc.append(f"[{n_in}:v]scale={W}:{H},format=rgba,fade=in:st={a}:d=0.7:alpha=1,"
               f"fade=out:st={b - 0.45}:d=0.45:alpha=1[t{k}];{cur}[t{k}]overlay=enable='between(t,{a},{b})'[c{k}]")
@@ -202,7 +204,7 @@ if "--no-vo" in sys.argv:
 else:
     vo = []
     for k, at in enumerate(VO_AT, 1):
-        inputs += ["-i", f"audio/vo{k}.mp3"]
+        inputs += ["-i", f"{HD}audio/vo{k}.mp3"]
         fc.append(f"[{m + k}:a]aresample=44100,aformat=channel_layouts=stereo,"
                   f"adelay={int(at * 1000)}:all=1[v{k}]")
         vo.append(f"[v{k}]")
@@ -213,7 +215,7 @@ else:
 fc.append(f"[mix]loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000,"
           f"afade=out:st={TOTAL - 1.2}:d=1.2[aout]")
 
-name = "out/invoyage_alila_seminyak" + ("_4k" if W > 1080 else "") + ("_PREVIEW" if preview else "") + ".mp4"
+name = "out/invoyage_" + (HOTEL or "alila_seminyak") + ("_4k" if W > 1080 else "") + ("_PREVIEW" if preview else "") + ".mp4"
 run(inputs + ["-filter_complex", ";".join(fc), "-map", "[vout]", "-map", "[aout]",
               "-frames:v", str(TOTAL * FPS), "-t", str(TOTAL)] + ENC +
     ["-crf", "16", "-profile:v", "high", "-c:a", "aac", "-b:a", "256k", "-movflags", "+faststart", name])
