@@ -14,7 +14,7 @@ const LOGO = 'file://' + path.resolve(__dirname, 'assets/invoyage_logo.jpg');
 const TEAL = '#1F7480', GOLD = '#B89A5E', INK = '#5F6F72';
 const tipHtml = cfg.tips.map((t, i) => `
 <div class="tip" id="tip${i}">
-  <div class="kick" id="k${i}">ОШИБКА</div>
+  <div class="kick" id="k${i}">Ошибка</div>
   <div class="num" id="n${i}">${i + 1}</div>
   <div class="h" id="h${i}">${t.h}</div>
   <div class="rule" id="r${i}"></div>
@@ -29,20 +29,20 @@ body{background:radial-gradient(ellipse 75% 60% at 50% 45%,#fff 0%,#fbfcfc 45%,#
 #prog i{flex:1;height:6px;border-radius:3px;background:rgba(31,116,128,.16);overflow:hidden;display:block}
 #prog b{display:block;height:100%;width:0;background:${GOLD}}
 .abs{position:absolute;left:90px;right:90px;text-align:center}
-.hook1{top:740px;font-weight:700;font-size:158px;line-height:1;white-space:nowrap;color:${TEAL}}
-.hook2{top:950px;font-weight:500;font-size:72px;color:#2A3A3D}
-.hook3{top:1110px;font-weight:500;font-size:44px;letter-spacing:.06em;color:${GOLD};text-transform:uppercase}
+.hook1{top:740px;font-weight:500;font-size:158px;line-height:1;white-space:nowrap;color:${TEAL}}
+.hook2{top:950px;font-weight:400;font-size:72px;color:#2A3A3D}
+.hook3{top:1110px;font-weight:400;font-size:46px;color:${GOLD}}
 .tip{position:absolute;left:90px;right:90px;top:500px;text-align:center}
-.kick{font-weight:600;font-size:30px;letter-spacing:.5em;margin-right:-.5em;color:${GOLD}}
-.num{font-weight:700;font-size:440px;line-height:1;margin-top:10px;color:${GOLD};opacity:.95}
-.h{font-weight:700;font-size:78px;line-height:1.15;color:${TEAL};margin-top:20px}
+.kick{font-weight:400;font-size:40px;color:${GOLD}}
+.num{font-weight:500;font-size:440px;line-height:1;margin-top:10px;color:${GOLD};opacity:.95}
+.h{font-weight:500;font-size:78px;line-height:1.15;color:${TEAL};margin-top:20px}
 .rule{width:110px;height:3px;background:${GOLD};margin:46px auto 42px;transform-origin:center}
 .s{font-weight:400;font-size:46px;line-height:1.4;color:${INK};padding:0 30px}
-.out1{top:760px;font-weight:700;font-size:100px;line-height:1.2;color:${TEAL}}
+.out1{top:760px;font-weight:500;font-size:100px;line-height:1.2;color:${TEAL}}
 #logo{position:absolute;left:35px;top:360px;width:1010px;mix-blend-mode:multiply;
   -webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 62%,transparent 100%)}
-.tag{top:1180px;font-weight:600;font-size:64px;line-height:1.25;color:${TEAL}}
-.cta{top:1450px;font-weight:600;font-size:30px;letter-spacing:.42em;margin-right:-.42em;color:${GOLD};text-transform:uppercase}
+.tag{top:1180px;font-weight:500;font-size:64px;line-height:1.25;color:${TEAL}}
+.cta{top:1450px;font-weight:400;font-size:40px;color:${GOLD}}
 </style>
 <svg id="star" viewBox="-100 -100 200 200"><g fill="${GOLD}">
  <path d="M0-98 L9-9 L98 0 L9 9 L0 98 L-9 9 L-98 0 L-9-9Z"/><path d="M0-62 L6-6 L62 0 L6 6 L0 62 L-6 6 L-62 0 L-6-6Z" transform="rotate(45)"/></g></svg>
