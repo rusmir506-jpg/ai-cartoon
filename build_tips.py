@@ -3,13 +3,15 @@
 Animated typography (render_tips.js) + shared lounge bed (audio/music.wav) + Russian voice-over (gen_vo.py)."""
 import subprocess, sys, os, json
 cfg = sys.argv[1]
-name = json.load(open(cfg))["name"]
+C = json.load(open(cfg))
+name = C["name"]
+renderer = C.get("renderer", "render_tips.js")
 d = os.path.dirname(cfg)
 VO_AT = [0.15, 3.25, 7.25, 11.25, 15.25, 19.25, 23.3]
 TOTAL = 27
 os.makedirs("out/tmp", exist_ok=True)
 vid = f"out/tmp/{name}_silent.mp4"
-if subprocess.run(["node", "render_tips.js", cfg, vid]).returncode:
+if subprocess.run(["node", renderer, cfg, vid]).returncode:
     sys.exit("render failed")
 inputs = ["-i", vid, "-i", "audio/music.wav"]
 fc, vo = [], []
