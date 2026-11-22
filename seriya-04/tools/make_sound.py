@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Фон и эффекты серии 3. Всё синтезируется здесь кодом (numpy) — чужих записей нет.
+"""Фон и эффекты серии 4. Всё синтезируется здесь кодом (numpy) — чужих записей нет.
 Запуск из папки серии: python3 tools/make_sound.py  ->  audio/zvuk/fon.wav, audio/zvuk/effekty.wav"""
 import numpy as np, wave, os
 
-SR, DUR = 48000, 69.0
+SR, DUR = 48000, 67.5
 N = int(SR * DUR)
 T = np.arange(N) / SR
 rs = np.random.RandomState(7)
@@ -41,77 +41,58 @@ for f, a, lf in [(55, 1.0, .07), (55.6, .8, .05), (82.4, .5, .09), (110.3, .28, 
     drone += a * np.sin(2 * np.pi * f * T + 2 * np.sin(2 * np.pi * lf * T)) * (0.8 + 0.2 * np.sin(2 * np.pi * lf * 0.6 * T + f))
 rumble = norm(band(np.cumsum(rs.randn(N)), 30, 140))
 drone = norm(drone) * 0.8 + rumble * 0.35
-droneEnv = env([(0, .6), (3.6, .5), (5.5, .15), (7.3, .3), (10.8, .7), (19.9, .9), (31.6, 1.2), (44.9, 1.1), (51.1, .6), (57.7, .9), (61.6, 1.2), (66.85, 1.6), (66.95, 0), (DUR, 0)])
+droneEnv = env([(0, .8), (25.6, 1.0), (29.9, .5), (39.8, .4), (42.5, .2), (45.4, .5), (52.9, 1.1), (62.2, 1.4), (65.45, 1.7), (65.55, 0), (DUR, 0)])
 w1 = norm(band(rs.randn(N), 250, 900)); w2 = norm(band(rs.randn(N), 500, 2200))
 gust = 0.55 + 0.45 * np.sin(2 * np.pi * 0.13 * T + 1) * np.sin(2 * np.pi * 0.31 * T)
-windEnv = env([(0, .5), (4.8, .5), (6.3, 0), (37.0, 0), (37.3, .9), (42.8, .9), (43.0, 0), (DUR, 0)])
+windEnv = env([(0, .3), (2.8, .6), (7.3, .6), (8.8, 1.5), (11.3, 1.2), (11.5, .2), (21.3, .6), (25.6, .3), (55.1, .4), (62.2, .8), (65.5, 0), (DUR, 0)])
 wind = (w1 * gust + w2 * (1 - gust) * .5) * windEnv
-babble = norm(band(rs.randn(N), 250, 1400)) * (0.7 + 0.3 * np.sin(2 * np.pi * 3.1 * T) * np.sin(2 * np.pi * 1.7 * T + 2))
-crowdEnv = env([(0, 0), (7.3, .5), (10.8, .15), (11.0, 0), (37.0, 0), (37.3, .8), (42.8, .8), (43.0, 0), (DUR, 0)])
-fon = np.stack([drone * droneEnv * .9 + wind * .5 + babble * crowdEnv * .35, drone * droneEnv * .9 + np.roll(wind, 4000) * .5 + np.roll(babble, 7000) * crowdEnv * .35], 1)
+fon = np.stack([drone * droneEnv * .9 + wind * .5, drone * droneEnv * .9 + np.roll(wind, 4000) * .5], 1)
 
 # ---------------- ЭФФЕКТЫ ----------------
 fx = np.zeros((N, 2))
 step = burst(.12, 60, 400, .03)
 bt = np.arange(int(2.2 * SR)) / SR
-# посадка: мягкий глухой удар и пыль
-place(fx, 0.25, np.sin(2 * np.pi * np.cumsum(np.interp(bt, [0, 2.2], [70, 30])) / SR) * np.exp(-bt / .5), .7)
-place(fx, 0.3, norm(band(rs.randn(int(3 * SR)), 300, 3000)) * np.exp(-np.arange(int(3 * SR)) / SR / 1.0) * np.minimum(1, np.arange(int(3 * SR)) / SR / .2), .25)
-# сопла: шипение, гаснет на «погасли»
-ht = np.arange(int(1.2 * SR)) / SR
-place(fx, 3.65, norm(band(rs.randn(len(ht)), 1500, 6000)) * np.interp(ht, [0, .4, 1.0, 1.2], [.6, .6, 0, 0]), .35)
-# очки: щелчок
-place(fx, 11.65, burst(.04, 2000, 6000, .01), .4, .3)
-# «щитом»: высокий тревожный звон
-place(fx, 16.95, tone(1975, 2.2, .9) * .5 + tone(2093, 2.2, .9) * .5, .18)
-# ракета: далёкий нарастающий гул и свист
-mt = np.arange(int(4.0 * SR)) / SR
-place(fx, 20.2, (norm(band(rs.randn(len(mt)), 80, 600)) * .7 + .3 * np.sin(2 * np.pi * np.cumsum(np.interp(mt, [0, 4], [900, 1400])) / SR)) * (mt / 4) ** 1.2 * np.minimum(1, (4 - mt) / .2), .5, .5)
-# экран: писк по ходу дуги, сирена зоны удара
-for i in range(6): place(fx, 24.3 + i * .4, tone(1568, .08), .2, .3)
-zt = np.arange(int(3.0 * SR)) / SR
-place(fx, 28.6, np.sin(2 * np.pi * np.cumsum(700 + 250 * np.sin(2 * np.pi * 1.6 * zt)) / SR) * np.minimum(1, zt / .2) * np.minimum(1, (3 - zt) / .3), .14, .3)
-# часы: тиканье (4:00 и 2:00 — чаще)
-for a, b, d in [(27.4, 28.5, .33), (42.86, 44.95, .2)]:
-    t0 = a
-    while t0 < b:
-        place(fx, t0, burst(.02, 3000, 7000, .004), .45, -.1); t0 += d
-# фото — тихий звон
-place(fx, 32.4, tone(1046, 1.3, .5) + .5 * tone(1568, 1.3, .4), .22)
-# ключ: щелчок и запуск двигателя; двигатель до элеватора
-place(fx, 36.3, burst(.05, 800, 3000, .012), .5, .3)
-et = np.arange(int(9.0 * SR)) / SR
-rpm = np.interp(et, [0, .4, 1.2, 7.8, 8.6, 9.0], [24, 40, 64, 66, 30, 20])
+# двигатель: старт у элеватора и гонка через поле до канавы
+et = np.arange(int(23.5 * SR)) / SR
+rpm = np.interp(et, [0, .6, 1.6, 22.5, 23.4, 23.5], [24, 42, 64, 68, 30, 20])
 ph = 2 * np.pi * np.cumsum(rpm) / SR
-eng = norm(band(np.sin(ph) + .5 * np.sin(2 * ph + .5) + .3 * np.sin(3 * ph) + .2 * np.sign(np.sin(ph)), 30, 420)) * np.interp(et, [0, .1, .6, 8.6, 9.0], [0, .5, 1, .6, 0])
-place(fx, 36.35, eng, .5)
-# встречные машины: проносящиеся гулы
-for i in range(7):
-    wt = np.arange(int(.9 * SR)) / SR
-    place(fx, 37.4 + i * .75, norm(band(rs.randn(len(wt)), 200, 2500)) * np.sin(np.pi * wt / .9) ** 2, .3, -.7 if i % 2 else .7)
-# трава по днищу
-gt = np.arange(int(1.8 * SR)) / SR
-place(fx, 41.0, norm(band(rs.randn(len(gt)), 1500, 7000)) * (rs.rand(len(gt)) > .6) * np.sin(np.pi * gt / 1.8), .2)
-# фонарь у элеватора: гудение
-lt = np.arange(int(4.2 * SR)) / SR
-place(fx, 44.95, (np.sin(2 * np.pi * 100 * lt) + .5 * np.sin(2 * np.pi * 200 * lt)) * np.minimum(1, lt / .2) * np.minimum(1, (4.2 - lt) / .2), .06, .4)
-# кепка: глухой низкий акцент
-place(fx, 49.96, np.sin(2 * np.pi * 49 * bt) * np.exp(-bt / .8), .5)
-# телефон: виброзвонок и мелодия, писк появившейся сети
-for i in range(8):
-    vt = np.arange(int(.35 * SR)) / SR
-    place(fx, 52.27 + i * .66, norm(band(np.sign(np.sin(2 * np.pi * 150 * vt)), 80, 400)) * np.sin(np.pi * vt / .35), .3)
-    place(fx, 52.27 + i * .66, tone(1318 if i % 2 == 0 else 1046, .3), .12, .2)
-place(fx, 53.5, tone(2637, .12) + tone(3136, .12), .2, .2)
-# люк: шипение и низкий гул, тяжёлые шаги
-place(fx, 61.7, norm(band(rs.randn(int(1.0 * SR)), 800, 6000)) * np.exp(-np.arange(int(1.0 * SR)) / SR / .35), .4)
-hh = np.arange(int(5.2 * SR)) / SR
-place(fx, 61.7, np.sin(2 * np.pi * 73 * hh) * np.minimum(1, hh / .5) * np.minimum(1, (5.2 - hh) / .1), .35)
-for i in range(3): place(fx, 62.7 + i * .5, burst(.18, 40, 250, .06), .7)
-# последняя фраза: высокий звенящий тон нарастает и обрывается
-rt = np.arange(int(1.6 * SR)) / SR
-place(fx, 65.3, (np.sin(2 * np.pi * 2349 * rt) + .6 * np.sin(2 * np.pi * 2489 * rt)) * (rt / 1.6) ** 2, .25)
-place(fx, 66.9, np.sin(2 * np.pi * np.cumsum(np.interp(bt, [0, 2.2], [60, 24])) / SR) * np.exp(-bt / .45), .9)
+eng = norm(band(np.sin(ph) + .5 * np.sin(2 * ph + .5) + .3 * np.sin(3 * ph) + .2 * np.sign(np.sin(ph)), 30, 420)) * np.interp(et, [0, .1, .8, 7.3, 7.6, 11.3, 11.6, 21.3, 21.6, 23.3, 23.5], [0, .6, 1, 1, .5, .5, .3, .3, 1, 1, 0])
+place(fx, .4, eng, .5)
+# часы в начале
+for i in range(5): place(fx, .1 + i * .5, burst(.02, 3000, 7000, .004), .4, -.1)
+# тенты: хлопок ткани о капот
+place(fx, 8.1, burst(.6, 200, 3000, .18), .6, .2)
+place(fx, 8.3, burst(.4, 1500, 6000, .1), .3, -.2)
+# телефон: полоски сети загораются (писки)
+for i in range(4): place(fx, 12.5 + i * .3, tone(1760 + i * 220, .1), .2, .2)
+# ракета меняет курс: свист и тревожный писк сигнала
+mt = np.arange(int(2.8 * SR)) / SR
+place(fx, 18.5, np.sin(2 * np.pi * np.cumsum(np.interp(mt, [0, 1, 1.6, 2.8], [1300, 1300, 900, 1100])) / SR) * np.sin(np.pi * mt / 2.8) ** 2, .2, .5)
+for i in range(3): place(fx, 20.6 + i * .3, tone(987, .12), .2)
+# канава: удар, скрежет; бег
+place(fx, 23.35, np.sin(2 * np.pi * np.cumsum(np.interp(bt, [0, 2.2], [80, 30])) / SR) * np.exp(-bt / .35) + .6 * burst(2.2, 300, 4000, .2), .8)
+for i in range(6): place(fx, 24.4 + i * .2, step, .35, .3 - i * .1)
+# люк и скафандр: гул объекта
+hh = np.arange(int(39.8 * SR)) / SR
+place(fx, 25.6, (np.sin(2 * np.pi * 73 * hh) + .3 * np.sin(2 * np.pi * 146.5 * hh)) * np.minimum(1, hh / .5) * np.minimum(1, (39.8 - hh) / .1) * .7, .25)
+# стекло шлема поднимается: пневматика
+place(fx, 40.85, burst(.6, 1500, 7000, .2), .4)
+place(fx, 41.0, tone(1318, .8, .3) + .5 * tone(1975, .8, .3), .15)
+# Лена шагнула — шаг
+place(fx, 43.4, step, .4, -.3); place(fx, 43.85, step, .35, -.3)
+# маячок на груди: писк в ритме
+k = int(np.ceil(49.1 / .84))
+while k * .84 < 52.9:
+    place(fx, k * .84, tone(2093, .08), .25); k += 1
+# часы 1:00 — быстрые
+for i in range(10): place(fx, 52.95 + i * .2, burst(.02, 3000, 7000, .004), .45, -.1)
+# шаги Кости по траве; бег Тёмы
+for i in range(6): place(fx, 56.5 + i * .55, burst(.18, 40, 300, .06), .5 - i * .06, .3)
+for i in range(10): place(fx, 62.8 + i * .26, burst(.08, 150, 1200, .02), .3, -.1 + i * .05)
+# ракета поворачивает: нарастающий свист
+rt = np.arange(int(5.7 * SR)) / SR
+place(fx, 59.8, (np.sin(2 * np.pi * np.cumsum(np.interp(rt, [0, 5.7], [700, 1700])) / SR) * .5 + norm(band(rs.randn(len(rt)), 300, 3000)) * .5) * (rt / 5.7) ** 1.5, .5, .3)
+place(fx, 65.5, np.sin(2 * np.pi * np.cumsum(np.interp(bt, [0, 2.2], [60, 24])) / SR) * np.exp(-bt / .45), .9)
 
 os.makedirs("audio/zvuk", exist_ok=True)
 for name, x in (("fon", fon), ("effekty", fx)):
