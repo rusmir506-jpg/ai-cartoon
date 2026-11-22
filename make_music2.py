@@ -6,11 +6,17 @@ soft paper-stamp thuds land on every stamp, the groove thins out at 19 s and res
 import json, sys, wave
 import numpy as np
 
-SR, DUR = 44100, 27.0
+SR = 44100
+DUR = 27.0
+DUR = float(json.load(open(sys.argv[1])).get("duration", 27))
 N = int(SR * DUR)
 rng = np.random.default_rng(23)
 cfg = json.load(open(sys.argv[1]))
-STAMPS = [s + 0.2 for s in cfg["stamps"]]          # impact moments
+MP = cfg.get("music_params", {})
+END_AT = MP.get("end_at", 23)
+LIFT = MP.get("lift", [15, 19])
+THIN = MP.get("thin_from", 19)
+STAMPS = [s + 0.2 for s in cfg.get("stamps", [])]          # impact moments
 L = np.zeros(N + SR * 4)
 R = np.zeros(N + SR * 4)
 hz = lambda m: 440.0 * 2 ** ((m - 69) / 12)
@@ -117,10 +123,10 @@ PROG = [  # pad voicing, bass root, arp tones
 ARP = [0, 1, 2, 3, 2, 1, 2, 1]
 K, C, H, HO = kick(), clap(), hat(), hat(True)
 
-for b in range(13):                                   # 2 s bars
+for b in range(int(DUR / 2)):                                   # 2 s bars
     t0 = b * 2.0
     pv, root, arp = PROG[b % 4]
-    last = t0 >= 22.99
+    last = t0 >= END_AT - 0.01
     if last:
         pv, root, arp = [57, 62, 66, 69, 74], 38, [62, 66, 69, 74]
     add(pad(pv, 2.9 if not last else 4.0), t0 - 0.2, 0.40 if t0 >= 3 else 0.30)
@@ -135,10 +141,10 @@ for b in range(13):                                   # 2 s bars
     for k in range(8):                                # 8th-note marimba arpeggio
         tt = t0 + k * 0.25
         if t0 >= 7 or k % 2 == 0:
-            add(marimba(arp[ARP[k]] + 12), tt, 0.085 if 15 <= t0 < 19 else 0.065, (-1) ** k * 0.5)
-        if 15 <= t0 < 19:
+            add(marimba(arp[ARP[k]] + 12), tt, 0.085 if LIFT[0] <= t0 < LIFT[1] else 0.065, (-1) ** k * 0.5)
+        if LIFT[0] <= t0 < LIFT[1]:
             add(marimba(arp[ARP[k]] + 24, 0.3), tt + 0.125, 0.03, (-1) ** k * -0.6)
-    quarter = t0 >= 19
+    quarter = t0 >= THIN
     for k in range(4 if quarter else 4):              # bass: off-beat 8ths, quarters in the thin section
         if quarter:
             add(bass(root, 0.4), t0 + k * 0.5, 0.26)
@@ -158,7 +164,7 @@ for b in range(13):                                   # 2 s bars
 n = int(2.9 * SR)                                     # riser into the first beat
 add(lowpass(highpass(rng.standard_normal(n), 2500) * np.linspace(0, 1, n) ** 3, 9000), 0.1, 0.02)
 n = int(0.8 * SR)                                     # breath into the brand ending
-add(lowpass(highpass(rng.standard_normal(n), 3500) * np.linspace(0, 1, n) ** 3, 9000), 22.2, 0.02)
+add(lowpass(highpass(rng.standard_normal(n), 3500) * np.linspace(0, 1, n) ** 3, 9000), END_AT - 0.8, 0.02)
 for s in STAMPS:
     add(thud(), s, 0.55)
 
