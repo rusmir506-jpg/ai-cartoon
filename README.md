@@ -28,3 +28,6 @@ python3 build.py --hotel <name>
 python3 gen_vo.py formats/hotel_mistakes/config.json
 python3 build_tips.py formats/hotel_mistakes/config.json   # out/invoyage_hotel_mistakes.mp4
 ```
+
+### Animated-scene reel (TikTok style, no footage needed)
+`formats/story/config.json` → `python3 make_story.py formats/story/config.json` (voice-over, word captions, stamps, HUD route, drawn scenes) → `out/invoyage_story.mp4`.
