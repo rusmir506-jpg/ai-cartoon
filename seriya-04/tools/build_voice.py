@@ -11,6 +11,8 @@ TEMPO = 1.14
 PAUSES = [("Костя.", 0.6), ("Один.", 0.5), ("ним.", 0.8), ("Лены.", 0.3)]
 # заплатки: (первое слово, сколько слов, файл, подгонять ли длину под исходную)
 import sys
+# заглушить артефакты в паузах (секунды финальной дорожки)
+MUTES = [(3.55, 3.79)]  # шипение на тире после «До центра поля»
 PATCHES = []  # ("слово#номер", кол-во слов, "audio/patch/файл", True)
 
 def load(path):
@@ -78,6 +80,15 @@ y = np.clip(np.concatenate(parts), -32768, 32767).astype(np.int16)
 tmp = tempfile.mktemp(suffix=".wav")
 o = wave.open(tmp, "w"); o.setnchannels(1); o.setsampwidth(2); o.setframerate(SR); o.writeframes(y.tobytes()); o.close()
 subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", tmp, "-af", f"atempo={TEMPO}", "-ar", "48000", "audio/golos-final.wav"], check=True)
+if MUTES:
+    g = load("audio/golos-final.wav")
+    sr2 = 44100
+    for a, b in MUTES:
+        i0, i1 = int(a * sr2), int(b * sr2); n = int(0.01 * sr2)
+        g[i0 - n:i0] *= np.linspace(1, 0, n); g[i0:i1] = 0; g[i1:i1 + n] *= np.linspace(0, 1, n)
+    tmpm = tempfile.mktemp(suffix=".wav")
+    o = wave.open(tmpm, "w"); o.setnchannels(1); o.setsampwidth(2); o.setframerate(sr2); o.writeframes(np.clip(g, -32768, 32767).astype(np.int16).tobytes()); o.close()
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", tmpm, "-ar", "48000", "audio/golos-final.wav"], check=True); os.remove(tmpm)
 subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", "audio/golos-final.wav", "-b:a", "160k", "audio/golos-final.mp3"], check=True)
 os.remove(tmp)
 
