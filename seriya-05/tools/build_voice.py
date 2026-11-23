@@ -14,8 +14,8 @@ import sys
 # заглушить артефакты в паузах (секунды финальной дорожки)
 MUTES = []
 import sys
-V = sys.argv[1] if len(sys.argv) > 1 else "a"
-PATCHES = [("Я#2", 6, "audio/patch/k1-" + V, True), ("Машина#1", 4, "audio/patch/k2-" + V, True), ("Пол#1", 2, "audio/patch/pb-" + V, True)]
+PB = sys.argv[1] if len(sys.argv) > 1 else "s1"   # «пол бака»: s1 — дубль, утверждённый в серии 1; pol — «Половина бака»
+PATCHES = [("Я#2", 6, "audio/patch/k1-b", True), ("Машина#1", 4, "audio/patch/k2-b", True), ("Пол#1", 2, "audio/patch/pb-" + PB, True)]
 
 def load(path):
     tmp = tempfile.mktemp(suffix=".wav")
@@ -65,7 +65,7 @@ for target, n, base, fit in PATCHES:
     x = np.concatenate([fade(x[:int(c1 * SR)]), seg, fade(x[int(c2 * SR):])])
     delta = len(seg) / SR - (c2 - c1)
     if len(pw) == n:
-        for q in range(n): words[i + q][1], words[i + q][2] = c1 + (pw[q][1] - a) / k, c1 + (pw[q][2] - a) / k
+        for q in range(n): words[i + q][0], words[i + q][1], words[i + q][2] = pw[q][0], c1 + (pw[q][1] - a) / k, c1 + (pw[q][2] - a) / k
     else:
         words[i][1], words[j][2] = c1 + (ps - a) / k, c1 + (pe - a) / k
     for w in words[j + 1:]: w[1] += delta; w[2] += delta
