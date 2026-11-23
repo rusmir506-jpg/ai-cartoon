@@ -52,11 +52,14 @@ D = round(max(E + 4.0, vo_dur + OFF + 0.8), 2)
 TL = {"duration": D, "words": words, "beats": [], "bigs": [], "titles": [], "emojis": [], "stamps": [],
       "end": {"t0": E, "tag": C.get("end_tag", "Подписывайся")}}
 hud = []
+last_stamp = 0
 for i, b in enumerate(beats[:-1]):
     t0, t1 = starts[i], starts[i + 1]
     be = {"scene": b["scene"], "t0": t0, "t1": t1 if i < nb - 2 else D}
     if "tip" in b:
         be["tip"] = b["tip"]
+    if "temp" in b:
+        be["temp"] = b["temp"]
     if "cues" in b:
         be["cues"] = {}
         for k, wd in b["cues"].items():
@@ -70,15 +73,16 @@ for i, b in enumerate(beats[:-1]):
     if "stamp" in b:
         TL["stamps"].append({**b["stamp"], "t0": t0 + 0.02})
         hud.append(t0)
+        last_stamp = i
     for em in b.get("emoji", []):
         TL["emojis"].append({**em, "t0": t0 + em["at"], "t1": t1})
-TL["hud"] = {"t0": hud[0], "t1": TL["beats"][4]["t1"],
-             "starts": hud, "labels": ["Мальдивы", "Мальдивы", "Сингапур", "Швеция"]}
+TL["hud"] = {"t0": hud[0], "t1": TL["beats"][last_stamp]["t1"],
+             "starts": hud, "labels": C.get("hud_labels", ["Мальдивы", "Мальдивы", "Сингапур", "Швеция"])}
 json.dump(TL, open("out/tmp/story/timeline.json", "w"), ensure_ascii=False, indent=1)
 print("beats:", [(b["scene"], round(b["t0"], 2)) for b in TL["beats"]], "end", E, "dur", D)
 
 mp = f"{D_DIR}/music_cfg.json"
-json.dump({"duration": D, "stamps": [round(t - 0.0, 2) for t in hud], "music_params": {"end_at": E, "lift": [hud[0], starts[5]], "thin_from": 999}}, open(mp, "w"))
+json.dump({"duration": D, "stamps": [round(t - 0.0, 2) for t in hud], "music_params": {"end_at": E, "lift": [hud[0], starts[last_stamp + 1]], "thin_from": 999}}, open(mp, "w"))
 subprocess.run(["python3", "make_music2.py", mp, f"{D_DIR}/music.wav"], check=True)
 
 silent = f"out/tmp/story/{name}_silent.mp4"

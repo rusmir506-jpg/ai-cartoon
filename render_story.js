@@ -33,6 +33,19 @@ const emos = TL.emojis.map((p, i) => `<div class="emo" id="em${i}">${p.ch}</div>
 const tips = TL.beats.filter(b => b.scene === 'tip').map((b, i) => `<div class="scn tipbg" id="s_tip${b.tip.n}">
   <div class="card" id="card${b.tip.n}"><div class="badge">Совет ${b.tip.n}</div><div class="ticon">${b.tip.icon}</div>
   <div class="th">${b.tip.h}</div><div class="ts" id="ts${b.tip.n}">${b.tip.s}</div><div class="chk" id="chk${b.tip.n}">✓</div></div></div>`).join('');
+const temps = TL.beats.map((b, i) => b.scene !== 'temp' ? '' : `<div class="scn" id="s_temp${i}" style="background:linear-gradient(180deg,${b.temp.bg[0]} 0%,${b.temp.bg[1]} 55%,${b.temp.bg[2]} 100%)">
+  <svg class="full" viewBox="0 0 1080 1920"><defs>
+   <linearGradient id="ga${i}" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FF5E3A"/><stop offset="1" stop-color="#FFC857"/></linearGradient>
+   <linearGradient id="gw${i}" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#1E9BC9"/><stop offset="1" stop-color="#9FF0FF"/></linearGradient></defs>
+   <circle cx="900" cy="330" r="190" fill="rgba(255,240,190,.22)"/>
+   ${[[300, 'a'], [780, 'w']].map(([x, k]) => `<rect x="${x - 60}" y="600" width="120" height="580" rx="60" fill="rgba(255,255,255,.2)" stroke="#fff" stroke-width="6"/>
+   <rect id="${k}f${i}" x="${x - 46}" y="1190" width="92" height="0" rx="46" fill="url(#g${k === 'a' ? 'a' : 'w'}${i})"/>
+   <circle cx="${x}" cy="1190" r="86" fill="url(#g${k === 'a' ? 'a' : 'w'}${i})" stroke="#fff" stroke-width="6"/>`).join('')}
+   <path id="wv${i}" fill="rgba(255,255,255,.22)"/></svg>
+  <div class="tnum" id="an${i}" style="left:60px">+0°</div><div class="tnum" id="wn${i}" style="left:540px">+0°</div>
+  <div class="tlab" style="left:60px">${b.temp.air_label || 'днём'}</div><div class="tlab" style="left:540px">вода</div>
+  <div class="ticon2" id="ic${i}">${b.temp.icon}</div>
+  <div class="note"><span>${b.temp.note}</span></div></div>`).join('');
 const hudPins = TL.hud.labels.map((l, i) => `<div class="hp" id="hp${i}"><div class="hc" id="hc${i}">${i + 1}</div><div class="hl2">${l}</div></div>`).join('');
 const html = `<meta charset="utf-8"><style>${faces}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -48,6 +61,11 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#000;font-family
 .ts{font-weight:500;font-size:44px;line-height:1.35;margin:34px 60px 0;color:#CBE7EE}
 .chk{position:absolute;right:50px;bottom:44px;width:120px;height:120px;border-radius:60px;background:#37C978;color:#fff;font-size:84px;line-height:116px;font-weight:800;opacity:0}
 .star{position:absolute;opacity:.9}
+.tnum{position:absolute;top:470px;width:480px;text-align:center;color:#fff;font-weight:900;font-size:112px;line-height:1;text-shadow:0 6px 24px rgba(0,0,0,.3)}
+.tlab{position:absolute;top:1300px;width:480px;text-align:center;color:#fff;font-weight:800;font-size:40px;text-transform:uppercase;letter-spacing:.08em;text-shadow:0 2px 10px rgba(0,0,0,.4)}
+.ticon2{position:absolute;left:340px;top:790px;width:400px;text-align:center;font-family:'Noto Color Emoji';font-size:200px;line-height:1}
+.note{position:absolute;left:60px;right:60px;top:1385px;text-align:center}
+.note span{display:inline-block;padding:14px 38px;border-radius:44px;background:rgba(255,255,255,.22);color:#fff;font-weight:700;font-size:44px;border:2px solid rgba(255,255,255,.4)}
 #hud{position:absolute;left:0;right:0;top:110px;height:170px;opacity:0}
 .hp{position:absolute;top:0;width:200px;margin-left:-100px;text-align:center;color:#fff}
 .hc{width:76px;height:76px;margin:0 auto;border-radius:38px;background:rgba(255,255,255,.22);border:3px solid #fff;font-weight:800;font-size:38px;line-height:70px}
@@ -119,7 +137,7 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#000;font-family
   <div id="sunE" style="position:absolute;left:760px;top:420px;font-family:'Noto Color Emoji';font-size:200px;opacity:0">☀️</div>
   <div id="flower" style="position:absolute;left:760px;top:1360px;font-family:'Noto Color Emoji';font-size:110px;opacity:0">🌷</div></div>
 <div class="scn tipbg" id="s_tipintro"></div>
-${tips}
+${tips}${temps}
 </div>
 <div id="hud"><svg width="1080" height="170" style="position:absolute;inset:0"><path id="hpath" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="6" stroke-linecap="round" stroke-dasharray="1 16" d="M 150 38 L 930 38"/></svg>${hudPins}<div id="plane">✈️</div></div>
 ${stamps}${bigs}${titles}${emos}
@@ -167,13 +185,17 @@ const S={
   $('warm').style.opacity=.55*me;const sn=$('sunE');sn.style.opacity=me;sn.style.transform='scale('+(.5+.5*back((u-b0)/.7))+') rotate('+(t*30)+'deg)';
   const fl=$('flower');fl.style.opacity=win(u,b0+1.3,b0+1.7);fl.style.transform='scale('+(.3+.7*back((u-b0-1.3)/.5))+')';
   snow.forEach(([c,x,y,sp,ph])=>{c.setAttribute('cx',x+Math.sin(t*1.5+ph)*30);c.setAttribute('cy',((y+t*sp)%1500)-40);c.setAttribute('opacity',(1-.7*me)*.85)})},
+ temp(u,t,b,i){const c=b.cues||{},g0=c.a?Math.max(.2,c.a.t0-.1):.4,pr=win(u,g0,g0+1.7),T=b.temp;
+  [['a',T.air,'an'],['w',T.water,'wn']].forEach(([k,v,n])=>{const h=590*(v/40)*pr;const r=$(k+'f'+i);r.setAttribute('y',1190-h);r.setAttribute('height',h);$(n+i).textContent='+'+Math.round(v*pr)+'°'});
+  let d='M 0 1760';for(let x=0;x<=1080;x+=40)d+=' L '+x+' '+(1760+Math.sin(x/110+t*2.5)*16);d+=' L 1080 1920 L 0 1920 Z';$('wv'+i).setAttribute('d',d);
+  const ic=$('ic'+i);ic.style.opacity=win(u,.3,.8);ic.style.transform='translateY('+(Math.sin(t*2.2)*14)+'px) scale('+(.6+.4*back((u-.3)/.5))+')'},
  tipintro(){}, tip(u,t,b){const n=b.tip.n,c=$('card'+n),a=back(u/.45);c.style.transform='translateX('+(1-a)*90+'px) scale('+(.9+.1*a)+')';c.style.opacity=clamp(u/.2);
   $('ts'+n).style.opacity=win(u,.35,.8);const k=$('chk'+n),q=back((u-.9)/.4);k.style.opacity=clamp((u-.9)/.1);k.style.transform='scale('+q+')'}
 };
 function render(t){
   let cur=null;
-  TL.beats.forEach((b,i)=>{const id=b.scene==='tip'?'s_tip'+b.tip.n:'s_'+b.scene,el=$(id);const on=t>=b.t0&&t<b.t1;el.style.display=on?'block':'none';
-    if(on){cur=b;const u=t-b.t0,L=b.t1-b.t0;S[b.scene](u,t,b);const pu=clamp(u/.3);el.style.transform='scale('+((1+.05*clamp(u/L))*(1+.06*Math.pow(1-pu,2)))+')'}});
+  TL.beats.forEach((b,i)=>{const id=b.scene==='tip'?'s_tip'+b.tip.n:(b.scene==='temp'?'s_temp'+i:'s_'+b.scene),el=$(id);const on=t>=b.t0&&t<b.t1;el.style.display=on?'block':'none';
+    if(on){cur=b;const u=t-b.t0,L=b.t1-b.t0;S[b.scene](u,t,b,i);const pu=clamp(u/.3);el.style.transform='scale('+((1+.05*clamp(u/L))*(1+.06*Math.pow(1-pu,2)))+')'}});
   let fl=0;TL.beats.forEach(b=>{const d=t-b.t0;if(b.t0>.01&&d>=0&&d<.14)fl=.3*(1-d/.14)});$('flash').style.opacity=fl;
   // big lines
   TL.bigs.forEach((b,i)=>{b.lines.forEach((l,j)=>{const e=$('bg'+i+'_'+j),a=.15+.25*j,o=clamp((b.t1-t)/.25),p=back((t-b.t0-a)/.3);e.style.opacity=(t-b.t0>=a)?o:0;e.style.transform='scale('+(.5+.5*p)+')'})});
