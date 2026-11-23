@@ -13,7 +13,9 @@ PAUSES = [("ней.", 0.6), ("тишина.", 1.5), ("птицы.", 0.6), ("от
 import sys
 # заглушить артефакты в паузах (секунды финальной дорожки)
 MUTES = []
-PATCHES = []  # ("слово#номер", кол-во слов, "audio/patch/файл", True)
+import sys
+V = sys.argv[1] if len(sys.argv) > 1 else "a"
+PATCHES = [("Я#2", 6, "audio/patch/k1-" + V, True), ("Машина#1", 4, "audio/patch/k2-" + V, True), ("Пол#1", 2, "audio/patch/pb-" + V, True)]
 
 def load(path):
     tmp = tempfile.mktemp(suffix=".wav")
