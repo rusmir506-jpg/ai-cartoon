@@ -39,7 +39,7 @@ for tx in texts:
 words, first = [], {}
 for m in re.finditer(r"\S+", full):
     a, b = m.span()
-    disp = re.sub(r"[.,!?—–:-]+", "", m.group())
+    disp = re.sub(r"^[-.,!?—–:]+|[-.,!?—–:]+$", "", m.group())
     bi = next(i for i, (x, y) in enumerate(bounds) if x <= a < y)
     if disp:
         first.setdefault(bi, cs[a] + OFF)

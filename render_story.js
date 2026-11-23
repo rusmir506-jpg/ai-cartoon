@@ -35,7 +35,7 @@ const tips = TL.beats.filter(b => b.scene === 'tip').map((b, i) => `<div class="
   <div class="th">${b.tip.h}</div><div class="ts" id="ts${b.tip.n}">${b.tip.s}</div><div class="chk" id="chk${b.tip.n}">✓</div></div></div>`).join('');
 const photoLayer = TL.beats.map((b, i) => (b.shots || []).map((s, j) => `<div class="shot2" id="ph${i}_${j}"><img id="pi${i}_${j}" src="file://${path.resolve(s.file)}" style="width:${s.iw}px;height:${s.ih}px"></div>`).join('')).join('');
 const temps = TL.beats.map((b, i) => b.scene !== 'temp' ? '' : b.shots ? `<div class="scn" id="s_temp${i}" style="background:linear-gradient(180deg,rgba(0,0,0,.36) 0%,rgba(0,0,0,0) 26%,rgba(0,0,0,0) 52%,rgba(0,0,0,.5) 100%)">
-  <div class="note" style="top:1115px"><span>${b.temp.note}</span></div>
+  <div class="note" style="top:1115px"><span style="background:rgba(10,20,28,.55);border-color:rgba(255,255,255,.35)">${b.temp.note}</span></div>
   <div class="gcards"><div class="gc"><div class="gl">☀️ ${b.temp.air_label || 'днём'}</div><div class="gn" id="an${i}">+0°</div><div class="gb"><i id="abar${i}" style="background:linear-gradient(90deg,#FF8A3D,#FFD166)"></i></div></div>
   <div class="gc"><div class="gl">🌊 вода</div><div class="gn" id="wn${i}">+0°</div><div class="gb"><i id="wbar${i}" style="background:linear-gradient(90deg,#1E9BC9,#9FF0FF)"></i></div></div></div></div>` : `<div class="scn" id="s_temp${i}" style="background:linear-gradient(180deg,${b.temp.bg[0]} 0%,${b.temp.bg[1]} 55%,${b.temp.bg[2]} 100%)">
   <svg class="full" viewBox="0 0 1080 1920"><defs>
