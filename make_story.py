@@ -15,7 +15,17 @@ texts = [b["text"] for b in beats]
 full = " ".join(texts)
 
 vo_mp3, vo_json = f"{D_DIR}/audio/vo.mp3", f"{D_DIR}/audio/vo_align.json"
-if "--regen-vo" in sys.argv or not os.path.exists(vo_json):
+NO_VOICE = "--no-voice" in sys.argv
+if NO_VOICE:
+    # silent narration: estimated reading pace (~13 chars/s) with pauses at punctuation; captions + music only
+    t, cs_l, ce_l = 0.0, [], []
+    for ch in full:
+        cs_l.append(t)
+        t += 0.062 + (0.3 if ch in ".?!" else 0.2 if ch in ",:—" else 0.0)
+        ce_l.append(t)
+    json.dump({"characters": list(full), "character_start_times_seconds": cs_l, "character_end_times_seconds": ce_l}, open(f"{D_DIR}/audio/vo_align_silent.json", "w"))
+    vo_json = f"{D_DIR}/audio/vo_align_silent.json"
+elif "--regen-vo" in sys.argv or not os.path.exists(vo_json):
     body = json.dumps({"text": full, "model_id": "eleven_multilingual_v2", "language_code": "ru",
                        "voice_settings": C.get("voice_settings", {"stability": 0.5, "similarity_boost": 0.8, "style": 0.2, "speed": 1.03})})
     r = subprocess.run(["curl", "-sS", "-m", "120", "-X", "POST",
@@ -23,12 +33,14 @@ if "--regen-vo" in sys.argv or not os.path.exists(vo_json):
                         "-H", "xi-api-key: dummy", "-H", "Content-Type: application/json", "-d", body],
                        capture_output=True, text=True)
     d = json.loads(r.stdout)
+    if "audio_base64" not in d:
+        sys.exit("TTS error: " + r.stdout[:400])
     open(vo_mp3, "wb").write(base64.b64decode(d["audio_base64"]))
     json.dump(d["alignment"], open(vo_json, "w"))
 al = json.load(open(vo_json))
 chars, cs, ce = al["characters"], al["character_start_times_seconds"], al["character_end_times_seconds"]
 assert "".join(chars) == full, "alignment text mismatch"
-vo_dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", vo_mp3],
+vo_dur = max(ce) if NO_VOICE else float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", vo_mp3],
                               capture_output=True, text=True).stdout)
 OFF = C.get("vo_delay", 0.25)
 
@@ -62,7 +74,7 @@ def prep_img(img, zmax):
     return out, im.size
 
 
-TL = {"duration": D, "words": words, "beats": [], "bigs": [], "titles": [], "emojis": [], "stamps": [],
+TL = {"style": C.get("style", ""), "duration": D, "words": words, "beats": [], "bigs": [], "titles": [], "emojis": [], "stamps": [],
       "end": {"t0": E, "tag": C.get("end_tag", "Подписывайся")}}
 hud = []
 last_stamp = 0
@@ -110,10 +122,16 @@ silent = f"out/tmp/story/{name}_silent.mp4"
 if "--no-render" not in sys.argv:
     subprocess.run(["node", "render_story.js", "out/tmp/story/timeline.json", silent], check=True)
     out = f"out/invoyage_{name}.mp4"
-    fc = (f"[2:a]aresample=44100,aformat=channel_layouts=stereo,adelay={int(OFF * 1000)}:all=1,apad=whole_dur={D},highpass=f=90,asplit[voa][vob];"
+    if NO_VOICE:
+        fc = f"[1:a]volume=1.0,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000,afade=out:st={D - 1.2}:d=1.2[aout]"
+        ins = ["-i", silent, "-i", f"{D_DIR}/music.wav"]
+    else:
+        ins = ["-i", silent, "-i", f"{D_DIR}/music.wav", "-i", vo_mp3]
+    if not NO_VOICE:
+      fc = (f"[2:a]aresample=44100,aformat=channel_layouts=stereo,adelay={int(OFF * 1000)}:all=1,apad=whole_dur={D},highpass=f=90,asplit[voa][vob];"
           f"[1:a]volume=0.55[mu];[mu][vob]sidechaincompress=threshold=0.02:ratio=5:attack=40:release=450[duck];"
           f"[duck][voa]amix=inputs=2:normalize=0[mix];[mix]loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000,afade=out:st={D - 1.2}:d=1.2[aout]")
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", silent, "-i", f"{D_DIR}/music.wav", "-i", vo_mp3, "-filter_complex", fc,
+    subprocess.run(["ffmpeg", "-v", "error", "-y"] + ins + ["-filter_complex", fc,
                     "-map", "0:v", "-map", "[aout]", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "-t", str(D),
                     "-movflags", "+faststart", out], check=True)
     print(out)

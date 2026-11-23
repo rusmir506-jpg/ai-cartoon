@@ -10,6 +10,22 @@ const faces = [400, 500, 600, 800, 900].map(w => ['cyrillic', 'latin'].map(s =>
   `@font-face{font-family:M;font-weight:${w};src:url('${F}montserrat-${s}-${w}-normal.woff2') format('woff2');` +
   (s === 'cyrillic' ? `unicode-range:${CYR};` : '') + '}').join('')).join('') +
   `@font-face{font-family:GV;src:url('${F}great-vibes-latin-400-normal.woff2') format('woff2')}`;
+const ed = (fam, file, w, st = 'normal') => ['cyrillic', 'latin'].map(s => `@font-face{font-family:${fam};font-weight:${w};font-style:${st};src:url('${F}${file}-${s}-${w}-${st}.woff2') format('woff2');` + (s === 'cyrillic' ? `unicode-range:${CYR};` : '') + '}').join('');
+const EDITORIAL = TL.style !== 'editorial' ? '' : `<style>${ed('PF', 'playfair-display', 700)}${ed('PF', 'playfair-display', 900)}${ed('PF', 'playfair-display', 700, 'italic')}${ed('PF', 'playfair-display', 900, 'italic')}${ed('OS', 'oswald', 500)}${ed('OS', 'oswald', 600)}${ed('OS', 'oswald', 700)}${ed('MS', 'marck-script', 400)}
+.hl{font-family:PF;font-weight:900;font-style:italic;font-size:132px;line-height:1.02;letter-spacing:-.01em}
+.hl b{font-weight:900;font-style:italic;color:#FFD84A}
+.script{font-family:MS;font-size:128px;font-weight:400;text-shadow:0 4px 26px rgba(0,0,0,.6),0 1px 4px rgba(0,0,0,.5)}
+#cap{font-family:OS;font-weight:600;font-size:54px;letter-spacing:.1em}
+.gl,.tlab,.badge,.hl2,.note span{font-family:OS;letter-spacing:.1em;font-weight:600}
+.gn,.tnum{font-family:OS;font-weight:700}
+.th{font-family:PF;font-weight:900;font-style:italic;font-size:88px}
+.ts{font-family:PF;font-weight:700;font-style:italic;font-size:44px}
+#end .tag{font-family:PF;font-weight:700;font-style:italic;font-size:64px}
+.hang{position:absolute;left:62px;top:840px;transform-origin:30px 0;opacity:0}
+.hang .str{width:4px;height:50px;background:#E9D9A8;margin-left:26px}
+.hang .tg{background:#F6EBCB;color:#5B3A12;border-radius:16px 16px 16px 16px;padding:12px 26px 12px 22px;font-family:OS;font-weight:700;font-size:40px;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 8px 24px rgba(0,0,0,.35);position:relative}
+.hang .tg:before{content:'';position:absolute;left:18px;top:-10px;width:18px;height:18px;border-radius:9px;background:#8d6a2b;box-shadow:inset 0 0 0 4px #F6EBCB}
+</style>`;
 const LOGO = 'file://' + path.resolve(__dirname, 'assets/invoyage_logo.jpg');
 const GOLD = '#C9A55C';
 const STAR = `<path d="M0-98 L9-9 L98 0 L9 9 L0 98 L-9 9 L-98 0 L-9-9Z"/><path d="M0-62 L6-6 L62 0 L6 6 L0 62 L-6 6 L-62 0 L-6-6Z" transform="rotate(45)"/>`;
@@ -35,6 +51,7 @@ const tips = TL.beats.filter(b => b.scene === 'tip').map((b, i) => `<div class="
   <div class="th">${b.tip.h}</div><div class="ts" id="ts${b.tip.n}">${b.tip.s}</div><div class="chk" id="chk${b.tip.n}">✓</div></div></div>`).join('');
 const photoLayer = TL.beats.map((b, i) => (b.shots || []).map((s, j) => `<div class="shot2" id="ph${i}_${j}"><img id="pi${i}_${j}" src="file://${path.resolve(s.file)}" style="width:${s.iw}px;height:${s.ih}px"></div>`).join('')).join('');
 const temps = TL.beats.map((b, i) => b.scene !== 'temp' ? '' : b.shots ? `<div class="scn" id="s_temp${i}" style="background:linear-gradient(180deg,rgba(0,0,0,.36) 0%,rgba(0,0,0,0) 26%,rgba(0,0,0,0) 52%,rgba(0,0,0,.5) 100%)">
+  ${b.temp.tag ? `<div class="hang" id="hg${i}"><div class="str"></div><div class="tg">${b.temp.tag}</div></div>` : ''}
   <div class="note" style="top:1115px"><span style="background:rgba(10,20,28,.55);border-color:rgba(255,255,255,.35)">${b.temp.note}</span></div>
   <div class="gcards"><div class="gc"><div class="gl">☀️ ${b.temp.air_label || 'днём'}</div><div class="gn" id="an${i}">+0°</div><div class="gb"><i id="abar${i}" style="background:linear-gradient(90deg,#FF8A3D,#FFD166)"></i></div></div>
   <div class="gc"><div class="gl">🌊 вода</div><div class="gn" id="wn${i}">+0°</div><div class="gb"><i id="wbar${i}" style="background:linear-gradient(90deg,#1E9BC9,#9FF0FF)"></i></div></div></div></div>` : `<div class="scn" id="s_temp${i}" style="background:linear-gradient(180deg,${b.temp.bg[0]} 0%,${b.temp.bg[1]} 55%,${b.temp.bg[2]} 100%)">
@@ -96,7 +113,7 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#000;font-family
 #end{position:absolute;inset:0;opacity:0;background:radial-gradient(ellipse 75% 60% at 50% 45%,#fff 0%,#fbfcfc 45%,#f0f4f5 100%)}
 #end img{position:absolute;left:35px;top:360px;width:1010px;mix-blend-mode:multiply;opacity:0;-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 62%,transparent 100%)}
 #end .tag{position:absolute;left:70px;right:70px;top:1180px;text-align:center;font-weight:500;font-size:58px;line-height:1.3;color:#1F7480;opacity:0}
-</style>
+</style>${EDITORIAL}
 ${photoLayer}<div id="world">
 <div class="scn" id="s_cover" style="background:linear-gradient(180deg,#0F5566,#082F3C 70%,#061F29)">
   <svg class="star" id="cstar" width="1000" height="1000" viewBox="-100 -100 200 200" style="left:40px;top:760px;opacity:.16"><g fill="${GOLD}">${STAR}</g></svg>
@@ -198,6 +215,7 @@ const S={
   const fl=$('flower');fl.style.opacity=win(u,b0+1.3,b0+1.7);fl.style.transform='scale('+(.3+.7*back((u-b0-1.3)/.5))+')';
   snow.forEach(([c,x,y,sp,ph])=>{c.setAttribute('cx',x+Math.sin(t*1.5+ph)*30);c.setAttribute('cy',((y+t*sp)%1500)-40);c.setAttribute('opacity',(1-.7*me)*.85)})},
  temp(u,t,b,i){const c=b.cues||{},g0=c.a?Math.max(.2,c.a.t0-.1):.4,pr=window.FORCE?1:win(u,g0,g0+1.7),T=b.temp;
+  const hg=$('hg'+i);if(hg){const q=back((u-.9)/.5);hg.style.opacity=clamp((u-.9)/.15);hg.style.transform='rotate('+(Math.sin(t*2.6)*5)+'deg) scale('+(.5+.5*q)+')'}
   if(b.shots){[['an','abar',T.air],['wn','wbar',T.water]].forEach(([n,bar,v])=>{$(n+i).textContent='+'+Math.round(v*pr)+'°';$(bar+i).style.width=(100*v/40*pr)+'%'});return}
   [['a',T.air,'an'],['w',T.water,'wn']].forEach(([k,v,n])=>{const h=590*(v/40)*pr;const r=$(k+'f'+i);r.setAttribute('y',1190-h);r.setAttribute('height',h);$(n+i).textContent='+'+Math.round(v*pr)+'°'});
   let d='M 0 1760';for(let x=0;x<=1080;x+=40)d+=' L '+x+' '+(1760+Math.sin(x/110+t*2.5)*16);d+=' L 1080 1920 L 0 1920 Z';$('wv'+i).setAttribute('d',d);
