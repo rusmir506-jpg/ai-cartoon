@@ -31,3 +31,8 @@ python3 build_tips.py formats/hotel_mistakes/config.json   # out/invoyage_hotel_
 
 ### Animated-scene reel (TikTok style, no footage needed)
 `formats/story/config.json` → `python3 make_story.py formats/story/config.json` (voice-over, word captions, stamps, HUD route, drawn scenes) → `out/invoyage_story.mp4`.
+
+### Free offline narration (when ElevenLabs credits run out)
+`"tts": "piper"` in a format's config.json uses Piper (`pip install piper-tts onnxruntime`).
+Download the voice once (needs huggingface.co + us.aws.cdn.hf.co reachable):
+`curl -L -o assets/voices/ru_RU-irina-medium.onnx https://huggingface.co/rhasspy/piper-voices/resolve/main/ru/ru_RU/irina/medium/ru_RU-irina-medium.onnx`

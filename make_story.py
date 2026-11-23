@@ -25,6 +25,11 @@ if NO_VOICE:
         ce_l.append(t)
     json.dump({"characters": list(full), "character_start_times_seconds": cs_l, "character_end_times_seconds": ce_l}, open(f"{D_DIR}/audio/vo_align_silent.json", "w"))
     vo_json = f"{D_DIR}/audio/vo_align_silent.json"
+elif C.get("tts") == "piper":
+    vo_mp3, vo_json = f"{D_DIR}/audio/vo_piper.wav", f"{D_DIR}/audio/vo_piper_align.json"
+    if "--regen-vo" in sys.argv or not os.path.exists(vo_json):
+        import tts_piper
+        json.dump(tts_piper.synth(texts, vo_mp3), open(vo_json, "w"))
 elif "--regen-vo" in sys.argv or not os.path.exists(vo_json):
     body = json.dumps({"text": full, "model_id": "eleven_multilingual_v2", "language_code": "ru",
                        "voice_settings": C.get("voice_settings", {"stability": 0.5, "similarity_boost": 0.8, "style": 0.2, "speed": 1.03})})

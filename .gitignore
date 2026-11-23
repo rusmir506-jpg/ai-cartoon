@@ -1,3 +1,4 @@
 out/tmp/
 node_modules/
 __pycache__/
+assets/voices/*.onnx
