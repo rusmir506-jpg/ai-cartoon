@@ -33,7 +33,11 @@ const emos = TL.emojis.map((p, i) => `<div class="emo" id="em${i}">${p.ch}</div>
 const tips = TL.beats.filter(b => b.scene === 'tip').map((b, i) => `<div class="scn tipbg" id="s_tip${b.tip.n}">
   <div class="card" id="card${b.tip.n}"><div class="badge">Совет ${b.tip.n}</div><div class="ticon">${b.tip.icon}</div>
   <div class="th">${b.tip.h}</div><div class="ts" id="ts${b.tip.n}">${b.tip.s}</div><div class="chk" id="chk${b.tip.n}">✓</div></div></div>`).join('');
-const temps = TL.beats.map((b, i) => b.scene !== 'temp' ? '' : `<div class="scn" id="s_temp${i}" style="background:linear-gradient(180deg,${b.temp.bg[0]} 0%,${b.temp.bg[1]} 55%,${b.temp.bg[2]} 100%)">
+const photoLayer = TL.beats.map((b, i) => (b.shots || []).map((s, j) => `<div class="shot2" id="ph${i}_${j}"><img id="pi${i}_${j}" src="file://${path.resolve(s.file)}" style="width:${s.iw}px;height:${s.ih}px"></div>`).join('')).join('');
+const temps = TL.beats.map((b, i) => b.scene !== 'temp' ? '' : b.shots ? `<div class="scn" id="s_temp${i}" style="background:linear-gradient(180deg,rgba(0,0,0,.36) 0%,rgba(0,0,0,0) 26%,rgba(0,0,0,0) 52%,rgba(0,0,0,.5) 100%)">
+  <div class="note" style="top:1115px"><span>${b.temp.note}</span></div>
+  <div class="gcards"><div class="gc"><div class="gl">☀️ ${b.temp.air_label || 'днём'}</div><div class="gn" id="an${i}">+0°</div><div class="gb"><i id="abar${i}" style="background:linear-gradient(90deg,#FF8A3D,#FFD166)"></i></div></div>
+  <div class="gc"><div class="gl">🌊 вода</div><div class="gn" id="wn${i}">+0°</div><div class="gb"><i id="wbar${i}" style="background:linear-gradient(90deg,#1E9BC9,#9FF0FF)"></i></div></div></div></div>` : `<div class="scn" id="s_temp${i}" style="background:linear-gradient(180deg,${b.temp.bg[0]} 0%,${b.temp.bg[1]} 55%,${b.temp.bg[2]} 100%)">
   <svg class="full" viewBox="0 0 1080 1920"><defs>
    <linearGradient id="ga${i}" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FF5E3A"/><stop offset="1" stop-color="#FFC857"/></linearGradient>
    <linearGradient id="gw${i}" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#1E9BC9"/><stop offset="1" stop-color="#9FF0FF"/></linearGradient></defs>
@@ -61,6 +65,14 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#000;font-family
 .ts{font-weight:500;font-size:44px;line-height:1.35;margin:34px 60px 0;color:#CBE7EE}
 .chk{position:absolute;right:50px;bottom:44px;width:120px;height:120px;border-radius:60px;background:#37C978;color:#fff;font-size:84px;line-height:116px;font-weight:800;opacity:0}
 .star{position:absolute;opacity:.9}
+.shot2{position:absolute;inset:0;overflow:hidden;display:none;filter:saturate(1.08) contrast(1.04)}
+.shot2 img{position:absolute;left:0;top:0;transform-origin:0 0;max-width:none}
+.gcards{position:absolute;left:50px;right:50px;top:1215px;display:flex;gap:30px}
+.gc{flex:1;height:215px;border-radius:38px;background:rgba(10,20,28,.45);border:2px solid rgba(255,255,255,.3);backdrop-filter:blur(12px);padding:22px 30px;color:#fff;position:relative}
+.gl{font-weight:700;font-size:34px;text-transform:uppercase;letter-spacing:.06em}
+.gn{font-weight:900;font-size:96px;line-height:1;margin-top:6px}
+.gb{position:absolute;left:30px;right:30px;bottom:22px;height:10px;border-radius:5px;background:rgba(255,255,255,.25);overflow:hidden}
+.gb i{display:block;height:100%;width:0;border-radius:5px}
 .tnum{position:absolute;top:470px;width:480px;text-align:center;color:#fff;font-weight:900;font-size:112px;line-height:1;text-shadow:0 6px 24px rgba(0,0,0,.3)}
 .tlab{position:absolute;top:1300px;width:480px;text-align:center;color:#fff;font-weight:800;font-size:40px;text-transform:uppercase;letter-spacing:.08em;text-shadow:0 2px 10px rgba(0,0,0,.4)}
 .ticon2{position:absolute;left:340px;top:790px;width:400px;text-align:center;font-family:'Noto Color Emoji';font-size:200px;line-height:1}
@@ -85,7 +97,7 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#000;font-family
 #end img{position:absolute;left:35px;top:360px;width:1010px;mix-blend-mode:multiply;opacity:0;-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 62%,transparent 100%)}
 #end .tag{position:absolute;left:70px;right:70px;top:1180px;text-align:center;font-weight:500;font-size:58px;line-height:1.3;color:#1F7480;opacity:0}
 </style>
-<div id="world">
+${photoLayer}<div id="world">
 <div class="scn" id="s_cover" style="background:linear-gradient(180deg,#0F5566,#082F3C 70%,#061F29)">
   <svg class="star" id="cstar" width="1000" height="1000" viewBox="-100 -100 200 200" style="left:40px;top:760px;opacity:.16"><g fill="${GOLD}">${STAR}</g></svg>
   <div id="cfloat"></div></div>
@@ -186,6 +198,7 @@ const S={
   const fl=$('flower');fl.style.opacity=win(u,b0+1.3,b0+1.7);fl.style.transform='scale('+(.3+.7*back((u-b0-1.3)/.5))+')';
   snow.forEach(([c,x,y,sp,ph])=>{c.setAttribute('cx',x+Math.sin(t*1.5+ph)*30);c.setAttribute('cy',((y+t*sp)%1500)-40);c.setAttribute('opacity',(1-.7*me)*.85)})},
  temp(u,t,b,i){const c=b.cues||{},g0=c.a?Math.max(.2,c.a.t0-.1):.4,pr=win(u,g0,g0+1.7),T=b.temp;
+  if(b.shots){[['an','abar',T.air],['wn','wbar',T.water]].forEach(([n,bar,v])=>{$(n+i).textContent='+'+Math.round(v*pr)+'°';$(bar+i).style.width=(100*v/40*pr)+'%'});return}
   [['a',T.air,'an'],['w',T.water,'wn']].forEach(([k,v,n])=>{const h=590*(v/40)*pr;const r=$(k+'f'+i);r.setAttribute('y',1190-h);r.setAttribute('height',h);$(n+i).textContent='+'+Math.round(v*pr)+'°'});
   let d='M 0 1760';for(let x=0;x<=1080;x+=40)d+=' L '+x+' '+(1760+Math.sin(x/110+t*2.5)*16);d+=' L 1080 1920 L 0 1920 Z';$('wv'+i).setAttribute('d',d);
   const ic=$('ic'+i);ic.style.opacity=win(u,.3,.8);ic.style.transform='translateY('+(Math.sin(t*2.2)*14)+'px) scale('+(.6+.4*back((u-.3)/.5))+')'},
@@ -195,8 +208,13 @@ const S={
 function render(t){
   let cur=null;
   TL.beats.forEach((b,i)=>{const id=b.scene==='tip'?'s_tip'+b.tip.n:(b.scene==='temp'?'s_temp'+i:'s_'+b.scene),el=$(id);const on=t>=b.t0&&t<b.t1;el.style.display=on?'block':'none';
+    if(on&&b.shots&&b.scene==='cover')el.style.background='linear-gradient(180deg,rgba(0,0,0,.4),rgba(0,0,0,.08) 40%,rgba(0,0,0,.5))';
     if(on){cur=b;const u=t-b.t0,L=b.t1-b.t0;S[b.scene](u,t,b,i);const pu=clamp(u/.3);el.style.transform='scale('+((1+.05*clamp(u/L))*(1+.06*Math.pow(1-pu,2)))+')'}});
-  let fl=0;TL.beats.forEach(b=>{const d=t-b.t0;if(b.t0>.01&&d>=0&&d<.14)fl=.3*(1-d/.14)});$('flash').style.opacity=fl;
+  TL.beats.forEach((b,i)=>(b.shots||[]).forEach((s,j)=>{const el=$('ph'+i+'_'+j),on=t>=s.t0&&t<s.t1;el.style.display=on?'block':'none';if(!on)return;
+    const u=sm((t-s.t0)/(s.t1-s.t0)),z=s.z0+(s.z1-s.z0)*u,cx=s.cx0+(s.cx1-s.cx0)*u,cy=s.cy0+(s.cy1-s.cy0)*u,base=Math.min(s.iw,s.ih*9/16),w=base/z,h=w*16/9;
+    const x=clamp(cx*s.iw-w/2,0,s.iw-w),y=clamp(cy*s.ih-h/2,0,s.ih-h),k=1080/w;$('pi'+i+'_'+j).style.transform='scale('+k+') translate('+(-x)+'px,'+(-y)+'px)';
+    const pu=clamp((t-s.t0)/.3);el.style.transform='scale('+(1+.06*Math.pow(1-pu,2))+')'}));
+  let fl=0;TL.beats.forEach(b=>{const d=t-b.t0;if(b.t0>.01&&d>=0&&d<.14)fl=.3*(1-d/.14);(b.shots||[]).forEach(s=>{const e=t-s.t0;if(s.t0>.01&&e>=0&&e<.14)fl=Math.max(fl,.28*(1-e/.14))})});$('flash').style.opacity=fl;
   // big lines
   TL.bigs.forEach((b,i)=>{b.lines.forEach((l,j)=>{const e=$('bg'+i+'_'+j),a=.15+.25*j,o=clamp((b.t1-t)/.25),p=back((t-b.t0-a)/.3);e.style.opacity=(t-b.t0>=a)?o:0;e.style.transform='scale('+(.5+.5*p)+')'})});
   // titles / emojis

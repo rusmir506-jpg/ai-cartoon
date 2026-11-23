@@ -3,6 +3,7 @@
 One continuous Russian voice-over (ElevenLabs, with timestamps) drives word-by-word captions and scene cuts
 (snapped to the 120 BPM music grid). Scenes are drawn in render_story.js. Output: out/invoyage_<name>.mp4"""
 import base64, json, os, re, subprocess, sys
+from PIL import Image, ImageFilter
 
 cfg_path = sys.argv[1]
 C = json.load(open(cfg_path))
@@ -16,7 +17,7 @@ full = " ".join(texts)
 vo_mp3, vo_json = f"{D_DIR}/audio/vo.mp3", f"{D_DIR}/audio/vo_align.json"
 if "--regen-vo" in sys.argv or not os.path.exists(vo_json):
     body = json.dumps({"text": full, "model_id": "eleven_multilingual_v2", "language_code": "ru",
-                       "voice_settings": {"stability": 0.5, "similarity_boost": 0.8, "style": 0.2, "speed": 1.03}})
+                       "voice_settings": C.get("voice_settings", {"stability": 0.5, "similarity_boost": 0.8, "style": 0.2, "speed": 1.03})})
     r = subprocess.run(["curl", "-sS", "-m", "120", "-X", "POST",
                         f"https://api.elevenlabs.io/v1/text-to-speech/{C['voice']}/with-timestamps",
                         "-H", "xi-api-key: dummy", "-H", "Content-Type: application/json", "-d", body],
@@ -49,6 +50,18 @@ E = snap(first[nb - 1] - 0.3)
 starts = [0.0] + [snap(first[i] - 0.12) for i in range(1, nb - 1)] + [E]
 D = round(max(E + 4.0, vo_dur + OFF + 0.8), 2)
 
+def prep_img(img, zmax):
+    im = Image.open(img).convert("RGB")
+    w0, h0 = im.size
+    ww = min(w0, h0 * 9 / 16)
+    f = min(3.0, max(1.0, 1080 * zmax / ww))
+    out = f"out/tmp/story/{os.path.basename(os.path.dirname(img))}_{os.path.splitext(os.path.basename(img))[0]}_x.jpg"
+    if f > 1.01:
+        im = im.resize((round(w0 * f), round(h0 * f)), Image.LANCZOS).filter(ImageFilter.UnsharpMask(2, 60, 3))
+    im.save(out, quality=93)
+    return out, im.size
+
+
 TL = {"duration": D, "words": words, "beats": [], "bigs": [], "titles": [], "emojis": [], "stamps": [],
       "end": {"t0": E, "tag": C.get("end_tag", "Подписывайся")}}
 hud = []
@@ -65,6 +78,14 @@ for i, b in enumerate(beats[:-1]):
         for k, wd in b["cues"].items():
             w = next(w for w in words if w["bi"] == i and w["text"].lower() == wd)
             be["cues"][k] = {"t0": round(w["t0"] - t0, 3), "t1": round(w["t1"] - t0, 3)}
+    if "photos" in b:
+        k = len(b["photos"])
+        cuts = [t0] + [snap(t0 + (be["t1"] - t0) * j / k) for j in range(1, k)] + [be["t1"]]
+        be["shots"] = []
+        for j, p in enumerate(b["photos"]):
+            f, (iw, ih) = prep_img(p["img"], max(p["move"][2], p["move"][5]))
+            cx0, cy0, z0, cx1, cy1, z1 = p["move"]
+            be["shots"].append({"file": f, "iw": iw, "ih": ih, "t0": cuts[j], "t1": cuts[j + 1], "cx0": cx0, "cy0": cy0, "z0": z0, "cx1": cx1, "cy1": cy1, "z1": z1})
     TL["beats"].append(be)
     if "big" in b:
         TL["bigs"].append({**b["big"], "t0": t0, "t1": t1})
@@ -83,7 +104,7 @@ print("beats:", [(b["scene"], round(b["t0"], 2)) for b in TL["beats"]], "end", E
 
 mp = f"{D_DIR}/music_cfg.json"
 json.dump({"duration": D, "stamps": [round(t - 0.0, 2) for t in hud], "music_params": {"end_at": E, "lift": [hud[0], starts[last_stamp + 1]], "thin_from": 999}}, open(mp, "w"))
-subprocess.run(["python3", "make_music2.py", mp, f"{D_DIR}/music.wav"], check=True)
+subprocess.run(["python3", C.get("music_script", "make_music2.py"), mp, f"{D_DIR}/music.wav"], check=True)
 
 silent = f"out/tmp/story/{name}_silent.mp4"
 if "--no-render" not in sys.argv:
