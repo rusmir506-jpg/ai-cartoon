@@ -236,7 +236,7 @@ const S={
   let d='M 0 1760';for(let x=0;x<=1080;x+=40)d+=' L '+x+' '+(1760+Math.sin(x/110+t*2.5)*16);d+=' L 1080 1920 L 0 1920 Z';$('wv'+i).setAttribute('d',d);
   const ic=$('ic'+i);ic.style.opacity=win(u,.3,.8);ic.style.transform='translateY('+(Math.sin(t*2.2)*14)+'px) scale('+(.6+.4*back((u-.3)/.5))+')'},
 
- thaw(u,t,b,i){const c=b.cues||{},g0=c.a?Math.max(.3,c.a.t0-.2):.6,p=win(u,g0,g0+2.4),T=b.temp;thawMask($('fr'+i),p);
+ thaw(u,t,b,i){const g0=.35,p=win(u,g0,g0+1.9),T=b.temp;thawMask($('fr'+i),p);
   const v=Math.round(T.air*p),tv=$('tv'+i);tv.textContent=(v>0?'+'+v:'0')+'°';
   const k=clamp(v/T.air);tv.style.color='rgb('+Math.round(190+65*k)+','+Math.round(228-70*k)+','+Math.round(255-190*k)+')';
   const a=back((u-.15)/.5);tv.style.opacity=clamp(u/.2);tv.style.transform='scale('+(.8+.2*a)+')';
