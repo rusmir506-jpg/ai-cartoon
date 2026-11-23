@@ -4,6 +4,7 @@ const path = require('path'), fs = require('fs');
 const F = 'file://' + path.resolve(__dirname, 'assets/fonts') + '/';
 const CYR = 'U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116';
 const faces = [800, 900].map(w => ['cyrillic', 'latin'].map(s => `@font-face{font-family:M;font-weight:${w};src:url('${F}montserrat-${s}-${w}-normal.woff2') format('woff2');` + (s === 'cyrillic' ? `unicode-range:${CYR};` : '') + '}').join('')).join('');
+const CV = process.argv[2] ? JSON.parse(fs.readFileSync(process.argv[2], 'utf8')) : { h1: '4 отеля', h2: 'которые кажутся', h3: 'выдумкой', out: 'out/cover' };
 const T = k => 'file://' + path.resolve(`out/tmp/story/th${k}.png`);
 const LOGO = 'file://' + path.resolve('assets/invoyage_logo.jpg');
 const html = `<meta charset="utf-8"><style>${faces}
@@ -20,9 +21,9 @@ body{background:radial-gradient(ellipse 90% 70% at 50% 35%,#13697C 0%,#0A3A48 55
 .lg img{position:absolute;left:-70px;top:-250px;width:660px}
 </style>
 <div class="lg"><img src="${LOGO}"></div>
-<div class="h" style="top:300px;font-size:156px;line-height:1">4 отеля</div>
-<div class="h" style="top:470px;font-size:72px;line-height:1">которые кажутся</div>
-<div class="h y" style="top:560px;font-size:148px;line-height:1">выдумкой</div>
+<div class="h" style="top:300px;font-size:156px;line-height:1">${CV.h1}</div>
+<div class="h" style="top:470px;font-size:72px;line-height:1">${CV.h2}</div>
+<div class="h y" style="top:560px;font-size:148px;line-height:1">${CV.h3}</div>
 <div class="g">${[1, 2, 3, 4].map(k => `<div class="c"><img src="${T(k)}"><div class="n">${k}</div></div>`).join('')}</div>`;
 (async () => {
   const b = await chromium.launch();
@@ -31,6 +32,6 @@ body{background:radial-gradient(ellipse 90% 70% at 50% 35%,#13697C 0%,#0A3A48 55
   await p.goto('file://' + path.resolve('out/_cover.html'));
   await p.evaluate(() => document.fonts.ready);
   await p.waitForFunction(() => [...document.images].every(i => i.complete));
-  await p.screenshot({ path: 'out/cover.png' });
+  await p.screenshot({ path: CV.out + '.png' });
   fs.unlinkSync('out/_cover.html'); await b.close();
 })();
