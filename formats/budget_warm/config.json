@@ -46,13 +46,13 @@
       ],
       "photos": [
         {
-          "img": "footage/december/phuket_bay.jpg",
+          "img": "footage/budget/palms_path.jpg",
           "move": [
             0.5,
-            0.55,
+            0.6,
             1.0,
             0.5,
-            0.45,
+            0.5,
             1.12
           ]
         }
@@ -60,7 +60,7 @@
     },
     {
       "text": "Первое: Вьетнам, остров Фукуок. Сухой сезон, днём до тридцати, вода — двадцать восемь.",
-      "scene": "temp",
+      "scene": "thaw",
       "temp": {
         "air": 30,
         "water": 28,
@@ -73,45 +73,38 @@
         ],
         "icon": "🌴"
       },
-      "stamp": {
-        "n": 1,
-        "city": "Фукуок",
-        "country": "ВЬЕТНАМ",
-        "vibe": "СУХОЙ СЕЗОН",
-        "color": "#1F7480"
-      },
       "title": "Фукуок",
       "cues": {
         "a": "днём"
       },
       "photos": [
         {
-          "img": "footage/december/phuket_beach.jpg",
+          "img": "footage/budget/vietnam_pool.jpg",
           "move": [
             0.5,
             0.55,
             1.0,
             0.5,
-            0.45,
-            1.12
+            0.5,
+            1.1
           ]
         },
         {
-          "img": "footage/december/phuket_bay.jpg",
+          "img": "footage/budget/vietnam_cablecar.jpg",
           "move": [
             0.5,
-            0.5,
+            0.55,
             1.0,
-            0.55,
-            0.55,
-            1.12
+            0.5,
+            0.62,
+            1.1
           ]
         }
       ]
     },
     {
       "text": "Второе: Индия, Гоа. Днём около тридцати двух, вода — двадцать восемь.",
-      "scene": "temp",
+      "scene": "thaw",
       "temp": {
         "air": 32,
         "water": 28,
@@ -124,45 +117,27 @@
         ],
         "icon": "🥥"
       },
-      "stamp": {
-        "n": 2,
-        "city": "Гоа",
-        "country": "ИНДИЯ",
-        "vibe": "ПИК СЕЗОНА",
-        "color": "#B08A3E"
-      },
       "title": "Гоа",
       "cues": {
         "a": "днём"
       },
       "photos": [
         {
-          "img": "footage/december/srilanka_drone.jpg",
-          "move": [
-            0.5,
-            0.55,
-            1.0,
-            0.5,
-            0.45,
-            1.12
-          ]
-        },
-        {
-          "img": "footage/december/srilanka_balcony.jpg",
+          "img": "footage/budget/goa_sunset_pool.jpg",
           "move": [
             0.5,
             0.5,
             1.0,
             0.55,
-            0.55,
-            1.12
+            0.6,
+            1.1
           ]
         }
       ]
     },
     {
       "text": "Третье: Египет, Шарм-эль-Шейх. Днём около двадцати двух, зато вода — двадцать пять.",
-      "scene": "temp",
+      "scene": "thaw",
       "temp": {
         "air": 22,
         "water": 25,
@@ -175,45 +150,38 @@
         ],
         "icon": "🐠"
       },
-      "stamp": {
-        "n": 3,
-        "city": "Шарм",
-        "country": "ЕГИПЕТ",
-        "vibe": "МОРЕ ДЛЯ КУПАНИЯ",
-        "color": "#2B4A6B"
-      },
       "title": "Шарм-эль-Шейх",
       "cues": {
         "a": "днём"
       },
       "photos": [
         {
-          "img": "footage/december/dubai_burj_al_arab.jpg",
+          "img": "footage/budget/egypt_night_hotel.jpg",
+          "move": [
+            0.5,
+            0.62,
+            1.0,
+            0.5,
+            0.5,
+            1.1
+          ]
+        },
+        {
+          "img": "footage/budget/egypt_beach.jpg",
           "move": [
             0.5,
             0.55,
             1.0,
             0.5,
             0.45,
-            1.12
-          ]
-        },
-        {
-          "img": "footage/december/maldives_jetty.jpg",
-          "move": [
-            0.5,
-            0.5,
-            1.0,
-            0.55,
-            0.55,
-            1.12
+            1.1
           ]
         }
       ]
     },
     {
       "text": "Четвёртое: Камбоджа, остров Кох Ронг. Днём около двадцати восьми, вода — двадцать девять.",
-      "scene": "temp",
+      "scene": "thaw",
       "temp": {
         "air": 28,
         "water": 29,
@@ -226,38 +194,31 @@
         ],
         "icon": "🏝️"
       },
-      "stamp": {
-        "n": 4,
-        "city": "Кох Ронг",
-        "country": "КАМБОДЖА",
-        "vibe": "СПОКОЙНОЕ МОРЕ",
-        "color": "#B5654A"
-      },
       "title": "Кох Ронг",
       "cues": {
         "a": "днём"
       },
       "photos": [
         {
-          "img": "footage/december/maldives_sunset.jpg",
+          "img": "footage/budget/cambodia_swing.jpg",
+          "move": [
+            0.5,
+            0.6,
+            1.0,
+            0.5,
+            0.5,
+            1.1
+          ]
+        },
+        {
+          "img": "footage/budget/cambodia_bath.jpg",
           "move": [
             0.5,
             0.55,
             1.0,
             0.5,
             0.45,
-            1.12
-          ]
-        },
-        {
-          "img": "footage/december/dubai_burj_khalifa.jpg",
-          "move": [
-            0.5,
-            0.5,
-            1.0,
-            0.55,
-            0.55,
-            1.12
+            1.1
           ]
         }
       ]
@@ -317,5 +278,6 @@
       "end": true
     }
   ],
-  "end_tag": "Подписывайся,<br>чтобы первым<br>узнавать,<br>куда ехать"
+  "end_tag": "Подписывайся,<br>чтобы первым<br>узнавать,<br>куда ехать",
+  "hud": false
 }

@@ -105,17 +105,18 @@ for i, b in enumerate(beats[:-1]):
         TL["titles"].append({"text": b["title"], "t0": t0 + 0.95, "t1": t1})
     if "stamp" in b:
         TL["stamps"].append({**b["stamp"], "t0": t0 + 0.02})
+    if "stamp" in b or b["scene"] == "thaw":
         hud.append(t0)
         last_stamp = i
     for em in b.get("emoji", []):
         TL["emojis"].append({**em, "t0": t0 + em["at"], "t1": t1})
 TL["hud"] = {"t0": hud[0], "t1": TL["beats"][last_stamp]["t1"],
-             "starts": hud, "labels": C.get("hud_labels", ["Мальдивы", "Мальдивы", "Сингапур", "Швеция"])}
+             "starts": hud, "off": not C.get("hud", True), "labels": C.get("hud_labels", ["Мальдивы", "Мальдивы", "Сингапур", "Швеция"])}
 json.dump(TL, open("out/tmp/story/timeline.json", "w"), ensure_ascii=False, indent=1)
 print("beats:", [(b["scene"], round(b["t0"], 2)) for b in TL["beats"]], "end", E, "dur", D)
 
 mp = f"{D_DIR}/music_cfg.json"
-json.dump({"duration": D, "stamps": [round(t - 0.0, 2) for t in hud], "music_params": {"end_at": E, "lift": [hud[0], starts[last_stamp + 1]], "thin_from": 999}}, open(mp, "w"))
+json.dump({"duration": D, "stamps": [round(x["t0"] - 0.02, 2) for x in TL["stamps"]], "music_params": {"end_at": E, "lift": [hud[0], starts[last_stamp + 1]], "thin_from": 999}}, open(mp, "w"))
 subprocess.run(["python3", C.get("music_script", "make_music2.py"), mp, f"{D_DIR}/music.wav"], check=True)
 
 silent = f"out/tmp/story/{name}_silent.mp4"
