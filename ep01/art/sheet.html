@@ -1,0 +1,57 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Лист персонажей</title>
+<style>html,body{margin:0;background:#07090d}svg{display:block}</style>
+<script src="assets.js"></script></head>
+<body><div id="out"></div>
+<script>
+const W = 1600, H = 2230;
+const label = (x, y, t, s = 22, c = '#e9e4d8', w = 700) => `<text x="${x}" y="${y}" fill="${c}" font-family="Inter" font-weight="${w}" font-size="${s}" text-anchor="middle">${t}</text>`;
+const panel = (x, y, w, h) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="16" fill="#0e141a" stroke="#1d2730" stroke-width="2"/>`;
+const at = (x, y, s, inner) => `<g transform="translate(${x} ${y}) scale(${s})">${inner}</g>`;
+const bgThumb = (x, y, fn, name) => { const s = .26; return `<g transform="translate(${x} ${y})"><svg width="${1080 * s}" height="${1920 * s}" viewBox="0 0 1080 1920">${fn()}</svg>
+  <rect width="${1080 * s}" height="${1920 * s}" fill="none" stroke="#2a3540" stroke-width="2"/></g>${label(x + 1080 * s / 2, y + 1920 * s + 34, name, 21)}`; };
+let s = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+<rect width="${W}" height="${H}" fill="#07090d"/>
+${label(W / 2, 64, 'ГИГАНТСКИЕ МУТАНТЫ', 52, '#c8ff6e', 900)}
+${label(W / 2, 104, 'Серия 1 «Завод» · лист персонажей и фонов', 24, '#8a98a3', 600)}
+${Object.entries({ 'ночь': PAL.night1, 'сталь': PAL.slate2, 'ржавчина': PAL.rust2, 'река': PAL.water1, 'реагент': PAL.reagent, 'глаза': PAL.eye, 'огонь': PAL.fire1, 'плащ Аси': PAL.coat, 'твёрдая кожа': PAL.hard, 'шерсть': PAL.fur })
+  .map(([n, c], i) => `<rect x="${170 + i * 128}" y="130" width="40" height="40" rx="8" fill="${c}" stroke="#2a3540"/><text x="${190 + i * 128}" y="192" fill="#8a98a3" font-family="Inter" font-size="14" text-anchor="middle">${n}</text>`).join('')}
+
+${panel(30, 220, 860, 640)}${label(460, 262, 'НИКИТА, 21 · студент-медик · рассказчик', 26)}
+${at(160, 790, .9, nikita({ face: 'tense' }))}${label(160, 838, 'идёт', 19, '#8a98a3', 600)}
+${at(440, 790, .9, nikita({ face: 'tense', lighter: 'on' }))}${label(440, 838, 'с зажигалкой', 19, '#8a98a3', 600)}
+${at(720, 790, .9, nikita({ face: 'scared', pose: { armL: 40, armR: -40, legL: -8, legR: 10 } }))}${label(720, 838, 'испуг', 19, '#8a98a3', 600)}
+
+${panel(910, 220, 660, 640)}${label(1240, 262, 'АСЯ, 8 · ищет родителей', 26)}
+${at(1030, 790, 1.25, asya({ face: 'calm' }))}${label(1020, 838, 'с фонариком', 19, '#8a98a3', 600)}
+${at(1240, 790, 1.25, asya({ face: 'scared', hard: .2, scratch: true, torch: false, pose: { armL: 30 } }))}${label(1240, 838, 'царапина → твёрдо', 19, '#8a98a3', 600)}
+${at(1450, 790, 1.25, asya({ face: 'scared', hard: .55, pose: { armL: 24 } }))}${label(1460, 838, 'до локтя', 19, '#8a98a3', 600)}
+
+${panel(30, 880, 1060, 520)}${label(560, 922, 'МУТАНТ С ЗАВОДА · мокрая свалявшаяся шерсть', 26)}
+${at(340, 1340, .78, mutant({ mouth: .2 }))}${label(320, 1384, 'крадётся', 19, '#8a98a3', 600)}
+${at(860, 1330, .62, mutant({ seed: 7, mouth: 1, pose: { fl: -50, fr: -35, bl: 30, br: 40, body: -14, head: -10 } }))}${label(820, 1384, 'прыжок', 19, '#8a98a3', 600)}
+
+${panel(1110, 880, 460, 520)}${label(1340, 922, 'ГИГАНТ В РЕКЕ', 26)}
+<rect x="1130" y="940" width="420" height="440" rx="10" fill="#0a1016"/>
+<clipPath id="gclip"><rect x="1130" y="940" width="420" height="440" rx="10"/></clipPath><g clip-path="url(#gclip)">${at(1340, 1330, .25, giant({ rise: 1 }))}</g>
+<rect x="1130" y="1330" width="420" height="50" fill="#0b161a"/>
+${at(1340, 1300, .25, `<g fill="#05080a"><rect x="-820" y="-60" width="1640" height="40"/><rect x="-600" y="-20" width="50" height="160"/><rect x="550" y="-20" width="50" height="160"/></g>`)}
+${label(1340, 1370, 'больше моста', 18, '#8a98a3', 600)}
+
+${panel(30, 1420, 1540, 240)}${label(130, 1462, 'РЫБА', 24)}${label(735, 1462, 'РЕКВИЗИТ', 24)}
+${at(150, 1560, .7, fish({ watching: true }))}${label(150, 1640, 'смотрит', 17, '#8a98a3', 600)}
+${at(370, 1560, .7, fish({ watching: false }))}${label(370, 1640, 'спит у слива', 17, '#8a98a3', 600)}
+${at(580, 1560, .45, propPhone())}
+${at(780, 1585, .7, propLighter(true))}
+${at(980, 1550, .75, propPass())}
+${at(1300, 1555, .72, propJournal())}
+
+${label(W / 2, 1712, 'ФОНЫ (кадр 9:16)', 26)}
+${bgThumb(42, 1730, bgRiver, 'Река и мост')}
+${bgThumb(352, 1730, bgFactory, 'Завод снаружи')}
+${bgThumb(662, 1730, bgWorkshop, 'Цех')}
+${bgThumb(972, 1730, bgControl, 'Пультовая')}
+${bgThumb(1282, 1730, bgCollector, 'Коллектор')}
+</svg>`;
+document.getElementById('out').innerHTML = s;
+</script></body></html>
