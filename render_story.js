@@ -197,7 +197,7 @@ const S={
   $('warm').style.opacity=.55*me;const sn=$('sunE');sn.style.opacity=me;sn.style.transform='scale('+(.5+.5*back((u-b0)/.7))+') rotate('+(t*30)+'deg)';
   const fl=$('flower');fl.style.opacity=win(u,b0+1.3,b0+1.7);fl.style.transform='scale('+(.3+.7*back((u-b0-1.3)/.5))+')';
   snow.forEach(([c,x,y,sp,ph])=>{c.setAttribute('cx',x+Math.sin(t*1.5+ph)*30);c.setAttribute('cy',((y+t*sp)%1500)-40);c.setAttribute('opacity',(1-.7*me)*.85)})},
- temp(u,t,b,i){const c=b.cues||{},g0=c.a?Math.max(.2,c.a.t0-.1):.4,pr=win(u,g0,g0+1.7),T=b.temp;
+ temp(u,t,b,i){const c=b.cues||{},g0=c.a?Math.max(.2,c.a.t0-.1):.4,pr=window.FORCE?1:win(u,g0,g0+1.7),T=b.temp;
   if(b.shots){[['an','abar',T.air],['wn','wbar',T.water]].forEach(([n,bar,v])=>{$(n+i).textContent='+'+Math.round(v*pr)+'°';$(bar+i).style.width=(100*v/40*pr)+'%'});return}
   [['a',T.air,'an'],['w',T.water,'wn']].forEach(([k,v,n])=>{const h=590*(v/40)*pr;const r=$(k+'f'+i);r.setAttribute('y',1190-h);r.setAttribute('height',h);$(n+i).textContent='+'+Math.round(v*pr)+'°'});
   let d='M 0 1760';for(let x=0;x<=1080;x+=40)d+=' L '+x+' '+(1760+Math.sin(x/110+t*2.5)*16);d+=' L 1080 1920 L 0 1920 Z';$('wv'+i).setAttribute('d',d);
@@ -246,8 +246,9 @@ function render(t){
   await p.goto('file://' + tmp);
   await p.evaluate(() => document.fonts.ready);
   await p.waitForFunction(() => [...document.images].every(i => i.complete));
-  if (MODE.startsWith('still:')) {
-    for (const t of MODE.slice(6).split(',')) { await p.evaluate(t => render(t), +t); await p.screenshot({ path: `${OUT}_still_${t}.png` }); }
+  if (MODE.startsWith('still:') || MODE.startsWith('clean:')) {
+    const clean = MODE.startsWith('clean:');
+    for (const t of MODE.slice(6).split(',')) { await p.evaluate(({ t, c }) => { window.FORCE = c; render(t); if (c) { document.getElementById('cap').style.display = 'none'; document.getElementById('flash').style.display = 'none'; } }, { t: +t, c: clean }); await p.screenshot({ path: `${OUT}_still_${t}.png` }); }
     fs.unlinkSync(tmp); await b.close(); return;
   }
   const ff = spawn('ffmpeg', ['-v', 'error', '-y', '-f', 'image2pipe', '-framerate', String(FPS), '-i', '-',
