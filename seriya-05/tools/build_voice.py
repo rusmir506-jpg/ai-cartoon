@@ -14,7 +14,7 @@ import sys
 # заглушить артефакты в паузах (секунды финальной дорожки)
 MUTES = []
 import sys
-PB = sys.argv[1] if len(sys.argv) > 1 else "s1"   # «пол бака»: s1 — дубль, утверждённый в серии 1; pol — «Половина бака»
+PB = sys.argv[1] if len(sys.argv) > 1 else "pol"   # «пол бака»: s1 — дубль, утверждённый в серии 1; pol — «Половина бака»
 PATCHES = [("Я#2", 6, "audio/patch/k1-b", True), ("Машина#1", 4, "audio/patch/k2-b", True), ("Пол#1", 2, "audio/patch/pb-" + PB, True)]
 
 def load(path):
