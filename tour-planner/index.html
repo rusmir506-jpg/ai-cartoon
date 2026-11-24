@@ -100,7 +100,8 @@ h1,h2,h3{text-wrap:balance;margin:0}
 
 /* grid */
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
-@media (max-width:860px){.grid{grid-template-columns:repeat(2,1fr);gap:3px}}
+@media (min-width:1000px){.grid{grid-template-columns:repeat(5,1fr)}.grid .t-bold{font-size:clamp(24px,2.5vw,34px)}.grid .t-serif{font-size:clamp(28px,2.8vw,40px)}.grid .t-thin{font-size:12px}.grid .t-days{font-size:17px}}
+@media (max-width:999px){.grid{grid-template-columns:repeat(2,1fr);gap:3px}}
 .tile{position:relative;aspect-ratio:3/4;max-width:100%;overflow:hidden;border:0;padding:0;cursor:pointer;text-align:center;background:var(--surface-2);color:#fff;display:block;width:100%}
 .tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
 .tile:hover img{transform:scale(1.05)}
@@ -455,7 +456,10 @@ const DEST = [
    route:[["Кёльн","собор днём и ночью, набережная Рейна"],["Нюрнберг","фахверковые улицы, крепость, ярмарка"],["Связка","поезда между городами"]]},
   {id:"turkey", tags:["sea"], img:"turkey", look:"bold", title:"Турция", sub:"Не только «всё включено»: бухты и красивые отели",
    season:"май – октябрь", length:"7–10 дней", forwho:"семьи, подруги",
-   route:[["Побережье","отели с хорошей кухней и пляжем"],["Бухты","морские прогулки, скалы, чистая вода"],["Вечера","прогулки, шопинг, местные рестораны"]]}
+   route:[["Побережье","отели с хорошей кухней и пляжем"],["Бухты","морские прогулки, скалы, чистая вода"],["Вечера","прогулки, шопинг, местные рестораны"]]},
+  {id:"mexico", tags:["sea","winter"], img:"mexico", look:"serif", title:"Мексика", days:"10–14 дней", sub:"Карибское море, сеноты и фламинго",
+   season:"ноябрь – апрель", length:"10–14 дней", forwho:"пары, любители природы",
+   route:[["Ривьера-Майя","Плайя-дель-Кармен, Тулум, отели на Карибском море"],["Сеноты и пирамиды","купание в сенотах, Чичен-Ица, Вальядолид"],["Природа","фламинго, черепахи в Акумале, остров Ольбош"]]}
 ];
 const FILTERS = [
   {id:"all",label:"Все",img:"monaco"},
@@ -554,7 +558,7 @@ function renderForm(){
   });
 }
 
-const words=["Ницца","Монако","Сен-Тропе","Дубай","Париж","Ибица","Мадрид","Краби","Сингапур","Кёльн"];
+const words=["Ницца","Монако","Сен-Тропе","Дубай","Париж","Ибица","Мадрид","Краби","Тулум","Сингапур","Кёльн"];
 const line=words.map(w=>`${w}<i>✦</i>`).join("");
 $("#mq").innerHTML=line+line;
 
