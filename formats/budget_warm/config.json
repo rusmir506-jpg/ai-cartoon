@@ -1,13 +1,7 @@
 {
   "name": "budget_warm",
   "style": "editorial",
-  "voice": "cgSgspJ2msm6clMCkdW9",
-  "voice_settings": {
-    "stability": 0.4,
-    "similarity_boost": 0.8,
-    "style": 0.5,
-    "speed": 1.08
-  },
+  "voice": "FGY2WhTYpPnrIDTdsKH5",
   "music_script": "make_music3.py",
   "vo_delay": 0.25,
   "hud_labels": [
@@ -280,5 +274,5 @@
   ],
   "end_tag": "Подписывайся,<br>чтобы первым<br>узнавать,<br>куда ехать",
   "hud": false,
-  "tts": "piper"
+  "model": "eleven_v3"
 }

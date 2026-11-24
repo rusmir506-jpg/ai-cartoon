@@ -31,8 +31,12 @@ elif C.get("tts") == "piper":
         import tts_piper
         json.dump(tts_piper.synth(texts, vo_mp3), open(vo_json, "w"))
 elif "--regen-vo" in sys.argv or not os.path.exists(vo_json):
-    body = json.dumps({"text": full, "model_id": "eleven_multilingual_v2", "language_code": "ru",
-                       "voice_settings": C.get("voice_settings", {"stability": 0.5, "similarity_boost": 0.8, "style": 0.2, "speed": 1.03})})
+    model = C.get("model", "eleven_multilingual_v2")
+    req = {"text": full, "model_id": model}
+    if model != "eleven_v3":                      # v3 takes no language_code / voice_settings here
+        req["language_code"] = "ru"
+        req["voice_settings"] = C.get("voice_settings", {"stability": 0.5, "similarity_boost": 0.8, "style": 0.2, "speed": 1.03})
+    body = json.dumps(req)
     r = subprocess.run(["curl", "-sS", "-m", "120", "-X", "POST",
                         f"https://api.elevenlabs.io/v1/text-to-speech/{C['voice']}/with-timestamps",
                         "-H", "xi-api-key: dummy", "-H", "Content-Type: application/json", "-d", body],
