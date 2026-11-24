@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>InVoyage — агентство люксовых путешествий</title>
+<meta name="description" content="InVoyage — агентство люксовых путешествий. Подпишитесь, чтобы узнавать о подборках отелей и новостях первыми.">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/style.css">
+<script src="/js/app.js" defer></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="/" aria-label="InVoyage"><img src="/img/logo.jpg" alt="InVoyage" width="819" height="327"></a>
+  <a class="pill" href="#subscribe">Узнать первыми</a>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-in">
+      <p class="eyebrow">InVoyage · Luxury Travel Advisors</p>
+      <h1>Путешествия, о которых хочется рассказывать</h1>
+      <p class="lead">Мы создаём агентство люксовых путешествий. Сайт скоро заработает полностью. Оставьте почту, и вы узнаете об этом первыми.</p>
+      <a class="btn" href="#subscribe">Узнать первыми</a>
+    </div>
+  </section>
+
+  <section class="sec" id="ideas">
+    <p class="eyebrow dark">Пока готовимся</p>
+    <h2>Где тепло в декабре</h2>
+    <p class="sub">Подборка из нашего контента: температура воздуха днём и воды по усреднённым климатическим данным.</p>
+    <div class="grid">
+      <article class="card"><img src="/img/maldives.jpg" alt="Деревянный мостик к виллам над водой на Мальдивах" width="760" height="1351" loading="lazy">
+        <div class="cap"><h3>Мальдивы</h3><p>днём около +30°<br>вода +28°</p></div></article>
+      <article class="card"><img src="/img/phuket.jpg" alt="Бирюзовая бухта со скалами и лодками" width="760" height="1351" loading="lazy">
+        <div class="cap"><h3>Пхукет</h3><p>днём до +32°<br>вода +28°</p></div></article>
+      <article class="card"><img src="/img/srilanka.jpg" alt="Пустынный пляж и пальмы на юге Шри-Ланки" width="760" height="1341" loading="lazy">
+        <div class="cap"><h3>Шри-Ланка</h3><p>юг и запад, около +30°<br>вода +28°</p></div></article>
+      <article class="card"><img src="/img/dubai.jpg" alt="Пляж и отель в форме паруса в Дубае" width="760" height="1351" loading="lazy">
+        <div class="cap"><h3>Дубай</h3><p>днём около +26°<br>вода +25°</p></div></article>
+    </div>
+  </section>
+
+  <section class="sec tint" id="subscribe">
+    <p class="eyebrow dark">Будьте в курсе</p>
+    <h2>Подпишитесь, чтобы узнавать первыми</h2>
+    <p class="sub">Напишем один раз, когда всё будет готово. Без спама.</p>
+    <form id="subscribe-form" class="form" novalidate autocomplete="on">
+      <label class="sr" for="email">Электронная почта</label>
+      <input id="email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="254" placeholder="Ваша почта" required>
+      <div class="trap" aria-hidden="true"><label>Не заполняйте это поле <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+      <button class="btn" type="submit">Подписаться</button>
+      <label class="consent"><input type="checkbox" id="consent" name="consent" required>
+        <span>Я согласен(на) на обработку адреса электронной почты для рассылки об открытии. <a href="/privacy.html">Политика конфиденциальности</a></span></label>
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+    </form>
+    <div id="social" class="social" hidden></div>
+  </section>
+</main>
+
+<footer class="foot">
+  <p>© InVoyage</p>
+  <p><a href="/privacy.html">Политика конфиденциальности</a></p>
+</footer>
+</body>
+</html>

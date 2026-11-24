@@ -1,0 +1,12 @@
+# Set DOMAIN in .env (e.g. DOMAIN=invoyage.example). Caddy gets and renews the HTTPS certificate by itself.
+{$DOMAIN} {
+	encode zstd gzip
+	header {
+		-Server
+		Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+	}
+	request_body {
+		max_size 8KB
+	}
+	reverse_proxy app:8080
+}
