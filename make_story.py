@@ -92,6 +92,8 @@ for i, b in enumerate(beats[:-1]):
     be = {"scene": b["scene"], "t0": t0, "t1": t1 if i < nb - 2 else D}
     if "tip" in b:
         be["tip"] = b["tip"]
+    if "card" in b:
+        be["card"] = b["card"]
     if "temp" in b:
         be["temp"] = b["temp"]
     if "cues" in b:
@@ -114,7 +116,7 @@ for i, b in enumerate(beats[:-1]):
         TL["titles"].append({"text": b["title"], "t0": t0 + 0.95, "t1": t1})
     if "stamp" in b:
         TL["stamps"].append({**b["stamp"], "t0": t0 + 0.02})
-    if "stamp" in b or b["scene"] == "thaw":
+    if "stamp" in b or b["scene"] == "thaw" or b.get("card", {}).get("type") == "place":
         hud.append(t0)
         last_stamp = i
     for em in b.get("emoji", []):
@@ -130,7 +132,7 @@ subprocess.run(["python3", C.get("music_script", "make_music2.py"), mp, f"{D_DIR
 
 silent = f"out/tmp/story/{name}_silent.mp4"
 if "--no-render" not in sys.argv:
-    subprocess.run(["node", "render_story.js", "out/tmp/story/timeline.json", silent], check=True)
+    subprocess.run(["node", C.get("renderer", "render_story.js"), "out/tmp/story/timeline.json", silent], check=True)
     out = f"out/invoyage_{name}.mp4"
     if NO_VOICE:
         fc = f"[1:a]volume=1.0,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000,afade=out:st={D - 1.2}:d=1.2[aout]"
