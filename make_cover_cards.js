@@ -4,11 +4,12 @@ const path = require('path'), fs = require('fs');
 const F = 'file://' + path.resolve(__dirname, 'assets/fonts') + '/';
 const CYR = 'U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116';
 const ff = (fam, file, w, st) => ['cyrillic', 'latin'].map(s => '@font-face{font-family:' + fam + ';font-weight:' + w + ';font-style:' + (st || 'normal') + ";src:url('" + F + file + '-' + s + '-' + w + '-' + (st || 'normal') + ".woff2') format('woff2');" + (s === 'cyrillic' ? 'unicode-range:' + CYR + ';' : '') + '}').join('');
-const img = 'file://' + path.resolve('footage/budget/vietnam_cablecar.jpg');
+const PHOTO = process.argv[2] || 'vietnam_cablecar.jpg', POS = process.argv[3] || '50% 40%', OUTN = process.argv[4] || 'cover_cards';
+const img = 'file://' + path.resolve('footage/budget/' + PHOTO);
 const html = '<meta charset="utf-8"><style>' + ff('OS', 'oswald', 700) + ff('MT', 'montserrat', 500) + ff('CG', 'cormorant-garamond', 500, 'italic') + `
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:1080px;height:1920px;overflow:hidden;background:#000;color:#fff}
-.bg{position:absolute;inset:0;background:url(${img}) 50% 40%/cover;filter:saturate(1.12) contrast(1.05)}
+.bg{position:absolute;inset:0;background:url(${img}) ${POS}/cover;filter:saturate(1.12) contrast(1.05)}
 .sh{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35) 0%,rgba(0,0,0,0) 24%,rgba(0,0,0,0) 38%,rgba(0,0,0,.78) 78%,rgba(0,0,0,.86) 100%)}
 .wm{position:absolute;left:72px;top:118px;font-family:CG,serif;font-style:italic;font-weight:500;font-size:60px;text-shadow:0 2px 16px rgba(0,0,0,.5)}
 .t{position:absolute;left:60px;right:60px;top:1000px;text-align:center;text-shadow:0 2px 22px rgba(0,0,0,.45)}
@@ -25,7 +26,7 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#000;color:#fff}
   await p.goto('file://' + path.resolve('out/_cc.html'));
   await p.evaluate(() => document.fonts.ready);
   await p.waitForTimeout(300);
-  await p.screenshot({ path: 'out/cover_cards.png' });
-  await p.screenshot({ path: 'out/cover_cards_4x5.png', clip: { x: 0, y: 285, width: 1080, height: 1350 } });
+  await p.screenshot({ path: 'out/' + OUTN + '.png' });
+  await p.screenshot({ path: 'out/' + OUTN + '_4x5.png', clip: { x: 0, y: 285, width: 1080, height: 1350 } });
   fs.unlinkSync('out/_cc.html'); await b.close();
 })();
