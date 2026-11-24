@@ -72,6 +72,18 @@ const html = '<meta charset="utf-8"><style>' + fonts + css + '</style><div id="s
     for (const t of MODE.slice(6).split(',')) { await p.evaluate(t => { window.FORCE = false; render(t); }, +t); await p.screenshot({ path: OUT + '_still_' + t + '.png' }); }
     fs.unlinkSync(tmp); await b.close(); return;
   }
+  if (MODE === 'frames') {          // one clean frame per photo shot (+ tips + end card)
+    const times = [];
+    TL.beats.forEach(b => { if (b.shots && b.shots.length) b.shots.forEach(sh => times.push(sh.t0 + 1.9)); else times.push(b.t0 + 2.0); });
+    times.push(TL.end.t0 + 2.6);
+    for (let i = 0; i < times.length; i++) {
+      await p.evaluate(t => { window.FORCE = true; render(t); }, times[i]);
+      const id = String(i + 1).padStart(2, '0');
+      await p.screenshot({ path: OUT + '_' + id + '_916.png' });
+      await p.screenshot({ path: OUT + '_' + id + '_45.png', clip: { x: 0, y: 285, width: 1080, height: 1350 } });
+    }
+    fs.unlinkSync(tmp); await b.close(); return;
+  }
   if (MODE === 'slides') {
     const times = TL.beats.map(x => x.t0 + 2.0).concat([TL.end.t0 + 2.6]);
     for (let i = 0; i < times.length; i++) {
