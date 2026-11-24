@@ -3,28 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Маршрут — тур-планнер</title>
+<title>InVoyage</title>
 <meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="InVoyage — авторские маршруты путешествий под ваш запрос.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&family=Inter:wght@400;500;600&family=Oswald:wght@200;300;500;700&display=swap">
 <style>
-/* Layout: тёмная «лента путешествий» — полноэкранные кадры с крупной типографикой, сетка туров 3:4 как в профиле, хайлайты-кружки как фильтры */
+/* Layout: тёмная лента путешествий — коллаж из личных фото, сетка направлений 3:4 как профиль в Instagram, крупная сжатая типографика + курсивная антиква */
 :root{
-  --bg:#0a0b0d;
-  --surface:#14161a;
-  --surface-2:#1c1f24;
-  --line:#2a2d33;
-  --fg:#f4efe6;
-  --muted:#a29e97;
-  --accent:#e8cf9f;      /* шампань / песок */
-  --accent-ink:#1a1408;
-  --ok:#8fe3b8;
-  --warn:#ffb877;
+  --bg:#0b0b0c;
+  --surface:#151517;
+  --surface-2:#1d1d20;
+  --line:#2b2a2e;
+  --fg:#f5f0e8;
+  --muted:#a39f98;
+  --accent:#e6cfa3;
+  --accent-ink:#1b1508;
   --f-display:"Oswald","Arial Narrow","Roboto Condensed",sans-serif;
   --f-serif:"Cormorant Garamond","Cormorant",Georgia,"Times New Roman",serif;
   --f-body:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  --r:14px;
+  --r:16px;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -37,84 +36,107 @@ a{color:inherit}
 button,input,select,textarea{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
 h1,h2,h3{text-wrap:balance;margin:0}
-.wrap{max-width:1180px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1200px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .eyebrow{font:500 12px/1 var(--f-body);letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
 .serif-i{font-family:var(--f-serif);font-style:italic;font-weight:400;text-transform:none;letter-spacing:0}
-.btn{display:inline-flex;align-items:center;gap:.5em;border:0;cursor:pointer;text-decoration:none;font:500 14px/1 var(--f-body);letter-spacing:.04em;padding:15px 22px;border-radius:999px;transition:transform .2s,background .2s}
+.btn{display:inline-flex;align-items:center;gap:.5em;border:0;cursor:pointer;text-decoration:none;font:500 14px/1 var(--f-body);letter-spacing:.03em;padding:15px 22px;border-radius:999px;transition:transform .2s,background .2s}
 .btn:hover{transform:translateY(-1px)}
 .btn-primary{background:var(--accent);color:var(--accent-ink)}
-.btn-ghost{background:rgba(255,255,255,.08);color:var(--fg);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(8px)}
+.btn-ghost{background:transparent;color:var(--fg);border:1px solid rgba(255,255,255,.25)}
+.photo{position:relative;overflow:hidden;background:var(--surface-2)}
+.photo img{width:100%;height:100%;object-fit:cover}
 
-/* ---------- header ---------- */
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
-.logo{font:700 22px/1 var(--f-display);letter-spacing:.14em;text-decoration:none;display:flex;align-items:baseline;gap:8px}
-.logo span{font:italic 400 17px/1 var(--f-serif);letter-spacing:0;color:var(--accent)}
+.logo{text-decoration:none;display:flex;align-items:baseline;gap:1px;font:700 23px/1 var(--f-display);letter-spacing:.08em}
+.logo span{font:italic 500 25px/1 var(--f-serif);letter-spacing:0;color:var(--accent)}
 .nav{display:flex;gap:26px}
 .nav a{text-decoration:none;font-size:14px;color:var(--muted);transition:color .2s}
 .nav a:hover{color:var(--fg)}
 .top .btn{padding:11px 18px;font-size:13px}
-@media (max-width:820px){.nav{display:none}}
+@media (max-width:860px){.nav{display:none}}
 
-/* ---------- scenes (иллюстрации-заглушки под фото) ---------- */
-.scene{position:absolute;inset:0;overflow:hidden;background:#111}
-.scene svg{position:absolute;inset:0;width:100%;height:100%}
-.scene img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.scene::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.18;mix-blend-mode:overlay;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-
-/* ---------- hero ---------- */
-.hero{position:relative;min-height:min(760px,92svh);display:flex;align-items:flex-end;isolation:isolate}
-.hero .scene{z-index:-2}
-.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(6,10,14,.35) 0%,rgba(6,10,14,0) 30%,rgba(10,11,13,.55) 70%,var(--bg) 100%)}
-.hero .wrap{width:100%;padding-block:120px 64px}
-.hero-kicker{font:italic 400 clamp(22px,3vw,30px)/1 var(--f-serif);color:var(--accent);margin-bottom:14px}
-.hero h1{font:700 clamp(46px,9.6vw,128px)/.9 var(--f-display);text-transform:uppercase;letter-spacing:-.01em;max-width:11ch}
-.hero h1 .thin{display:block;font-weight:200;font-size:.42em;letter-spacing:.06em;line-height:1.15;margin-top:.35em;max-width:none}
-.hero p.lead{max-width:46ch;color:#d9d3c9;font-size:17px;margin:22px 0 30px}
+/* hero */
+.hero{padding-block:56px 72px}
+.hero .wrap{display:grid;grid-template-columns:1fr 1.05fr;gap:48px;align-items:center}
+.hero-text{min-width:0}
+.hero-kicker{font:italic 400 clamp(22px,2.6vw,30px)/1 var(--f-serif);color:var(--accent);margin-bottom:16px}
+.hero h1{font:700 clamp(44px,7vw,98px)/.9 var(--f-display);text-transform:uppercase;letter-spacing:-.01em}
+.hero h1 .thin{display:block;font-weight:200;font-size:.4em;letter-spacing:.05em;line-height:1.2;margin-top:.45em}
+.hero p.lead{max-width:44ch;color:#d8d2c8;font-size:17px;margin:24px 0 30px}
 .hero-actions{display:flex;flex-wrap:wrap;gap:12px}
-.hero-facts{display:flex;flex-wrap:wrap;gap:28px 44px;margin-top:52px;padding-top:24px;border-top:1px solid rgba(255,255,255,.16)}
-.hero-facts b{display:block;font:500 34px/1 var(--f-display);font-variant-numeric:tabular-nums}
+.hero-facts{display:flex;flex-wrap:wrap;gap:22px 40px;margin-top:44px;padding-top:22px;border-top:1px solid var(--line)}
+.hero-facts b{display:block;font:500 28px/1 var(--f-display);font-variant-numeric:tabular-nums}
 .hero-facts span{font-size:13px;color:var(--muted)}
+.collage{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;align-items:start;min-width:0}
+.collage .photo{border-radius:14px;aspect-ratio:9/16;max-width:100%;margin:0}
+.collage .photo:nth-child(1){margin-top:56px}
+.collage .photo:nth-child(3){margin-top:28px}
+.collage figcaption{position:absolute;left:10px;bottom:10px;font:italic 400 17px/1 var(--f-serif);color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.6)}
+@media (max-width:900px){
+  .hero{padding-block:32px 56px}
+  .hero .wrap{grid-template-columns:1fr;gap:36px}
+  .collage .photo:nth-child(1){margin-top:24px}
+  .collage .photo:nth-child(3){margin-top:12px}
+}
 
-/* ---------- highlights ---------- */
+/* sections */
 .section{padding-block:88px}
 .sec-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 32px;margin-bottom:36px}
 .sec-head h2{font:700 clamp(34px,5.4vw,64px)/.95 var(--f-display);text-transform:uppercase}
 .sec-head h2 .serif-i{font-size:.8em;color:var(--accent);margin-left:.15em}
 .sec-head p{max-width:42ch;color:var(--muted);margin:0}
-.highlights{display:flex;gap:18px;overflow-x:auto;padding:4px 2px 18px;scrollbar-width:none;margin-bottom:26px}
+
+/* highlights */
+.highlights{display:flex;gap:18px;overflow-x:auto;padding:4px 2px 18px;scrollbar-width:none;margin-bottom:22px}
 .highlights::-webkit-scrollbar{display:none}
 .hl{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:9px;background:none;border:0;cursor:pointer;padding:0;width:84px}
 .hl .ring{width:76px;height:76px;border-radius:50%;padding:3px;background:var(--line);transition:background .25s}
-.hl .ring .scene{position:relative;inset:auto;width:100%;height:100%;border-radius:50%;border:3px solid var(--bg)}
+.hl .ring .photo{width:100%;height:100%;border-radius:50%;border:3px solid var(--bg)}
 .hl span{font-size:12.5px;color:var(--muted);white-space:nowrap}
-.hl[aria-pressed="true"] .ring{background:linear-gradient(135deg,var(--accent),#b98a5a)}
+.hl[aria-pressed="true"] .ring{background:linear-gradient(135deg,var(--accent),#a9784e)}
 .hl[aria-pressed="true"] span{color:var(--fg)}
 
-/* ---------- tour grid ---------- */
+/* grid */
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
-@media (max-width:860px){.grid{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:520px){.grid{grid-template-columns:1fr 1fr;gap:3px}}
-.tile{position:relative;aspect-ratio:3/4;max-width:100%;overflow:hidden;border:0;padding:0;cursor:pointer;text-align:center;background:#111;color:#fff;isolation:isolate}
-.tile .scene{z-index:-2;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
-.tile:hover .scene{transform:scale(1.05)}
-.tile::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(0,0,0,.28),rgba(0,0,0,0) 38%,rgba(0,0,0,0) 55%,rgba(0,0,0,.5))}
-.tile .copy{position:absolute;inset:0;display:flex;flex-direction:column;padding:9% 7%;gap:4px}
+@media (max-width:860px){.grid{grid-template-columns:repeat(2,1fr);gap:3px}}
+.tile{position:relative;aspect-ratio:3/4;max-width:100%;overflow:hidden;border:0;padding:0;cursor:pointer;text-align:center;background:var(--surface-2);color:#fff;display:block;width:100%}
+.tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.tile:hover img{transform:scale(1.05)}
+.tile .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.42) 0%,rgba(0,0,0,0) 40%,rgba(0,0,0,0) 55%,rgba(0,0,0,.55) 100%)}
+.tile .copy{position:absolute;inset:0;display:flex;flex-direction:column;padding:9% 7%;gap:5px}
 .tile .copy.bottom{justify-content:flex-end}
-.tile .copy.top{justify-content:flex-start}
-.t-bold{font:700 clamp(24px,4.4vw,54px)/.92 var(--f-display);text-transform:uppercase;text-shadow:0 2px 24px rgba(0,0,0,.35)}
-.t-thin{font:300 clamp(10px,1.35vw,15px)/1.2 var(--f-display);text-transform:uppercase;letter-spacing:.03em;text-shadow:0 1px 10px rgba(0,0,0,.5)}
-.t-days{font:italic 400 clamp(14px,2vw,24px)/1 var(--f-serif)}
-.t-serif{font:500 clamp(28px,4.6vw,58px)/.95 var(--f-serif);text-shadow:0 2px 24px rgba(0,0,0,.3)}
-.t-yellow{color:#ffd21f;font-size:clamp(22px,3.6vw,44px);line-height:.95;text-align:left;text-shadow:none}
-.tile .pin,.tile .badge{position:absolute;top:10px;right:10px;width:26px;height:26px;display:grid;place-items:center}
-.tile .pin svg{width:20px;height:20px;fill:#fff;filter:drop-shadow(0 1px 4px rgba(0,0,0,.4))}
-.tile .price-tag{position:absolute;left:10px;top:10px;font:500 11px/1 var(--f-body);background:rgba(0,0,0,.42);backdrop-filter:blur(6px);padding:6px 9px;border-radius:999px;letter-spacing:.02em}
+.t-bold{font:700 clamp(24px,4.3vw,54px)/.92 var(--f-display);text-transform:uppercase;text-shadow:0 2px 20px rgba(0,0,0,.35)}
+.t-thin{font:300 clamp(10px,1.3vw,15px)/1.25 var(--f-display);text-transform:uppercase;letter-spacing:.03em;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+.t-days{font:italic 400 clamp(14px,2vw,24px)/1 var(--f-serif);text-shadow:0 1px 8px rgba(0,0,0,.5)}
+.t-serif{font:500 clamp(28px,4.6vw,58px)/.95 var(--f-serif);text-shadow:0 2px 20px rgba(0,0,0,.35)}
+.tile .more{position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:rgba(0,0,0,.35);font-size:15px;line-height:1}
 .tile[hidden]{display:none}
-.grid-empty{padding:48px 0;color:var(--muted);text-align:center}
 
-/* ---------- steps ---------- */
+/* sample route */
+.sample{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+@media (max-width:900px){.sample{grid-template-columns:1fr;gap:32px}}
+.sample-photos{display:grid;grid-template-columns:1.2fr 1fr;gap:10px;min-width:0}
+.sample-photos .photo{border-radius:14px}
+.sample-photos .photo:nth-child(1){grid-row:span 2;aspect-ratio:3/5;max-width:100%}
+.sample-photos .photo:nth-child(2),.sample-photos .photo:nth-child(3){aspect-ratio:4/5;max-width:100%}
+.sample-photos .photo:nth-child(2) img{object-position:50% 20%}
+.doc{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:clamp(22px,3vw,34px);min-width:0}
+.doc-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:18px}
+.doc-head h3{font:500 30px/1.05 var(--f-serif)}
+.doc-head span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.days{list-style:none;margin:0;padding:0;border-left:1px solid var(--line);margin-left:6px}
+.days li{position:relative;padding:0 0 18px 22px}
+.days li:last-child{padding-bottom:0}
+.days li::before{content:"";position:absolute;left:-5px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--accent)}
+.days b{display:block;font:500 14px/1.3 var(--f-display);text-transform:uppercase;letter-spacing:.06em;color:var(--accent)}
+.days span{color:#d8d2c8;font-size:14.5px}
+.doc-foot{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chip{font-size:12.5px;padding:7px 12px;border-radius:999px;background:var(--bg);border:1px solid var(--line)}
+.sample-note{color:var(--muted);font-size:13.5px;margin:14px 2px 0}
+
+/* steps */
 .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 @media (max-width:900px){.steps{grid-template-columns:1fr 1fr}}
 @media (max-width:520px){.steps{grid-template-columns:1fr}}
@@ -122,271 +144,263 @@ h1,h2,h3{text-wrap:balance;margin:0}
 .step .n{font:italic 400 44px/1 var(--f-serif);color:var(--accent)}
 .step h3{font:500 21px/1.15 var(--f-display);text-transform:uppercase;letter-spacing:.02em}
 .step p{margin:0;color:var(--muted);font-size:14.5px}
-.step .time{margin-top:auto;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg);opacity:.7}
 
-/* ---------- services ---------- */
-.services{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:start}
-@media (max-width:860px){.services{grid-template-columns:1fr}}
-.svc-visual{position:relative;aspect-ratio:4/5;max-width:100%;border-radius:var(--r);overflow:hidden;isolation:isolate}
-.svc-visual::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(0,0,0,.25),transparent 45%)}
-.svc-visual .scene{z-index:-2}
-.svc-visual h2{position:absolute;top:7%;left:6%;right:6%;font:700 clamp(30px,4.6vw,54px)/.95 var(--f-display);text-transform:uppercase;color:#fff}
-.svc-visual h2 em{font-family:var(--f-serif);font-weight:500;font-style:italic;text-transform:none;color:var(--accent)}
-.svc-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
-.svc-list li{display:grid;grid-template-columns:1fr auto;gap:4px 16px;padding:20px 0;border-bottom:1px solid var(--line)}
-.svc-list b{font:500 19px/1.2 var(--f-display);text-transform:uppercase;letter-spacing:.03em}
-.svc-list span{grid-column:1/-1;color:var(--muted);font-size:14.5px}
-.svc-list i{font:italic 400 16px/1.2 var(--f-serif);color:var(--accent);white-space:nowrap}
+/* prices */
+.prices{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:stretch}
+@media (max-width:900px){.prices{grid-template-columns:1fr;gap:28px}}
+.price-visual{position:relative;border-radius:var(--r);overflow:hidden;min-height:420px}
+.price-visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.price-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,0) 50%)}
+.price-visual h2{position:absolute;z-index:1;top:7%;left:7%;right:7%;font:700 clamp(32px,4.6vw,56px)/.95 var(--f-display);text-transform:uppercase;color:#fff}
+.price-visual h2 em{display:block;font:italic 500 .62em/1.1 var(--f-serif);text-transform:none;color:var(--accent)}
+.price-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line);min-width:0}
+.price-list li{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:6px 20px;padding:22px 0;border-bottom:1px solid var(--line)}
+.price-list b{font:500 20px/1.2 var(--f-display);text-transform:uppercase;letter-spacing:.03em}
+.price-list .dur{font:italic 400 17px/1 var(--f-serif);color:var(--muted);text-transform:none;letter-spacing:0;margin-left:8px}
+.price-list .p{font:500 24px/1 var(--f-display);font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--accent)}
+.price-list .p.free{font:italic 500 24px/1 var(--f-serif)}
+.price-list .d{grid-column:1/-1;color:var(--muted);font-size:14.5px}
+.tag{display:inline-block;margin-left:10px;vertical-align:3px;font:500 10.5px/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;padding:4px 8px;border-radius:999px;background:var(--accent);color:var(--accent-ink)}
+.incl-head{margin:28px 0 12px}
+.incl{display:flex;flex-wrap:wrap;gap:8px}
 
-/* ---------- schedule ---------- */
-.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r)}
-table{width:100%;border-collapse:collapse;min-width:640px}
-th,td{padding:18px 20px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
-th{font:500 11px/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:var(--surface)}
-tr:last-child td{border-bottom:0}
-td.date{font:500 17px/1.2 var(--f-display);font-variant-numeric:tabular-nums;white-space:nowrap}
-td.tour b{display:block;font:500 22px/1.1 var(--f-serif)}
-td.tour span{font-size:13px;color:var(--muted)}
-td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
-.pill{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;padding:5px 10px;border-radius:999px;background:var(--surface-2);white-space:nowrap}
-.pill::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok)}
-.pill.low::before{background:var(--warn)}
-.pill.full{color:var(--muted)}
-.pill.full::before{background:var(--muted)}
-.link-btn{background:none;border:0;padding:0;cursor:pointer;color:var(--accent);font-size:14px;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+/* band */
+.band{position:relative;min-height:440px;display:flex;align-items:flex-end;overflow:hidden}
+.band img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 60%}
+.band::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--bg) 0%,rgba(11,11,12,.2) 30%,rgba(11,11,12,.25) 60%,var(--bg) 100%)}
+.band .wrap{position:relative;z-index:1;width:100%;padding-block:64px}
+.band q{display:block;max-width:22ch;font:italic 400 clamp(32px,5vw,60px)/1.05 var(--f-serif);quotes:none;color:#fff;text-shadow:0 2px 30px rgba(0,0,0,.5)}
 
-/* ---------- reviews ---------- */
-.reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-@media (max-width:900px){.reviews{grid-template-columns:1fr}}
-.review{background:var(--surface);border-radius:var(--r);padding:28px;display:flex;flex-direction:column;gap:18px;min-width:0}
-.review q{font:italic 400 22px/1.3 var(--f-serif);quotes:"«" "»"}
-.review .who{margin-top:auto;display:flex;align-items:center;gap:12px;font-size:14px}
-.review .who .scene{position:relative;width:40px;height:40px;border-radius:50%;flex:none}
-.review .who small{display:block;color:var(--muted);font-size:12.5px}
-
-/* ---------- planner form ---------- */
+/* planner form */
 .planner{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:start}
 @media (max-width:900px){.planner{grid-template-columns:1fr;gap:32px}}
-.planner-intro h2{font:700 clamp(36px,5.6vw,68px)/.92 var(--f-display);text-transform:uppercase}
-.planner-intro h2 .serif-i{display:block;color:var(--accent);font-size:.62em;margin-top:.2em}
+.planner-intro{min-width:0}
+.planner-intro h2{font:700 clamp(36px,5.6vw,68px)/.92 var(--f-display);text-transform:uppercase;margin-top:14px}
+.planner-intro h2 .serif-i{display:block;color:var(--accent);font-size:.6em;margin-top:.2em}
 .planner-intro p{color:var(--muted);max-width:40ch}
-.contacts{display:flex;flex-direction:column;gap:10px;margin-top:28px;font-size:15px}
-.contacts div{display:flex;gap:12px;align-items:baseline}
-.contacts dt{color:var(--muted);width:90px;flex:none;font-size:13px}
-.contacts dd{margin:0;user-select:all}
+.socials{display:grid;gap:10px;margin-top:28px}
+.social{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 18px;border:1px solid var(--line);border-radius:14px;text-decoration:none;transition:border-color .2s,background .2s}
+.social:hover{border-color:var(--accent);background:var(--surface)}
+.social small{display:block;color:var(--muted);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.social b{font-weight:500}
+.social i{font-style:normal;color:var(--accent)}
 form.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:clamp(22px,3vw,36px);display:grid;gap:22px;min-width:0}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media (max-width:560px){.row2{grid-template-columns:1fr}}
 .field{display:flex;flex-direction:column;gap:8px;min-width:0}
 .field>label,.field>.lbl{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-input[type=text],input[type=tel],select,textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:14px 15px;font-size:15px;transition:border-color .2s}
+input[type=text],select,textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:14px 15px;font-size:15px;transition:border-color .2s}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}
-textarea{min-height:84px;resize:vertical}
+textarea{min-height:90px;resize:vertical}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chips input{position:absolute;opacity:0;pointer-events:none}
 .chips label{padding:9px 14px;border:1px solid var(--line);border-radius:999px;font-size:14px;cursor:pointer;transition:all .2s;user-select:none}
 .chips input:checked+label{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 .chips input:focus-visible+label{outline:2px solid var(--accent);outline-offset:2px}
-.stepper{display:flex;align-items:center;gap:0;border:1px solid var(--line);border-radius:12px;width:max-content;background:var(--bg)}
-.stepper button{width:46px;height:48px;background:none;border:0;cursor:pointer;font-size:20px;color:var(--fg)}
+.stepper{display:flex;align-items:center;border:1px solid var(--line);border-radius:12px;width:max-content;background:var(--bg)}
+.stepper button{width:46px;height:48px;background:none;border:0;cursor:pointer;font-size:20px}
 .stepper output{min-width:44px;text-align:center;font:500 18px/1 var(--f-display);font-variant-numeric:tabular-nums}
-.range-val{font:500 22px/1 var(--f-display);font-variant-numeric:tabular-nums}
-input[type=range]{width:100%;accent-color:var(--accent)}
 .form-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px}
 .form-foot small{color:var(--muted);max-width:34ch}
-.err{color:var(--warn);font-size:13px}
+.err{color:#ffb877;font-size:13px}
 .result{background:var(--surface);border:1px solid var(--accent);border-radius:20px;padding:clamp(22px,3vw,36px);display:grid;gap:18px}
 .result h3{font:500 28px/1.1 var(--f-serif)}
 .result pre{margin:0;white-space:pre-wrap;background:var(--bg);border-radius:12px;padding:18px;font:14px/1.6 var(--f-body);color:#ddd6ca;max-height:340px;overflow:auto}
 .result .acts{display:flex;flex-wrap:wrap;gap:10px}
-.toast{font-size:13px;color:var(--ok)}
+.toast{font-size:13px;color:#8fe3b8}
 
-/* ---------- modal ---------- */
-dialog{border:0;padding:0;background:var(--surface);color:var(--fg);border-radius:22px;width:min(980px,calc(100% - 24px));max-height:calc(100% - 24px);overflow:hidden}
-dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(6px)}
+/* modal */
+dialog{border:0;padding:0;background:var(--surface);color:var(--fg);border-radius:22px;width:min(940px,calc(100% - 24px));max-height:calc(100% - 24px);overflow:hidden}
+dialog::backdrop{background:rgba(0,0,0,.75)}
 .m-grid{display:grid;grid-template-columns:.85fr 1.15fr;max-height:calc(100svh - 24px)}
 @media (max-width:760px){.m-grid{grid-template-columns:1fr;overflow:auto}}
-.m-visual{position:relative;min-height:320px;isolation:isolate}
-.m-visual::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.6))}
-.m-visual .scene{z-index:-2}
-.m-visual .cap{position:absolute;left:24px;right:24px;bottom:22px;color:#fff}
-.m-visual .cap h3{font:500 clamp(40px,6vw,60px)/.95 var(--f-serif)}
-.m-visual .cap div{font:italic 400 22px/1 var(--f-serif);opacity:.9}
+.m-visual{position:relative;min-height:340px}
+.m-visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.m-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(0,0,0,.65))}
+.m-visual .cap{position:absolute;z-index:1;left:24px;right:24px;bottom:22px;color:#fff}
+.m-visual .cap h3{font:500 clamp(40px,6vw,58px)/.95 var(--f-serif)}
+.m-visual .cap div{font:300 13px/1.3 var(--f-display);text-transform:uppercase;letter-spacing:.06em;opacity:.9;margin-top:6px}
 .m-body{padding:30px clamp(20px,3vw,36px) 32px;overflow:auto;display:flex;flex-direction:column;gap:22px;min-width:0}
-.m-close{position:absolute;top:14px;right:14px;z-index:3;width:40px;height:40px;border-radius:50%;border:0;background:rgba(0,0,0,.5);color:#fff;font-size:22px;cursor:pointer;backdrop-filter:blur(6px)}
+.m-close{position:absolute;top:14px;right:14px;z-index:3;width:40px;height:40px;border-radius:50%;border:0;background:rgba(0,0,0,.55);color:#fff;font-size:22px;cursor:pointer}
 .m-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.m-meta div{background:var(--bg);border-radius:12px;padding:14px}
+.m-meta div{background:var(--bg);border-radius:12px;padding:14px;min-width:0}
 .m-meta small{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.m-meta b{font:500 17px/1.2 var(--f-display);font-variant-numeric:tabular-nums}
+.m-meta b{font:500 16px/1.25 var(--f-display)}
 @media (max-width:460px){.m-meta{grid-template-columns:1fr 1fr}}
-.days{list-style:none;margin:0;padding:0;display:grid;gap:0;border-left:1px solid var(--line);margin-left:6px}
-.days li{position:relative;padding:0 0 16px 22px}
-.days li::before{content:"";position:absolute;left:-5px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--accent)}
-.days b{display:block;font:500 14px/1.3 var(--f-display);text-transform:uppercase;letter-spacing:.06em;color:var(--accent)}
-.days span{color:#d6d0c6;font-size:14.5px}
-.incl{display:flex;flex-wrap:wrap;gap:8px}
-.incl span{font-size:13px;padding:7px 12px;border-radius:999px;background:var(--bg);border:1px solid var(--line)}
 .m-h{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
 
-/* ---------- footer ---------- */
-footer{border-top:1px solid var(--line);padding-block:40px 48px;color:var(--muted);font-size:13.5px}
-footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+/* footer */
 .marquee{overflow:hidden;border-block:1px solid var(--line);padding-block:18px;white-space:nowrap}
-.marquee div{display:inline-block;font:200 clamp(28px,4vw,46px)/1 var(--f-display);text-transform:uppercase;letter-spacing:.04em;animation:mq 38s linear infinite}
+.marquee div{display:inline-block;font:200 clamp(28px,4vw,46px)/1 var(--f-display);text-transform:uppercase;letter-spacing:.04em;animation:mq 40s linear infinite}
 .marquee i{font-family:var(--f-serif);font-weight:400;color:var(--accent);margin:0 .5em}
 @keyframes mq{to{transform:translateX(-50%)}}
+footer{border-top:1px solid var(--line);padding-block:40px 48px;color:var(--muted);font-size:13.5px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+footer nav{display:flex;flex-wrap:wrap;gap:18px}
+footer a{text-decoration:none}
+footer a:hover{color:var(--fg)}
 </style>
 </head>
 <body>
 
 <header class="top">
   <div class="wrap">
-    <a class="logo" href="#top">МАРШРУТ <span>тур-планнер</span></a>
+    <a class="logo" href="#top">IN<span>voyage</span></a>
     <nav class="nav" aria-label="Разделы">
-      <a href="#tours">Туры</a>
-      <a href="#how">Как мы работаем</a>
-      <a href="#schedule">Расписание</a>
-      <a href="#reviews">Отзывы</a>
+      <a href="#destinations">Направления</a>
+      <a href="#example">Пример маршрута</a>
+      <a href="#how">Как я работаю</a>
+      <a href="#prices">Цены</a>
     </nav>
-    <a class="btn btn-primary" href="#plan">Подобрать тур</a>
+    <a class="btn btn-primary" href="#plan">Хочу маршрут</a>
   </div>
 </header>
 
 <main id="top">
   <section class="hero">
-    <div class="scene" data-scene="aurora" data-photo="https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=1800&q=70"></div>
     <div class="wrap">
-      <div class="hero-kicker">(путешествия под ключ)</div>
-      <h1>Готовы оказаться на краю земли?
-        <span class="thin">Маршрут, отели, визы и перелёты — за 48 часов</span></h1>
-      <p class="lead">Я лично собираю каждую поездку: от Териберки до Кейптауна. Вы рассказываете, о чём мечтаете, я возвращаюсь с готовым маршрутом, бронями и списком мест, куда не водят туристов.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="#plan">Собрать мой маршрут →</a>
-        <a class="btn btn-ghost" href="#tours">Смотреть туры</a>
+      <div class="hero-text">
+        <div class="hero-kicker">(путешествия под ваш запрос)</div>
+        <h1>Маршрут, в который хочется
+          <span class="thin">Без готовых туров. Только ваша поездка</span></h1>
+        <p class="lead">Вы рассказываете, как хотите отдохнуть, а я собираю маршрут по дням: отели, логистику, рестораны и места, которые сама проверила в поездках.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#plan">Записаться на знакомство →</a>
+          <a class="btn btn-ghost" href="#prices">Смотреть цены</a>
+        </div>
+        <div class="hero-facts">
+          <div><b>15 мин</b><span>знакомство бесплатно</span></div>
+          <div><b>от 5 000 ₽</b><span>мини-маршрут</span></div>
+          <div><b>1 : 1</b><span>маршрут только под вас</span></div>
+        </div>
       </div>
-      <div class="hero-facts">
-        <div><b>35</b><span>стран в портфолио</span></div>
-        <div><b>1 200+</b><span>путешественников</span></div>
-        <div><b>48 ч</b><span>на готовый маршрут</span></div>
-        <div><b>24/7</b><span>связь в поездке</span></div>
+      <div class="collage" aria-label="Фото из моих поездок">
+        <figure class="photo"><img src="img/dubai.jpg" alt="Бассейн на крыше отеля в Дубае с видом на Пальму"><figcaption>Дубай</figcaption></figure>
+        <figure class="photo"><img src="img/monaco.jpg" alt="Вход в казино Монте-Карло" style="object-position:50% 55%"><figcaption>Монако</figcaption></figure>
+        <figure class="photo"><img src="img/paris.jpg" alt="Эйфелева башня на закате"><figcaption>Париж</figcaption></figure>
       </div>
-    </div>
-  </section>
-
-  <section class="section" id="tours">
-    <div class="wrap">
-      <div class="sec-head">
-        <h2>Туры сезона<span class="serif-i">(зима 2026/27)</span></h2>
-        <p>Нажмите на кружок, чтобы отфильтровать направления, а на карточку, чтобы открыть программу по дням.</p>
-      </div>
-      <div class="highlights" id="highlights" role="toolbar" aria-label="Фильтр направлений"></div>
-      <div class="grid" id="grid"></div>
-      <p class="grid-empty" id="gridEmpty" hidden>В этой подборке пока нет туров. Напишите мне, соберу индивидуально.</p>
     </div>
   </section>
 
   <div class="marquee" aria-hidden="true"><div id="mq"></div></div>
 
-  <section class="section" id="how">
+  <section class="section" id="destinations">
     <div class="wrap">
       <div class="sec-head">
-        <h2>Как мы работаем<span class="serif-i">(4 шага)</span></h2>
-        <p>От первого сообщения до возвращения домой вы общаетесь с одним человеком.</p>
+        <h2>Куда поехать<span class="serif-i">(для вдохновения)</span></h2>
+        <p>Это места, где я была сама. Нажмите на фото, чтобы узнать, когда лучше ехать и как может выглядеть поездка. Маршрут можно собрать и в любую другую страну.</p>
+      </div>
+      <div class="highlights" id="highlights" role="toolbar" aria-label="Фильтр направлений"></div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section class="section" id="example" style="padding-top:24px">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Что вы получите<span class="serif-i">(пример)</span></h2>
+        <p>Маршрут приходит готовым документом. Им удобно пользоваться прямо в поездке: всё расписано по дням, со ссылками и адресами.</p>
+      </div>
+      <div class="sample">
+        <div class="sample-photos">
+          <div class="photo"><img src="img/riviera.jpg" alt="Пляж с зонтом в Сен-Тропе" loading="lazy"></div>
+          <div class="photo"><img src="img/dior.jpg" alt="Кафе Dior des Lices в Сен-Тропе" loading="lazy"></div>
+          <div class="photo"><img src="img/dinner.jpg" alt="Ресторан у яхт на Лазурном берегу" loading="lazy"></div>
+        </div>
+        <div style="min-width:0">
+          <article class="doc">
+            <div class="doc-head"><h3>Лазурный берег за 5 дней</h3><span>маршрут · 2 человека</span></div>
+            <ul class="days">
+              <li><b>День 1 · Ницца</b><span>Прилёт, заселение у Английской набережной, закат и ужин в старом городе</span></li>
+              <li><b>День 2 · Монако</b><span>Поезд вдоль моря, Монте-Карло, площадь Казино, обед с видом на гавань</span></li>
+              <li><b>День 3 · Эз и Вильфранш</b><span>Деревня на скале, сады, вечер на маленьком пляже</span></li>
+              <li><b>День 4 · Сен-Тропе</b><span>Трансфер, пляжный клуб на Пампелоне, бутики и ужин у яхт в порту</span></li>
+              <li><b>День 5 · Канны</b><span>Набережная Круазет, завтрак у моря и дорога в аэропорт</span></li>
+            </ul>
+            <div class="doc-foot">
+              <span class="chip">Отели на выбор</span><span class="chip">Перелёты и трансферы</span><span class="chip">Рестораны</span><span class="chip">Бюджет по дням</span><span class="chip">Карта точек</span>
+            </div>
+          </article>
+          <p class="sample-note">Это пример. Ваш маршрут я соберу под ваши даты, темп и бюджет.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="how" style="padding-top:24px">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Как я работаю<span class="serif-i">(4 шага)</span></h2>
+        <p>Вы общаетесь со мной напрямую, без менеджеров и шаблонов.</p>
       </div>
       <div class="steps">
-        <div class="step"><div class="n">i.</div><h3>Знакомство</h3><p>Короткий созвон или анкета: даты, бюджет, с кем едете, что точно не любите.</p><div class="time">15 минут</div></div>
-        <div class="step"><div class="n">ii.</div><h3>Маршрут</h3><p>Присылаю 2–3 варианта с отелями, перелётами и программой по дням. Правим, пока не станет идеально.</p><div class="time">до 48 часов</div></div>
-        <div class="step"><div class="n">iii.</div><h3>Бронирование</h3><p>Покупаю билеты, бронирую отели и экскурсии, помогаю с визой и страховкой. Все документы в одном файле.</p><div class="time">1–3 дня</div></div>
-        <div class="step"><div class="n">iv.</div><h3>В поездке</h3><p>Остаюсь на связи 24/7: задержка рейса, смена планов, столик в ресторане — решаю за вас.</p><div class="time">всё путешествие</div></div>
+        <div class="step"><div class="n">i.</div><h3>Знакомство</h3><p>Бесплатный звонок на 15 минут. Обсуждаем, куда хочется, на сколько дней и с кем вы едете.</p></div>
+        <div class="step"><div class="n">ii.</div><h3>Детали</h3><p>Уточняю бюджет, темп, любимую кухню и то, чего точно не хочется в поездке.</p></div>
+        <div class="step"><div class="n">iii.</div><h3>Маршрут</h3><p>Собираю программу по дням: где жить, как добираться, где есть и что посмотреть.</p></div>
+        <div class="step"><div class="n">iv.</div><h3>Правки</h3><p>Дорабатываем вместе, пока маршрут не станет таким, как вы хотите.</p></div>
       </div>
     </div>
   </section>
 
-  <section class="section" style="padding-top:0">
-    <div class="wrap services">
-      <div class="svc-visual">
-        <div class="scene" data-scene="lagoon" data-photo="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=70"></div>
-        <h2>Полный список услуг <em>под ключ</em></h2>
+  <section class="section" id="prices" style="padding-top:24px">
+    <div class="wrap prices">
+      <div class="price-visual">
+        <img src="img/room.jpg" alt="Номер отеля с панорамным видом на море" loading="lazy">
+        <h2>Стоимость<em>прозрачно и заранее</em></h2>
       </div>
-      <ul class="svc-list">
-        <li><b>Индивидуальный маршрут</b><i>от 15 000 ₽</i><span>Программа по дням, логистика, рестораны и места для фото.</span></li>
-        <li><b>Групповые туры</b><i>по расписанию</i><span>Небольшие группы до 12 человек, с сопровождающим из нашей команды.</span></li>
-        <li><b>Перелёты и отели</b><i>без наценки</i><span>Подбор по цене и удобству, бронирование с бесплатной отменой, где это возможно.</span></li>
-        <li><b>Визы и документы</b><i>от 5 000 ₽</i><span>Шенген, ЮАР, США, Великобритания: заполняем анкеты и записываем на подачу.</span></li>
-        <li><b>События и концерты</b><i>пакетом</i><span>Перелёт, проживание и билет на концерт или Формулу-1 в одной брони.</span></li>
-        <li><b>Медовый месяц и сюрпризы</b><i>индивидуально</i><span>Предложение на закате, ужин на пляже, фотограф и декор.</span></li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="section" id="schedule" style="background:var(--surface)">
-    <div class="wrap">
-      <div class="sec-head">
-        <h2>Расписание<span class="serif-i">(групповые туры)</span></h2>
-        <p>Места в группах ограничены. Бронь фиксируется предоплатой 30%.</p>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Даты</th><th>Тур</th><th>Длительность</th><th>Места</th><th>Цена</th><th></th></tr></thead>
-          <tbody id="sched"></tbody>
-        </table>
+      <div style="min-width:0">
+        <ul class="price-list" id="priceList"></ul>
+        <p class="m-h incl-head">В каждый маршрут входит</p>
+        <div class="incl">
+          <span class="chip">Программа по дням</span><span class="chip">Подбор отелей</span><span class="chip">Логистика</span><span class="chip">Рестораны и кафе</span><span class="chip">Места для фото</span><span class="chip">Ориентир по бюджету</span>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="section" id="reviews">
-    <div class="wrap">
-      <div class="sec-head">
-        <h2>Отзывы<span class="serif-i">(без фильтров)</span></h2>
-      </div>
-      <div class="reviews">
-        <article class="review"><q>Северное сияние увидели в первую же ночь. Гид знал, куда ехать, а в домике ждал горячий глинтвейн. Это лучший подарок самой себе.</q><div class="who"><div class="scene" data-scene="aurora"></div><div>Анастасия<small>Териберка, январь</small></div></div></article>
-        <article class="review"><q>Летели в ЮАР втроём с ребёнком. Каждый день был расписан, но без спешки. Пингвины на Боулдерс-Бич — дочь до сих пор вспоминает.</q><div class="who"><div class="scene" data-scene="ocean"></div><div>Марина и Олег<small>Кейптаун, декабрь</small></div></div></article>
-        <article class="review"><q>Хотели Мальдивы, а получили Маврикий за ту же цену и с виллой у океана. Доверилась полностью и ни разу не пожалела.</q><div class="who"><div class="scene" data-scene="lagoon"></div><div>Екатерина<small>Маврикий, март</small></div></div></article>
-      </div>
-    </div>
+  <section class="band" aria-label="Цитата">
+    <img src="img/marina.jpg" alt="" loading="lazy">
+    <div class="wrap"><q>Путешествие начинается с маршрута, который сделан для вас.</q></div>
   </section>
 
-  <section class="section" id="plan" style="padding-top:24px">
+  <section class="section" id="plan">
     <div class="wrap planner">
       <div class="planner-intro">
         <div class="eyebrow">Заявка</div>
-        <h2 style="margin-top:14px">Соберём ваше путешествие<span class="serif-i">(это займёт 2 минуты)</span></h2>
-        <p>Заполните анкету, и мы сформируем готовое сообщение. Отправьте его в Telegram или WhatsApp, и я отвечу с первыми идеями в течение дня.</p>
-        <dl class="contacts">
-          <div><dt>Telegram</dt><dd>@marshrut_planner</dd></div>
-          <div><dt>WhatsApp</dt><dd>+7 900 000-00-00</dd></div>
-          <div><dt>Instagram</dt><dd>@marshrut.travel</dd></div>
-        </dl>
+        <h2>Расскажите о поездке<span class="serif-i">(это займёт 2 минуты)</span></h2>
+        <p>Заполните анкету, и у меня будет всё нужное для первого разговора. Готовый текст отправьте мне в Telegram.</p>
+        <div class="socials">
+          <a class="social" href="https://t.me/InVoyagee" target="_blank" rel="noopener"><div><small>Написать в Telegram</small><b>@InVoyagee</b></div><i>→</i></a>
+          <a class="social" href="https://t.me/invoyageee" target="_blank" rel="noopener"><div><small>Telegram-канал</small><b>t.me/invoyageee</b></div><i>→</i></a>
+          <a class="social" href="https://www.instagram.com/invoyage.online" target="_blank" rel="noopener"><div><small>Instagram</small><b>@invoyage.online</b></div><i>→</i></a>
+          <a class="social" href="https://www.tiktok.com/@invoyage.online" target="_blank" rel="noopener"><div><small>TikTok</small><b>@invoyage.online</b></div><i>→</i></a>
+        </div>
       </div>
 
-      <div id="planBox">
+      <div id="planBox" style="min-width:0">
         <form class="card" id="planForm" novalidate>
           <div class="row2">
             <div class="field"><label for="f-name">Как вас зовут</label><input type="text" id="f-name" autocomplete="name" placeholder="Анна"></div>
             <div class="field"><label for="f-contact">Telegram или телефон</label><input type="text" id="f-contact" placeholder="@anna или +7…"></div>
           </div>
           <div class="row2">
-            <div class="field"><label for="f-dest">Направление</label><select id="f-dest"></select></div>
+            <div class="field"><label for="f-dest">Куда хочется</label><select id="f-dest"></select></div>
             <div class="field"><label for="f-month">Когда</label>
               <select id="f-month">
-                <option>Декабрь 2026</option><option>Новый год</option><option>Январь 2027</option><option>Февраль 2027</option><option>Март 2027</option><option>Апрель 2027</option><option>Май 2027</option><option>Лето 2027</option><option>Даты гибкие</option>
+                <option>Даты пока гибкие</option><option>Декабрь</option><option>Новый год</option><option>Январь</option><option>Февраль</option><option>Март</option><option>Апрель</option><option>Май</option><option>Лето</option><option>Осень</option>
               </select></div>
           </div>
           <div class="row2">
+            <div class="field"><label for="f-pack">Формат</label><select id="f-pack"></select></div>
             <div class="field"><span class="lbl" id="lbl-people">Сколько путешественников</span>
               <div class="stepper" role="group" aria-labelledby="lbl-people">
                 <button type="button" id="p-minus" aria-label="Меньше">−</button><output id="f-people">2</output><button type="button" id="p-plus" aria-label="Больше">+</button>
               </div></div>
-            <div class="field"><label for="f-budget">Бюджет на человека</label>
-              <div class="range-val" id="budgetVal">250 000 ₽</div>
-              <input type="range" id="f-budget" min="50000" max="1000000" step="25000" value="250000"></div>
           </div>
-          <div class="field"><span class="lbl">Какой отдых хочется</span>
-            <div class="chips" id="styleChips"></div></div>
-          <div class="field"><label for="f-notes">Пожелания</label><textarea id="f-notes" placeholder="Например: годовщина свадьбы, хотим виллу с бассейном и один день на сафари"></textarea></div>
+          <div class="field"><span class="lbl">Какой отдых хочется</span><div class="chips" id="styleChips"></div></div>
+          <div class="field"><label for="f-notes">Пожелания</label><textarea id="f-notes" placeholder="Например: годовщина, хотим море и пару дней в городе, бюджет около 300 000 ₽ на двоих"></textarea></div>
           <div class="form-foot">
-            <small>Нажимая кнопку, вы получите готовый текст заявки. Мы ничего не отправляем автоматически.</small>
+            <small>После нажатия появится готовый текст заявки. Скопируйте его и отправьте мне в Telegram.</small>
             <button class="btn btn-primary" type="submit">Сформировать заявку →</button>
           </div>
           <div class="err" id="formErr" hidden></div>
@@ -398,293 +412,153 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
 
 <footer>
   <div class="wrap">
-    <span>© 2026 Маршрут · авторские путешествия</span>
-    <span>Цены указаны ориентировочно и зависят от дат и курса.</span>
+    <span>© 2026 InVoyage · авторские маршруты</span>
+    <nav aria-label="Соцсети">
+      <a href="https://t.me/invoyageee" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://www.instagram.com/invoyage.online" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@invoyage.online" target="_blank" rel="noopener">TikTok</a>
+    </nav>
   </div>
 </footer>
 
-<dialog id="tourModal" aria-labelledby="mTitle">
+<dialog id="destModal" aria-labelledby="mTitle">
   <button class="m-close" id="mClose" aria-label="Закрыть">×</button>
-  <div class="m-grid">
-    <div class="m-visual" id="mVisual"></div>
-    <div class="m-body" id="mBody"></div>
-  </div>
+  <div class="m-grid"><div class="m-visual" id="mVisual"></div><div class="m-body" id="mBody"></div></div>
 </dialog>
 
 <script>
-/* ================== ДАННЫЕ — правьте здесь ==================
-   photo: ссылка на ваше фото (если не загрузится — останется иллюстрация scene) */
-const TOURS = [
-  {id:"capetown", tags:["sea","ny","group","exotic"], scene:"ocean", pinned:true,
-   look:"serif", title:"Кейптаун", days:"9 дней", sub:"Пингвины, киты, сафари, океан — и всё это одно путешествие",
-   dates:"29 дек – 6 янв", price:"от 389 000 ₽", seats:"осталось 3",
-   program:[["День 1–2","Прилёт, Столовая гора на рассвете, ужин на набережной V&A"],["День 3","Мыс Доброй Надежды и пингвины на Боулдерс-Бич"],["День 4","Винные долины Стелленбош и Франшхук"],["День 5–6","Сафари в частном резервате, большая пятёрка"],["День 7","Наблюдение за китами в Германусе"],["День 8–9","Новогодняя ночь на крыше и вылет домой"]],
-   incl:["Перелёт","Отели 4–5★","Сафари-лодж","Трансферы","Гид","Новогодний ужин"]},
-  {id:"teriberka", tags:["russia","group","winter"], scene:"aurora", pinned:true, photo:"https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=900&q=70",
-   look:"serif", title:"Териберка", days:"4 дня", sub:"Готова оказаться на краю Земли?",
-   dates:"15–18 янв", price:"от 89 000 ₽", seats:"осталось 5",
-   program:[["День 1","Мурманск, трансфер в Териберку, глэмпинг с панорамными окнами"],["День 2","Баренцево море, кладбище кораблей, охота за сиянием"],["День 3","Снегоходы к водопаду, ужин из краба"],["День 4","Завтрак у океана и вылет"]],
-   incl:["Глэмпинг","Трансферы","Охота за сиянием","Снегоходы","Фотограф"]},
-  {id:"mauritius", tags:["sea","exotic"], scene:"lagoon", photo:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&q=70",
-   look:"serif", title:"Маврикий", days:"7 дней", sub:"Там, где твои мечты встречаются с океаном",
-   dates:"любые даты", price:"от 245 000 ₽", seats:"индивидуально",
-   program:[["День 1","Прилёт, вилла на восточном побережье"],["День 2","Катамаран к Иль-о-Серф"],["День 3","Плавание с дельфинами, Ле-Морн"],["День 4","Семицветные земли и водопад Шамарель"],["День 5–7","Спа, пляж и свободные дни"]],
-   incl:["Перелёт","Вилла","Завтраки","Катамаран","Трансферы"]},
-  {id:"thailand", tags:["sea","exotic"], scene:"tropic",
-   look:"bold", title:"Таиланд", sub:"Какое побережье выбрать и где остановиться?", pos:"bottom",
-   dates:"ноябрь – апрель", price:"от 120 000 ₽", seats:"индивидуально",
-   program:[["Пхукет","Для первого раза: пляжи, виллы, удобная логистика"],["Краби","Скалы Рейли, острова Пхи-Пхи, каякинг"],["Самуи","Тишина, бутик-отели, ретриты"],["Бангкок","2 дня на храмы, рынки и гастрономию"]],
-   incl:["Подбор побережья","Отели","Перелёты","Морские прогулки"]},
-  {id:"uzbek", tags:["group","spring"], scene:"mosaic",
-   look:"yellow", title:"Встретим 8 марта в Узбекистане?", pos:"top",
-   dates:"6–10 мар", price:"от 79 000 ₽", seats:"мест нет",
-   program:[["День 1","Ташкент: плов-центр, метро-музей"],["День 2","Скоростной поезд в Самарканд, Регистан вечером"],["День 3","Шахи-Зинда, мастерская сюзане, ужин в доме у местной семьи"],["День 4","Бухара: старый город и хаммам"],["День 5","Вылет"]],
-   incl:["Отели","Поезд Afrosiyob","Гид","Дегустации","Праздничный ужин"]},
-  {id:"uae", tags:["sea","ny"], scene:"city", photo:"https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=900&q=70",
-   look:"bold", title:"ОАЭ", sub:"Наши лучшие предложения сезона", pos:"center",
-   dates:"ноябрь – март", price:"от 95 000 ₽", seats:"индивидуально",
-   program:[["Дубай","Отели на Палме, бранчи, пустынное сафари"],["Абу-Даби","Лувр, мечеть шейха Зайда, Ferrari World"],["Рас-эль-Хайма","Тишина, горы Джебель-Джайс, пляжи"]],
-   incl:["Отели","Перелёт","Трансферы","Сафари"]},
-  {id:"jordan", tags:["exotic","spring"], scene:"desert", photo:"https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=900&q=70",
-   look:"bold", title:"Пейзажи «Дюны»", sub:"Иордания с прямым перелётом: Вади-Рам, Петра и Мёртвое море", pos:"top",
-   dates:"14–20 мар", price:"от 165 000 ₽", seats:"осталось 6",
-   program:[["День 1","Амман, ужин на крыше"],["День 2–3","Петра днём и ночью при свечах"],["День 4","Вади-Рам: джипы, марсианский лагерь, звёзды"],["День 5–6","Мёртвое море и спа"],["День 7","Вылет"]],
-   incl:["Прямой перелёт","Лагерь в пустыне","Отели","Гид","Входные билеты"]},
-  {id:"elbrus", tags:["russia","winter","group"], scene:"snow", photo:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=70",
-   look:"serif", title:"Приэльбрусье", days:"5 дней", sub:"Открываем горнолыжный сезон вместе",
-   dates:"10–14 дек", price:"от 72 000 ₽", seats:"осталось 2",
-   program:[["День 1","Минводы, трансфер в Терскол"],["День 2–4","Катание на Эльбрусе и Чегете, инструктор по запросу"],["День 3","Вечер в чане с видом на горы"],["День 5","Вылет"]],
-   incl:["Отель","Ски-пассы","Трансферы","Чаны","Фотосессия"]},
-  {id:"srilanka", tags:["sea","exotic","ny"], scene:"jungle",
-   look:"bold", title:"Шри-Ланка", sub:"10 самых эстетичных отелей острова", pos:"bottom",
-   dates:"декабрь – март", price:"от 140 000 ₽", seats:"индивидуально",
-   program:[["Юг","Мирисса и Велигама: киты, сёрфинг, виллы у океана"],["Чайные горы","Элла и Нувара-Элия, поезд через плантации"],["Культурный треугольник","Сигирия, Дамбулла, сафари в Минерии"]],
-   incl:["Подбор отелей","Водитель","Перелёт","Поезд в горы"]}
+/* ===== Направления (фото лежат в папке img/) ===== */
+const DEST = [
+  {id:"riviera", tags:["sea","lux","europe"], img:"riviera", look:"serif", title:"Лазурный берег", days:"5–7 дней", sub:"Ницца, Монако, Сен-Тропе",
+   season:"май – сентябрь", length:"5–7 дней", forwho:"пары, подруги",
+   route:[["Ницца","Английская набережная, старый город, рынок цветов"],["Монако","Монте-Карло, порт с яхтами, Княжеский дворец"],["Сен-Тропе","пляжные клубы, бутики, ужин в порту"]]},
+  {id:"dubai", tags:["sea","lux","winter"], img:"dubai", look:"bold", title:"Дубай", sub:"Отели, бассейны на крышах и ночной город",
+   season:"октябрь – апрель", length:"5–8 дней", forwho:"всем",
+   route:[["Даунтаун","Бурдж-Халифа, фонтаны, Dubai Mall"],["Пальма","пляжные отели, бассейн на крыше, закат"],["Марина","прогулка на яхте вечером"]]},
+  {id:"paris", tags:["city","europe"], img:"paris", look:"serif", title:"Париж", days:"4–5 дней", sub:"Классика, которую можно прожить по-своему",
+   season:"апрель – октябрь, декабрь", length:"4–5 дней", forwho:"пары, первый раз в Европе",
+   route:[["Сен-Жермен","кафе, галереи, книжные"],["Марэ","бутики, винтажные магазины, ужин"],["Трокадеро","пикник у Эйфелевой башни на закате"]]},
+  {id:"thailand", tags:["sea","winter"], img:"thailand", look:"bold", title:"Таиланд", sub:"Какое побережье выбрать и где остановиться",
+   season:"ноябрь – апрель", length:"10–14 дней", forwho:"пары, семьи",
+   route:[["Пхукет","удобная база, пляжи и виллы"],["Краби","скалы, острова Хонг и Пхи-Пхи, каяки"],["Бангкок","2 дня на храмы, рынки и еду"]]},
+  {id:"ibiza", tags:["sea","europe"], img:"ibiza", look:"serif", title:"Ибица", days:"5–7 дней", sub:"Белый город, бухты и закаты",
+   season:"май – октябрь", length:"5–7 дней", forwho:"подруги, пары",
+   route:[["Дальт-Вила","старый город на холме, вид на порт"],["Бухты","Кала-Комте, лодка на Форментеру"],["Хиппи-маркет","рынок Лас-Далиас и закат в Сан-Антонио"]]},
+  {id:"spain", tags:["city","europe"], img:"madrid", look:"bold", title:"Испания", sub:"Мадрид и Валенсия: города, гастрономия, море",
+   season:"март – июнь, сентябрь – ноябрь", length:"6–8 дней", forwho:"всем",
+   route:[["Мадрид","Гран-Виа, Прадо, ужин на террасе"],["Валенсия","старый город, паэлья, порт и пляж"],["Связка","скоростной поезд между городами"]]},
+  {id:"asia", tags:["city","winter"], img:"singapore", look:"bold", title:"Сингапур + Малайзия", sub:"Две страны за одну поездку",
+   season:"круглый год", length:"6–9 дней", forwho:"пары, любители городов",
+   route:[["Сингапур","Марина-Бэй, Сады у залива, Чайна-таун"],["Куала-Лумпур","башни Петронас, Бату-пещеры, стрит-фуд"],["Бонус","несколько дней на море в конце поездки"]]},
+  {id:"germany", tags:["city","europe"], img:"germany", look:"serif", title:"Германия", days:"5–7 дней", sub:"Кёльн, Нюрнберг и рождественские ярмарки",
+   season:"май – сентябрь, декабрь", length:"5–7 дней", forwho:"семьи, любители истории",
+   route:[["Кёльн","собор днём и ночью, набережная Рейна"],["Нюрнберг","фахверковые улицы, крепость, ярмарка"],["Связка","поезда между городами"]]},
+  {id:"turkey", tags:["sea"], img:"turkey", look:"bold", title:"Турция", sub:"Не только «всё включено»: бухты и красивые отели",
+   season:"май – октябрь", length:"7–10 дней", forwho:"семьи, подруги",
+   route:[["Побережье","отели с хорошей кухней и пляжем"],["Бухты","морские прогулки, скалы, чистая вода"],["Вечера","прогулки, шопинг, местные рестораны"]]}
 ];
 const FILTERS = [
-  {id:"all",label:"Все",scene:"aurora"},
-  {id:"russia",label:"Россия",scene:"snow"},
-  {id:"sea",label:"Море",scene:"lagoon"},
-  {id:"exotic",label:"Экзотика",scene:"desert"},
-  {id:"ny",label:"Новый год",scene:"night"},
-  {id:"group",label:"Группы",scene:"ocean"},
-  {id:"winter",label:"Зима",scene:"aurora"},
-  {id:"spring",label:"Весна",scene:"mosaic"}
+  {id:"all",label:"Все",img:"monaco"},
+  {id:"sea",label:"Море",img:"riviera"},
+  {id:"city",label:"Города",img:"paris"},
+  {id:"lux",label:"Люкс",img:"dubai"},
+  {id:"europe",label:"Европа",img:"ibiza"},
+  {id:"winter",label:"Тепло зимой",img:"thailand"}
 ];
-const SCHEDULE = [
-  {date:"10–14 дек",tour:"elbrus",dur:"5 дней",seats:2,price:"72 000 ₽"},
-  {date:"29 дек – 6 янв",tour:"capetown",dur:"9 дней",seats:3,price:"389 000 ₽"},
-  {date:"15–18 янв",tour:"teriberka",dur:"4 дня",seats:5,price:"89 000 ₽"},
-  {date:"6–10 мар",tour:"uzbek",dur:"5 дней",seats:0,price:"79 000 ₽"},
-  {date:"14–20 мар",tour:"jordan",dur:"7 дней",seats:6,price:"165 000 ₽"}
+const PRICES = [
+  {name:"Знакомство", dur:"15 минут", price:"бесплатно", free:true, desc:"Короткий звонок, чтобы понять задачу и подобрать формат."},
+  {name:"Консультация", dur:"60 минут", price:"2 500 ₽", desc:"Разбираем вашу поездку и вопросы. Стоимость засчитывается, если потом закажете «Маршрут»."},
+  {name:"Мини-маршрут", price:"5 000 ₽", desc:"Выходные или 3–4 дня в одном городе."},
+  {name:"Маршрут", price:"12 000 ₽", featured:true, desc:"Путешествие на 1–2 недели по одной стране."},
+  {name:"Сложный маршрут", price:"от 30 000 ₽", desc:"Несколько стран, поездка на событие или большая семья."}
 ];
-const STYLES = ["Пляж","Природа","Города","Гастрономия","Активный","Романтика","С детьми","Роскошь"];
+const STYLES = ["Пляж","Города","Гастрономия","Шопинг","Природа","Романтика","С детьми","Люкс"];
 
-/* ================== ИЛЛЮСТРАЦИИ ================== */
-let uid = 0;
-function sceneSVG(type){
-  const u = "g"+(uid++);
-  const S = (stops)=>stops.map(([o,c])=>`<stop offset="${o}" stop-color="${c}"/>`).join("");
-  const lg = (id,stops,v=true)=>`<linearGradient id="${u+id}" x1="0" y1="0" x2="${v?0:1}" y2="${v?1:0}">${S(stops)}</linearGradient>`;
-  const blur = `<filter id="${u}b" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="14"/></filter>`;
-  const pines = (y,n,col,s=1)=>{let o="";for(let i=0;i<n;i++){const x=(i*317%300)+((i*53)%20);const h=(28+(i*37%30))*s;o+=`<path d="M${x} ${y-h} L${x-h*.28} ${y} L${x+h*.28} ${y}Z" fill="${col}"/>`;}return o;};
-  const sc = {
-    aurora:`<defs>${lg("s",[[0,"#03080f"],[.55,"#0b2a33"],[1,"#12303a"]])}${blur}</defs>
-      <rect width="300" height="400" fill="url(#${u}s)"/>
-      <g filter="url(#${u}b)" opacity=".85"><path d="M-20 150 C60 60 140 190 320 70 L320 120 C170 230 80 110 -20 210Z" fill="#35f2a4"/><path d="M40 60 C120 20 200 120 320 30 L320 60 C200 150 130 60 40 100Z" fill="#2bd1c4" opacity=".6"/><ellipse cx="230" cy="90" rx="60" ry="20" fill="#b46bff" opacity=".35"/></g>
-      ${[...Array(40)].map((_,i)=>`<circle cx="${i*73%300}" cy="${i*41%160}" r="${i%3?.6:1}" fill="#fff" opacity=".7"/>`).join("")}
-      <path d="M0 300 Q80 270 160 292 T300 280 V400 H0Z" fill="#dfe9ee"/>${pines(305,9,"#071318")}<path d="M0 340 Q120 320 300 345 V400 H0Z" fill="#eef4f6"/>`,
-    ocean:`<defs>${lg("s",[[0,"#9fd0e4"],[1,"#e8f3ef"]])}${lg("w",[[0,"#2bb6c4"],[1,"#0b5a72"]])}</defs>
-      <rect width="300" height="400" fill="url(#${u}s)"/>
-      <path d="M0 200 L40 200 L60 150 L190 146 L215 200 L300 200Z" fill="#6f8794" opacity=".75"/>
-      <rect y="198" width="300" height="202" fill="url(#${u}w)"/>
-      <path d="M0 300 Q100 280 300 310 V400 H0Z" fill="#f1ebe0"/>
-      <ellipse cx="40" cy="300" rx="70" ry="38" fill="#8d8a84"/><ellipse cx="260" cy="290" rx="50" ry="30" fill="#a3a09a"/>
-      ${[[120,330],[140,345],[165,335],[185,352],[205,338]].map(([x,y])=>`<g transform="translate(${x} ${y})"><ellipse rx="6" ry="13" fill="#1d1d1f"/><ellipse cx="1" cy="2" rx="3.5" ry="9" fill="#fff"/><circle cy="-11" r="4" fill="#1d1d1f"/></g>`).join("")}`,
-    lagoon:`<defs>${lg("s",[[0,"#cfe6ee"],[1,"#f6f2e8"]])}${lg("w",[[0,"#47e0d1"],[.6,"#17a2b5"],[1,"#0a6c86"]])}</defs>
-      <rect width="300" height="400" fill="url(#${u}s)"/>
-      <path d="M150 190 L205 70 L225 98 L240 80 L300 170 L300 195 L150 195Z" fill="#2f5a3f"/>
-      <path d="M0 190 L300 190 L300 400 L0 400Z" fill="url(#${u}w)"/>
-      <path d="M0 186 Q150 176 300 192 L300 200 L0 200Z" fill="#f4ecd8"/>
-      <g opacity=".25" stroke="#fff" stroke-width="1.2" fill="none">${[...Array(10)].map((_,i)=>`<path d="M${-20+i*30} ${230+i*15} q20 -6 40 0 t40 0"/>`).join("")}</g>
-      <g transform="translate(140 300) rotate(-20)"><ellipse rx="22" ry="6" fill="#c98e6b"/><circle cx="-24" r="5" fill="#5b3a26"/></g>`,
-    tropic:`<defs>${lg("s",[[0,"#9fc5c9"],[1,"#d9ebe4"]])}${lg("w",[[0,"#4fd6c8"],[1,"#127d88"]])}</defs>
-      <rect width="300" height="400" fill="url(#${u}s)"/>
-      <path d="M0 120 Q30 80 70 110 Q110 70 150 115 L150 170 L0 170Z" fill="#3e6b52" opacity=".7"/>
-      <rect y="160" width="300" height="240" fill="url(#${u}w)"/>
-      <path d="M170 380 C150 300 160 220 200 170 C230 140 260 160 262 210 C270 280 250 340 270 380Z" fill="#26452f"/>
-      <path d="M190 200 C210 180 240 185 250 210" stroke="#7fa06b" stroke-width="8" fill="none" opacity=".6"/>
-      <path d="M20 260 C10 220 30 190 55 195 C80 200 85 240 75 270Z" fill="#2c4f37"/>
-      <path d="M0 360 Q80 340 140 370 L140 400 L0 400Z" fill="#efe6cf"/>`,
-    mosaic:`<defs>${lg("s",[[0,"#152b6e"],[1,"#0a1440"]])}${lg("a",[[0,"#e7b86a"],[1,"#7d4a1e"]])}</defs>
-      <rect width="300" height="400" fill="#3a2414"/>
-      <path d="M45 400 L45 170 Q45 70 150 60 Q255 70 255 170 L255 400Z" fill="url(#${u}s)"/>
-      <g fill="none" stroke="#3fa2d8" stroke-width="1.2" opacity=".55">${[...Array(9)].map((_,i)=>`<path d="M${60+i*22} 110 l11 11 l-11 11 l-11 -11z M${60+i*22} 260 l11 11 l-11 11 l-11 -11z"/>`).join("")}</g>
-      <path d="M95 400 L95 230 Q95 170 150 165 Q205 170 205 230 L205 400Z" fill="url(#${u}a)" opacity=".9"/>
-      <rect y="350" width="300" height="50" fill="#5a3a1f"/>`,
-    city:`<defs>${lg("s",[[0,"#cbb79c"],[.6,"#e2d3bc"],[1,"#b9a58a"]])}</defs>
-      <rect width="300" height="400" fill="url(#${u}s)"/>
-      <circle cx="210" cy="120" r="26" fill="#f2e2c6" opacity=".8"/>
-      <g fill="#a89276" opacity=".75">${[[20,150,18],[44,120,14],[64,170,20],[90,80,10],[104,130,16],[126,60,8],[140,110,18],[164,150,14],[184,95,12],[200,140,20],[226,175,16],[246,125,14],[266,160,18]].map(([x,h,w])=>`<rect x="${x}" y="${260-h}" width="${w}" height="${h}"/>`).join("")}<path d="M128 60 L130 20 L132 60Z"/></g>
-      <rect y="258" width="300" height="142" fill="#c4b29a"/><path d="M0 330 Q150 320 300 335 V400 H0Z" fill="#d8c9b2"/>`,
-    desert:`<defs>${lg("s",[[0,"#e98fb3"],[.5,"#f6a98a"],[1,"#fcd59a"]])}${lg("d",[[0,"#d0834f"],[1,"#8b4a2b"]])}</defs>
-      <rect width="300" height="400" fill="url(#${u}s)"/>
-      <circle cx="150" cy="210" r="34" fill="#ffe6b5" opacity=".85"/>
-      <path d="M0 220 L40 180 L70 200 L100 160 L130 220Z M190 220 L230 150 L260 190 L300 170 L300 220Z" fill="#9a5940" opacity=".7"/>
-      <path d="M0 240 Q90 205 180 245 T300 235 V400 H0Z" fill="url(#${u}d)"/>
-      <path d="M0 300 Q120 260 300 310 V400 H0Z" fill="#e3a06d"/>
-      <g fill="#3b2316" transform="translate(110 300)"><ellipse rx="26" ry="10"/><circle cx="24" cy="-14" r="6"/><path d="M20 -10 L30 -18" stroke="#3b2316" stroke-width="5"/></g>`,
-    snow:`<defs>${lg("s",[[0,"#9fc3dd"],[1,"#e6eff5"]])}</defs>
-      <rect width="300" height="400" fill="url(#${u}s)"/>
-      <path d="M0 230 L70 120 L105 165 L160 70 L215 150 L250 110 L300 180 L300 260 L0 260Z" fill="#f5f9fc"/>
-      <path d="M160 70 L175 150 L150 230 L215 150Z M70 120 L80 190 L105 165Z" fill="#b8cfe0"/>
-      <path d="M0 260 Q150 230 300 265 V400 H0Z" fill="#fff"/>${pines(300,7,"#2d4552",1.1)}<path d="M0 330 Q150 310 300 340 V400 H0Z" fill="#f2f6f9"/>`,
-    jungle:`<defs>${lg("s",[[0,"#2a8f8a"],[.5,"#5fd3c4"],[1,"#d7f1e7"]])}</defs>
-      <rect width="300" height="400" fill="url(#${u}s)"/>
-      <g fill="#fff" opacity=".5">${[...Array(6)].map((_,i)=>`<path d="M0 ${40+i*30} q75 -12 150 0 t150 0 v4 q-75 -10 -150 2 t-150 -2z"/>`).join("")}</g>
-      <path d="M0 250 Q60 200 120 230 Q170 190 220 225 Q260 200 300 220 V400 H0Z" fill="#1e5a38"/>
-      ${[[40,240],[100,215],[170,230],[240,210],[280,240]].map(([x,y])=>`<g transform="translate(${x} ${y})" fill="#123b24"><path d="M0 0 L2 -60 L4 0Z"/><path d="M3 -60 q-30 -2 -40 14 q24 -10 40 -14z M3 -60 q30 -2 40 14 q-24 -10 -40 -14z M3 -60 q-14 -20 -36 -16 q22 4 36 16z M3 -60 q14 -20 36 -16 q-22 4 -36 16z"/></g>`).join("")}
-      <path d="M0 320 Q150 290 300 330 V400 H0Z" fill="#0f3a22"/>`,
-    night:`<defs>${lg("s",[[0,"#1a0626"],[1,"#4a0f3d"]])}${blur}</defs>
-      <rect width="300" height="400" fill="url(#${u}s)"/>
-      <g filter="url(#${u}b)">${[[80,120,"#ff4fb5"],[200,90,"#ffb347"],[160,220,"#c34bff"]].map(([x,y,c])=>`<circle cx="${x}" cy="${y}" r="40" fill="${c}" opacity=".55"/>`).join("")}</g>
-      ${[[80,120],[200,90],[160,220]].map(([x,y])=>[...Array(18)].map((_,i)=>{const a=i/18*Math.PI*2;return`<line x1="${x}" y1="${y}" x2="${x+Math.cos(a)*48}" y2="${y+Math.sin(a)*48}" stroke="#ffd1ef" stroke-width="1.2" opacity=".8"/>`}).join("")).join("")}`
-  };
-  return `<svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${sc[type]||sc.aurora}</svg>`;
-}
-function fillScene(el, type, photo){
-  el.innerHTML = sceneSVG(type);
-  if(photo){
-    const img = new Image();
-    img.alt = ""; img.loading = "lazy"; img.decoding = "async";
-    img.onerror = ()=>img.remove();
-    img.src = photo;
-    el.appendChild(img);
-  }
-}
-document.querySelectorAll(".scene[data-scene]").forEach(el=>fillScene(el, el.dataset.scene, el.dataset.photo));
-
-/* ================== СЕТКА ТУРОВ ================== */
 const $ = s=>document.querySelector(s);
 const esc = s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const pinIcon = `<svg viewBox="0 0 24 24"><path d="M14.5 2.5l7 7-2.1.7-3.7 3.7.4 4.3-1.6 1.6-4.2-4.2-5.6 5.6-1.1-1.1 5.6-5.6-4.2-4.2 1.6-1.6 4.3.4 3.7-3.7z"/></svg>`;
+const src = n=>`img/${n}.jpg`;
 
-function tileCopy(t){
-  if(t.look==="serif") return `<div class="copy top"><div class="t-days">(${esc(t.days)})</div><div class="t-serif">${esc(t.title)}</div><div class="t-thin">${esc(t.sub)}</div></div>`;
-  if(t.look==="yellow") return `<div class="copy top"><div class="t-bold t-yellow">${esc(t.title)}</div></div>`;
-  const pos = t.pos==="top"?"top":t.pos==="center"?"bottom":"bottom";
-  const style = t.pos==="center"?' style="justify-content:center"':"";
-  return `<div class="copy ${pos}"${style}><div class="t-bold">${esc(t.title)}</div><div class="t-thin">${esc(t.sub)}</div></div>`;
+function tileCopy(d){
+  if(d.look==="serif") return `<div class="copy"><div class="t-days">(${esc(d.days)})</div><div class="t-serif">${esc(d.title)}</div><div class="t-thin">${esc(d.sub)}</div></div>`;
+  return `<div class="copy bottom"><div class="t-bold">${esc(d.title)}</div><div class="t-thin">${esc(d.sub)}</div></div>`;
 }
 function renderGrid(filter){
-  const grid = $("#grid"); grid.innerHTML = "";
-  let shown = 0;
-  TOURS.forEach(t=>{
-    const b = document.createElement("button");
-    b.className = "tile"; b.type = "button";
-    b.setAttribute("aria-label", `${t.title}: ${t.sub||""}. Открыть программу`);
-    b.innerHTML = `<div class="scene"></div>${tileCopy(t)}${t.pinned?`<span class="pin">${pinIcon}</span>`:""}<span class="price-tag">${esc(t.price)}</span>`;
-    fillScene(b.querySelector(".scene"), t.scene, t.photo);
-    b.hidden = !(filter==="all" || t.tags.includes(filter));
-    if(!b.hidden) shown++;
-    b.addEventListener("click", ()=>openTour(t.id));
+  const grid=$("#grid"); grid.innerHTML="";
+  DEST.forEach(d=>{
+    const b=document.createElement("button");
+    b.type="button"; b.className="tile";
+    b.setAttribute("aria-label",`${d.title}. Подробнее`);
+    b.innerHTML=`<img src="${src(d.img)}" alt="" loading="lazy"><div class="shade"></div>${tileCopy(d)}<span class="more" aria-hidden="true">+</span>`;
+    b.hidden=!(filter==="all"||d.tags.includes(filter));
+    b.addEventListener("click",()=>openDest(d.id));
     grid.appendChild(b);
   });
-  $("#gridEmpty").hidden = shown>0;
 }
 function renderHighlights(){
-  const box = $("#highlights");
+  const box=$("#highlights");
   FILTERS.forEach((f,i)=>{
-    const b = document.createElement("button");
-    b.className = "hl"; b.type = "button";
-    b.setAttribute("aria-pressed", i===0?"true":"false");
-    b.innerHTML = `<div class="ring"><div class="scene"></div></div><span>${esc(f.label)}</span>`;
-    fillScene(b.querySelector(".scene"), f.scene);
-    b.addEventListener("click", ()=>{
-      box.querySelectorAll(".hl").forEach(x=>x.setAttribute("aria-pressed","false"));
-      b.setAttribute("aria-pressed","true");
-      renderGrid(f.id);
-    });
+    const b=document.createElement("button");
+    b.type="button"; b.className="hl"; b.setAttribute("aria-pressed",i===0?"true":"false");
+    b.innerHTML=`<div class="ring"><div class="photo"><img src="${src(f.img)}" alt=""></div></div><span>${esc(f.label)}</span>`;
+    b.addEventListener("click",()=>{box.querySelectorAll(".hl").forEach(x=>x.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");renderGrid(f.id);});
     box.appendChild(b);
   });
 }
-
-/* ================== МОДАЛКА ================== */
-const modal = $("#tourModal");
-function openTour(id){
-  const t = TOURS.find(x=>x.id===id);
-  $("#mVisual").innerHTML = `<div class="scene"></div><div class="cap">${t.days?`<div>(${esc(t.days)})</div>`:""}<h3 id="mTitle">${esc(t.look==="yellow"?"Узбекистан":t.title)}</h3></div>`;
-  fillScene($("#mVisual .scene"), t.scene, t.photo);
-  $("#mBody").innerHTML = `
-    <p style="margin:0;font:italic 400 22px/1.3 var(--f-serif)">${esc(t.sub||"Самарканд, Бухара и Ташкент за пять дней")}</p>
-    <div class="m-meta"><div><small>Даты</small><b>${esc(t.dates)}</b></div><div><small>Стоимость</small><b>${esc(t.price)}</b></div><div><small>Места</small><b>${esc(t.seats)}</b></div></div>
-    <div><p class="m-h">Программа</p><ul class="days">${t.program.map(([d,s])=>`<li><b>${esc(d)}</b><span>${esc(s)}</span></li>`).join("")}</ul></div>
-    <div><p class="m-h">Включено</p><div class="incl">${t.incl.map(x=>`<span>${esc(x)}</span>`).join("")}</div></div>
-    <div><button class="btn btn-primary" type="button" id="mBook">Хочу в этот тур →</button></div>`;
-  $("#mBook").addEventListener("click", ()=>{ modal.close(); $("#f-dest").value = t.id; $("#plan").scrollIntoView(); setTimeout(()=>$("#f-name").focus({preventScroll:true}),400); });
+const modal=$("#destModal");
+function openDest(id){
+  const d=DEST.find(x=>x.id===id);
+  $("#mVisual").innerHTML=`<img src="${src(d.img)}" alt=""><div class="cap"><h3 id="mTitle">${esc(d.title)}</h3><div>${esc(d.sub)}</div></div>`;
+  $("#mBody").innerHTML=`
+    <div class="m-meta"><div><small>Сезон</small><b>${esc(d.season)}</b></div><div><small>Сколько дней</small><b>${esc(d.length)}</b></div><div><small>Подойдёт</small><b>${esc(d.forwho)}</b></div></div>
+    <div><p class="m-h">Как может выглядеть поездка</p><ul class="days">${d.route.map(([a,b])=>`<li><b>${esc(a)}</b><span>${esc(b)}</span></li>`).join("")}</ul></div>
+    <p style="margin:0;color:var(--muted)">Это идея для старта. Точный маршрут соберу под ваши даты и бюджет.</p>
+    <div><button class="btn btn-primary" type="button" id="mGo">Хочу сюда →</button></div>`;
+  $("#mGo").addEventListener("click",()=>{modal.close();$("#f-dest").value=d.id;$("#plan").scrollIntoView();setTimeout(()=>$("#f-name").focus({preventScroll:true}),400);});
   if(typeof modal.showModal==="function") modal.showModal(); else modal.setAttribute("open","");
 }
-$("#mClose").addEventListener("click", ()=>modal.close());
-modal.addEventListener("click", e=>{ if(e.target===modal) modal.close(); });
+$("#mClose").addEventListener("click",()=>modal.close());
+modal.addEventListener("click",e=>{if(e.target===modal) modal.close();});
 
-/* ================== РАСПИСАНИЕ ================== */
-function renderSchedule(){
-  $("#sched").innerHTML = SCHEDULE.map(r=>{
-    const t = TOURS.find(x=>x.id===r.tour);
-    const name = t.look==="yellow"?"Узбекистан":t.title;
-    const pill = r.seats===0?`<span class="pill full">мест нет</span>`:r.seats<=3?`<span class="pill low">${r.seats} места</span>`:`<span class="pill">${r.seats} мест</span>`;
-    return `<tr><td class="date">${esc(r.date)}</td><td class="tour"><b>${esc(name)}</b><span>${esc(t.incl.slice(0,3).join(" · "))}</span></td><td class="num">${esc(r.dur)}</td><td>${pill}</td><td class="num">${esc(r.price)}</td><td>${r.seats===0?`<button class="link-btn" data-wait="${t.id}">в лист ожидания</button>`:`<button class="link-btn" data-open="${t.id}">Программа</button>`}</td></tr>`;
-  }).join("");
-  $("#sched").addEventListener("click", e=>{
-    const o = e.target.closest("[data-open]"); if(o) return openTour(o.dataset.open);
-    const w = e.target.closest("[data-wait]"); if(w){ $("#f-dest").value = w.dataset.wait; $("#f-notes").value = "Хочу в лист ожидания на этот тур"; $("#plan").scrollIntoView(); }
-  });
+function renderPrices(){
+  $("#priceList").innerHTML=PRICES.map(p=>`<li><b>${esc(p.name)}${p.dur?`<span class="dur">${esc(p.dur)}</span>`:""}${p.featured?`<span class="tag">популярно</span>`:""}</b><span class="p${p.free?" free":""}">${esc(p.price)}</span><span class="d">${esc(p.desc)}</span></li>`).join("");
 }
 
-/* ================== ЗАЯВКА ================== */
 function renderForm(){
-  $("#f-dest").innerHTML = `<option value="help">Пока не знаю, помогите выбрать</option>` + TOURS.map(t=>`<option value="${t.id}">${esc(t.look==="yellow"?"Узбекистан":t.title)}</option>`).join("") + `<option value="other">Другое направление</option>`;
-  $("#styleChips").innerHTML = STYLES.map((s,i)=>`<input type="checkbox" id="st-${i}" value="${esc(s)}"${i===0||i===5?" checked":""}><label for="st-${i}">${esc(s)}</label>`).join("");
-  let people = 2;
-  const setP = v=>{ people = Math.max(1, Math.min(20, v)); $("#f-people").textContent = people; };
-  $("#p-minus").onclick = ()=>setP(people-1);
-  $("#p-plus").onclick = ()=>setP(people+1);
-  const fmt = n=>n.toLocaleString("ru-RU").replace(/,/g," ")+" ₽"+(n>=1000000?"+":"");
-  const bud = $("#f-budget");
-  bud.addEventListener("input", ()=>$("#budgetVal").textContent = fmt(+bud.value));
-
-  $("#planForm").addEventListener("submit", e=>{
+  $("#f-dest").innerHTML=`<option value="help">Пока не знаю, помогите выбрать</option>`+DEST.map(d=>`<option value="${d.id}">${esc(d.title)}</option>`).join("")+`<option value="other">Другое направление</option>`;
+  $("#f-pack").innerHTML=PRICES.map((p,i)=>`<option${i===3?" selected":""}>${esc(p.name)} · ${esc(p.price)}</option>`).join("");
+  $("#styleChips").innerHTML=STYLES.map((s,i)=>`<input type="checkbox" id="st-${i}" value="${esc(s)}"${i===0||i===2?" checked":""}><label for="st-${i}">${esc(s)}</label>`).join("");
+  let people=2;
+  const setP=v=>{people=Math.max(1,Math.min(30,v));$("#f-people").textContent=people;};
+  $("#p-minus").onclick=()=>setP(people-1);
+  $("#p-plus").onclick=()=>setP(people+1);
+  const form=$("#planForm"), box=$("#planBox");
+  form.addEventListener("submit",e=>{
     e.preventDefault();
-    const name = $("#f-name").value.trim(), contact = $("#f-contact").value.trim();
-    const err = $("#formErr");
-    if(!name || !contact){ err.textContent = "Укажите имя и контакт, чтобы я могла вам ответить."; err.hidden = false; (!name?$("#f-name"):$("#f-contact")).focus(); return; }
-    err.hidden = true;
-    const dest = $("#f-dest").selectedOptions[0].textContent;
-    const styles = [...document.querySelectorAll("#styleChips input:checked")].map(i=>i.value);
-    const notes = $("#f-notes").value.trim();
-    const text = `Здравствуйте! Хочу подобрать путешествие.\n\nИмя: ${name}\nКонтакт: ${contact}\nНаправление: ${dest}\nКогда: ${$("#f-month").value}\nПутешественников: ${people}\nБюджет на человека: ${fmt(+bud.value)}\nФормат: ${styles.join(", ")||"любой"}${notes?`\nПожелания: ${notes}`:""}`;
-    const box = $("#planBox");
-    $("#planForm").hidden = true;
-    box.querySelector(".result")?.remove();
-    box.insertAdjacentHTML("beforeend", `<div class="result"><div class="eyebrow">Заявка готова</div><h3>${esc(name)}, осталось отправить сообщение</h3><pre id="reqText">${esc(text)}</pre>
-      <div class="acts"><button class="btn btn-primary" type="button" id="copyBtn">Скопировать текст</button><a class="btn btn-ghost" href="https://t.me/marshrut_planner" target="_blank" rel="noopener">Открыть Telegram</a><button class="btn btn-ghost" type="button" id="editBtn">Изменить</button></div>
+    const name=$("#f-name").value.trim(), contact=$("#f-contact").value.trim(), err=$("#formErr");
+    if(!name||!contact){err.textContent="Укажите имя и контакт, чтобы я могла вам ответить.";err.hidden=false;(!name?$("#f-name"):$("#f-contact")).focus();return;}
+    err.hidden=true;
+    const styles=[...document.querySelectorAll("#styleChips input:checked")].map(i=>i.value);
+    const notes=$("#f-notes").value.trim();
+    const text=`Здравствуйте! Хочу маршрут от InVoyage.\n\nИмя: ${name}\nКонтакт: ${contact}\nНаправление: ${$("#f-dest").selectedOptions[0].textContent}\nКогда: ${$("#f-month").value}\nФормат: ${$("#f-pack").value}\nПутешественников: ${people}\nХочется: ${styles.join(", ")||"пока не знаю"}${notes?`\nПожелания: ${notes}`:""}`;
+    form.hidden=true;
+    box.insertAdjacentHTML("beforeend",`<div class="result"><div class="eyebrow">Заявка готова</div><h3>${esc(name)}, осталось отправить мне сообщение</h3><pre id="reqText">${esc(text)}</pre>
+      <div class="acts"><button class="btn btn-primary" type="button" id="copyBtn">Скопировать текст</button><a class="btn btn-ghost" href="https://t.me/InVoyagee" target="_blank" rel="noopener">Открыть Telegram</a><button class="btn btn-ghost" type="button" id="editBtn">Изменить</button></div>
       <div class="toast" id="toast" hidden></div></div>`);
-    $("#copyBtn").addEventListener("click", ()=>{
-      const t = $("#toast");
-      const sel = ()=>{ const r = document.createRange(); r.selectNodeContents($("#reqText")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); t.textContent = "Текст выделен, нажмите Ctrl+C или «Копировать»"; t.hidden = false; };
-      try{ navigator.clipboard.writeText(text).then(()=>{ t.textContent = "Скопировано. Вставьте текст в чат."; t.hidden = false; }, sel); }catch(_){ sel(); }
+    $("#copyBtn").addEventListener("click",()=>{
+      const t=$("#toast");
+      const sel=()=>{const r=document.createRange();r.selectNodeContents($("#reqText"));const s=getSelection();s.removeAllRanges();s.addRange(r);t.textContent="Текст выделен. Скопируйте его вручную.";t.hidden=false;};
+      try{navigator.clipboard.writeText(text).then(()=>{t.textContent="Скопировано. Вставьте текст в чат Telegram.";t.hidden=false;},sel);}catch(_){sel();}
     });
-    $("#editBtn").addEventListener("click", ()=>{ box.querySelector(".result").remove(); $("#planForm").hidden = false; });
+    $("#editBtn").addEventListener("click",()=>{box.querySelector(".result").remove();form.hidden=false;});
     box.scrollIntoView({block:"nearest"});
   });
 }
 
-/* ================== БЕГУЩАЯ СТРОКА ================== */
-const words = ["Териберка","Кейптаун","Маврикий","Петра","Самарканд","Пхукет","Эльбрус","Дубай","Шри-Ланка"];
-const line = words.map(w=>`${w}<i>✦</i>`).join("");
-$("#mq").innerHTML = line + line;
+const words=["Ницца","Монако","Сен-Тропе","Дубай","Париж","Ибица","Мадрид","Краби","Сингапур","Кёльн"];
+const line=words.map(w=>`${w}<i>✦</i>`).join("");
+$("#mq").innerHTML=line+line;
 
-renderHighlights(); renderGrid("all"); renderSchedule(); renderForm();
+renderHighlights(); renderGrid("all"); renderPrices(); renderForm();
 </script>
 </body>
 </html>
