@@ -100,7 +100,14 @@ h1,h2,h3{text-wrap:balance;margin:0}
 
 /* grid */
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
-@media (min-width:1000px){.grid{grid-template-columns:repeat(5,1fr)}.grid .t-bold{font-size:clamp(24px,2.5vw,34px)}.grid .t-serif{font-size:clamp(28px,2.8vw,40px)}.grid .t-thin{font-size:12px}.grid .t-days{font-size:17px}}
+@media (min-width:1000px){.grid{grid-template-columns:repeat(4,1fr)}.grid .t-bold{font-size:clamp(28px,3vw,42px)}.grid .t-serif{font-size:clamp(32px,3.3vw,46px)}.grid .t-thin{font-size:13px}.grid .t-days{font-size:19px}}
+.grid-note{margin:0 0 18px;font:italic 400 20px/1.3 var(--f-serif);color:var(--accent)}
+.tile.cta{background:var(--surface);border:1px solid var(--line);color:var(--fg);text-decoration:none}
+.tile.cta .copy{justify-content:center;align-items:center;gap:12px}
+.tile.cta .q{font:italic 400 clamp(48px,6vw,80px)/1 var(--f-serif);color:var(--accent)}
+.tile.cta .t-bold{text-shadow:none;font-size:clamp(22px,2.6vw,34px)}
+.tile.cta .t-thin{text-shadow:none;color:var(--muted);text-transform:none;font:400 14px/1.45 var(--f-body);max-width:24ch}
+.tile.cta:hover{border-color:var(--accent)}
 @media (max-width:999px){.grid{grid-template-columns:repeat(2,1fr);gap:3px}}
 .tile{position:relative;aspect-ratio:3/4;max-width:100%;overflow:hidden;border:0;padding:0;cursor:pointer;text-align:center;background:var(--surface-2);color:#fff;display:block;width:100%}
 .tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
@@ -289,7 +296,7 @@ footer a:hover{color:var(--fg)}
     <div class="wrap">
       <div class="sec-head">
         <h2>Куда поехать<span class="serif-i">(для вдохновения)</span></h2>
-        <p>Это места, где я была сама. Нажмите на фото, чтобы узнать, когда лучше ехать и как может выглядеть поездка. Маршрут можно собрать и в любую другую страну.</p>
+        <p>Здесь не все направления, это просто фото из моих поездок для вдохновения. Маршрут я соберу в любую страну. Нажмите на фото, чтобы узнать, когда лучше ехать и как может выглядеть поездка.</p>
       </div>
       <div class="highlights" id="highlights" role="toolbar" aria-label="Фильтр направлений"></div>
       <div class="grid" id="grid"></div>
@@ -457,6 +464,9 @@ const DEST = [
   {id:"turkey", tags:["sea"], img:"turkey", look:"bold", title:"Турция", sub:"Не только «всё включено»: бухты и красивые отели",
    season:"май – октябрь", length:"7–10 дней", forwho:"семьи, подруги",
    route:[["Побережье","отели с хорошей кухней и пляжем"],["Бухты","морские прогулки, скалы, чистая вода"],["Вечера","прогулки, шопинг, местные рестораны"]]},
+  {id:"israel", tags:["sea","city","winter"], img:"israel", look:"bold", title:"Израиль", sub:"Тель-Авив, Иерусалим и Мёртвое море",
+   season:"октябрь – май", length:"6–9 дней", forwho:"пары, подруги, семьи",
+   route:[["Тель-Авив","пляжи, набережная, рынок Кармель, старый Яффо"],["Иерусалим","Старый город, Стена Плача, рынок Махане-Иегуда"],["Мёртвое море","день на курорте Эйн-Бокек и крепость Масада"]]},
   {id:"mexico", tags:["sea","winter"], img:"mexico", look:"serif", title:"Мексика", days:"10–14 дней", sub:"Карибское море, сеноты и фламинго",
    season:"ноябрь – апрель", length:"10–14 дней", forwho:"пары, любители природы",
    route:[["Ривьера-Майя","Плайя-дель-Кармен, Тулум, отели на Карибском море"],["Сеноты и пирамиды","купание в сенотах, Чичен-Ица, Вальядолид"],["Природа","фламинго, черепахи в Акумале, остров Ольбош"]]}
@@ -488,6 +498,10 @@ function tileCopy(d){
 }
 function renderGrid(filter){
   const grid=$("#grid"); grid.innerHTML="";
+  const cta=document.createElement("a");
+  cta.href="#plan"; cta.className="tile cta";
+  cta.innerHTML=`<div class="copy"><div class="q">?</div><div class="t-bold">Ваше направление</div><div class="t-thin">Здесь только часть мест. Напишите, куда хочется, и я соберу маршрут в любую страну.</div></div>`;
+  queueMicrotask(()=>grid.appendChild(cta));
   DEST.forEach(d=>{
     const b=document.createElement("button");
     b.type="button"; b.className="tile";
