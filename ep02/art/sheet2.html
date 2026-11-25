@@ -1,0 +1,35 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Лист серии 2</title>
+<style>html,body{margin:0;background:#07090d}</style>
+<script src="../../ep01/art/assets.js"></script><script src="assets2.js"></script></head>
+<body><div id="out"></div><script>
+const W = 1600, H = 2000;
+const label = (x, y, t, s = 22, c = '#e9e4d8', w = 700) => `<text x="${x}" y="${y}" fill="${c}" font-family="Inter" font-weight="${w}" font-size="${s}" text-anchor="middle">${t}</text>`;
+const panel = (x, y, w, h) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="16" fill="#0e141a" stroke="#1d2730" stroke-width="2"/>`;
+const at = (x, y, s, inner) => `<g transform="translate(${x} ${y}) scale(${s})">${inner}</g>`;
+const thumb = (x, y, inner, name, s = .3) => `<g transform="translate(${x} ${y})"><svg width="${1080 * s}" height="${1920 * s}" viewBox="0 0 1080 1920">${inner}</svg><rect width="${1080 * s}" height="${1920 * s}" fill="none" stroke="#2a3540" stroke-width="2"/></g>${label(x + 1080 * s / 2, y + 1920 * s + 32, name, 20)}`;
+const sub = (x, y, t) => label(x, y, t, 18, '#8a98a3', 600);
+document.getElementById('out').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">
+<rect width="${W}" height="${H}" fill="#07090d"/>
+${label(W / 2, 64, 'ГИГАНТСКИЕ МУТАНТЫ', 52, '#c8ff6e', 900)}${label(W / 2, 104, 'Серия 2 «Мост» · новые персонажи, фоны и реквизит', 24, '#8a98a3', 600)}
+
+${panel(30, 140, 600, 560)}${label(330, 182, 'ГИГАНТ · морда крупно', 26)}
+<clipPath id="c1"><rect x="50" y="200" width="560" height="440" rx="10"/></clipPath><rect x="50" y="200" width="560" height="440" rx="10" fill="#0a1016"/>
+<g clip-path="url(#c1)">${at(330, 420, .38, giantHead({ look: 1, sniff: .6 }))}</g>${sub(330, 680, 'смотрит вниз, на Асю · принюхивается')}
+
+${panel(650, 140, 920, 560)}${label(1110, 182, 'МУТАНТ С КРАСНЫМ ШНУРКОМ · АСЯ', 26)}
+${at(900, 600, .75, mutant({ lanyard: true, mouth: .2 }))}${sub(860, 680, 'на шее — красный шнурок с пропуском (намёк)')}
+${at(1260, 630, 1.3, asya({ face: 'scared', hard: 1.5, torch: false, pose: { armL: 20 } }))}${sub(1260, 680, 'серое на плече')}
+${at(1450, 630, 1.3, asya({ face: 'calm', hard: 2, torch: false, pose: { armL: 10 } }))}${sub(1450, 680, 'у самой шеи')}
+
+${panel(30, 720, 1540, 330)}${label(800, 762, 'РЕКВИЗИТ', 26)}
+${at(170, 920, .6, valveWheel(20))}${sub(170, 1035, 'вентиль')}
+${at(390, 900, 1, gauge(.15))}${at(530, 900, 1, gauge(.95))}${sub(460, 1035, 'манометры: норма → красное')}
+${at(700, 960, 1, lever(0))}${at(800, 960, 1, lever(1))}${sub(750, 1035, 'рычаги')}
+${at(1100, 900, .26, phoneSMS(1, 1))}${sub(1100, 1035, 'SMS: образец нашёлся')}
+<rect x="1260" y="800" width="280" height="200" rx="10" fill="#0a1016"/><g clip-path="url(#c2)"><clipPath id="c2"><rect x="1260" y="800" width="280" height="200" rx="10"/></clipPath>${at(1260, 800, .26, greenMist(1, 2.2, { y0: 0, y1: 800 }))}</g>${sub(1400, 1035, 'зелёный туман')}
+
+${label(W / 2, 1100, 'НОВЫЕ ФОНЫ (кадр 9:16)', 26)}
+${thumb(330, 1125, bgUnderBridge({ door: 0 }), 'Под мостом: дверь водозабора', .4)}
+${thumb(830, 1125, bgIntake({ wheel: 30, levers: [1, 1, 0], gauges: [.9, .7, .2], flow: .5 }), 'Водозабор: цистерна, вентиль, пульт', .4)}
+</svg>`;
+</script></body></html>

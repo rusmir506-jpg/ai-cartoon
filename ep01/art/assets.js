@@ -3,6 +3,7 @@
 // Используется и листом персонажей, и анимацией.
 
 let _uid = 0;
+const clampN = (x) => Math.max(0, Math.min(1, x));
 const PAL = {
   night0: '#07090d', night1: '#0d1218', night2: '#151d26', slate: '#243039', slate2: '#33414c',
   fog: '#4a5a66', rust: '#5e3322', rust2: '#7a4428', brick: '#3a2420',
@@ -102,12 +103,17 @@ function nikita({ pose = {}, face = 'tense', lighter = false, phone = false, fla
 // ---------------- АСЯ ----------------
 // hard: 0..1 — насколько поднялась твёрдая кожа по левой руке (0 — нет, 0.5 — до локтя, 1 — плечо)
 function asya({ pose = {}, face = 'scared', hard = 0, torch = true, scratch = false } = {}) {
+  // hard > 1: серое переходит на плечо и шею (2 — у самой шеи)
+  const hk = clampN(hard - 1);
+  const shoulder = hk > 0 ? `<path d="M-46 -200 Q-44 -218 -28 -224 L${(-28 + 22 * hk).toFixed(1)} ${(-226 - 4 * hk).toFixed(1)} Q${(-34 + 10 * hk).toFixed(1)} -205 -40 ${(-196 + 20 * (1 - hk)).toFixed(1)}Z" fill="${PAL.hard}"/><path d="M-42 -206 l8 -6 l7 5 l7 -6" stroke="${PAL.hardHi}" stroke-width="2" fill="none"/>` : '';
+  const nk = clampN((hk - .5) / .5);
+  const neck = nk > 0 ? [[-24, -234, 1], [-30, -246, .8], [-18, -224, .9]].map(([x, y, sz], i) => nk > i / 3 ? `<path d="M${x} ${y - 6 * sz} l${6 * sz} ${6 * sz} l${-6 * sz} ${6 * sz} l${-6 * sz} ${-6 * sz}Z" fill="${PAL.hard}" stroke="${PAL.hardSh}" stroke-width="1.5"/>` : '').join('') : '';
   const p = Object.assign({ armL: 10, armR: -14, legL: 0, legR: 0, head: 0, lean: 0 }, pose);
   const leg = (x, a) => `<g transform="${rot(a, x, -92)}">
       <rect x="${x - 11}" y="-94" width="22" height="70" rx="8" fill="#2d2a33"/>
       <rect x="${x - 14}" y="-46" width="30" height="46" rx="9" fill="${PAL.boots}"/></g>`;
   // Левая рука: длина 100 от плеча (-48,-205). Твёрдые пластины снизу (кисть) вверх.
-  const armLen = 104, hLen = armLen * hard;
+  const armLen = 104, hLen = armLen * Math.min(1, hard);
   const plates = hard > 0 ? (() => {
     const cid = 'asyaArm' + (++_uid);
     let s = `<clipPath id="${cid}"><rect x="-62" y="${-205 + armLen - hLen + 10}" width="30" height="${hLen + 20}"/></clipPath>
@@ -135,12 +141,13 @@ function asya({ pose = {}, face = 'scared', hard = 0, torch = true, scratch = fa
     <circle cx="-8" cy="-190" r="3" fill="${PAL.coatSh}"/><circle cx="-8" cy="-160" r="3" fill="${PAL.coatSh}"/><circle cx="-8" cy="-130" r="3" fill="${PAL.coatSh}"/>
     <path d="M-16 -222 L-4 -160 M16 -222 L4 -160" stroke="#a33a2e" stroke-width="3"/>
     <rect x="-13" y="-162" width="26" height="34" rx="3" fill="#dfe3e6"/><rect x="-9" y="-158" width="12" height="12" fill="#6d7a84"/><rect x="-9" y="-142" width="18" height="3" fill="#6d7a84"/><rect x="-9" y="-136" width="14" height="3" fill="#6d7a84"/>
+    ${shoulder}
     <g transform="${rot(p.head, 0, -222)}">
       <path d="M-46 -230 Q-52 -318 0 -324 Q52 -318 46 -230 Q0 -214 -46 -230Z" fill="${PAL.coatSh}"/>
       <ellipse cx="0" cy="-258" rx="32" ry="36" fill="${PAL.skin}"/>
       <path d="M-33 -262 Q-34 -298 0 -296 Q34 -298 33 -262 Q22 -282 0 -280 Q-22 -282 -33 -262Z" fill="#4a2e1e"/>
       <path d="M-34 -262 q-6 30 -2 46 M34 -262 q6 30 2 46" stroke="#4a2e1e" stroke-width="7" fill="none" stroke-linecap="round"/>
-      ${eyes}</g>
+      ${eyes}</g>${neck}
     <g id="a-armR" transform="${rot(p.armR, 48, -205)}">
       <rect x="34" y="-212" width="27" height="${armLen}" rx="11" fill="${PAL.coat}"/>
       <circle cx="47" cy="-98" r="11" fill="${PAL.skin}"/>${torchG}</g>
@@ -149,7 +156,7 @@ function asya({ pose = {}, face = 'scared', hard = 0, torch = true, scratch = fa
 
 // ---------------- МУТАНТ (с завода) ----------------
 // Сгорбленный, длинные лапы, свалявшаяся мокрая шерсть, зелёные глаза. Ноги в (0,0).
-function mutant({ pose = {}, seed = 7, eyes = 1, mouth = 0.3 } = {}) {
+function mutant({ pose = {}, seed = 7, eyes = 1, mouth = 0.3, lanyard = false } = {}) {
   const p = Object.assign({ fl: 0, fr: 0, bl: 0, br: 0, head: 0, body: 0 }, pose);
   const limb = (x, y, a, len, c) => `<g transform="${rot(a, x, y)}">
      <path d="M${x - 14} ${y} L${x - 8} ${y + len} L${x + 8} ${y + len} L${x + 14} ${y}Z" fill="${c}"/>
@@ -169,6 +176,7 @@ function mutant({ pose = {}, seed = 7, eyes = 1, mouth = 0.3 } = {}) {
       <circle cx="-250" cy="-232" r="11" fill="${PAL.eye}"/><circle cx="-212" cy="-236" r="9" fill="${PAL.eye}"/>
       <ellipse cx="-250" cy="-232" rx="2.5" ry="8" fill="#10140a"/><ellipse cx="-212" cy="-236" rx="2.5" ry="7" fill="#10140a"/></g>
       ${[...Array(5)].map((_, i) => `<path d="M${-280 + i * 22} -165 q2 ${12 + i * 3} 0 ${22 + i * 4}" stroke="${PAL.waterHi}" stroke-width="2.5" fill="none" opacity=".7"/>`).join('')}
+      ${lanyard ? `<path d="M-205 -262 Q-190 -170 -150 -250" stroke="#c23a2e" stroke-width="7" fill="none"/><path d="M-182 -196 l-6 34" stroke="#c23a2e" stroke-width="4"/><g transform="rotate(${(Math.sin((typeof __T !== 'undefined' ? __T : 0) * 3) * 12).toFixed(1)} -188 -162)"><rect x="-204" y="-162" width="32" height="40" rx="4" fill="#dfe3e6"/><rect x="-199" y="-156" width="12" height="12" fill="#6d7a84"/><rect x="-199" y="-140" width="20" height="3" fill="#6d7a84"/></g>` : ''}
     </g>
   </g>`;
 }
