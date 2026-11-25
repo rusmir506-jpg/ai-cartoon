@@ -46,8 +46,8 @@ function phoneSMS(typed = 1, sign = 0) {
     <rect x="-226" y="-420" width="452" height="840" rx="20" fill="#121a20"/>
     <text x="0" y="-330" fill="#8fb3c4" font-family="Inter" font-size="34" text-anchor="middle" font-weight="700">Неизвестный номер</text>
     <text x="0" y="-286" fill="#5a6d78" font-family="Inter" font-size="26" text-anchor="middle">03:47</text>
-    <rect x="-200" y="-220" width="400" height="${170 + (sign > 0 ? 110 : 0)}" rx="26" fill="#243039"/>
-    <text font-family="Inter" font-size="36" font-weight="700" fill="#e9e4d8"><tspan x="-176" y="-160">${l1}</tspan><tspan x="-176" y="-112">${l2}</tspan></text>
+    <rect x="-215" y="-220" width="430" height="${170 + (sign > 0 ? 110 : 0)}" rx="26" fill="#243039"/>
+    <text font-family="Inter" font-size="31" font-weight="700" fill="#e9e4d8"><tspan x="-190" y="-160">${l1}</tspan><tspan x="-190" y="-112">${l2}</tspan></text>
     <text x="-176" y="-20" font-family="Inter" font-size="30" font-style="italic" fill="${PAL.eye}" opacity="${sign}">— проф. Г. Л. Вершинин</text>
     <text x="-176" y="16" font-family="Inter" font-size="24" fill="#8a98a3" opacity="${sign}">каф. нормальной физиологии</text>`;
 }
@@ -57,7 +57,7 @@ function greenMist(t, k = 1, { y0 = 900, y1 = 1900 } = {}) {
   let s = '';
   for (let i = 0; i < 16; i++) {
     const x = (hashN(i * 3.1) * 1400 - 160 + t * 40 * (.5 + hashN(i))) % 1500 - 200, y = y0 + hashN(i * 7.7) * (y1 - y0) + Math.sin(t + i) * 30;
-    s += `<ellipse cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" rx="${(200 + hashN(i * 5) * 260).toFixed(0)}" ry="${(70 + hashN(i * 9) * 90).toFixed(0)}" fill="${PAL.reagent}" opacity="${(k * (.08 + hashN(i * 2) * .1)).toFixed(3)}"/>`;
+    s += `<ellipse cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" rx="${(200 + hashN(i * 5) * 260).toFixed(0)}" ry="${(70 + hashN(i * 9) * 90).toFixed(0)}" fill="${PAL.reagent}" opacity="${(k * .55 * (.08 + hashN(i * 2) * .1)).toFixed(3)}"/>`;
   }
   return s;
 }
