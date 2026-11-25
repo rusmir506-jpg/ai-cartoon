@@ -144,12 +144,17 @@ silent = f"out/tmp/story/{name}_silent.mp4"
 if "--no-render" not in sys.argv:
     subprocess.run(["node", C.get("renderer", "render_story.js"), "out/tmp/story/timeline.json", silent], check=True)
     out = f"out/invoyage_{name}.mp4"
-    if NO_VOICE:
+    if "--no-music" in sys.argv and not NO_VOICE:      # voice only, no music bed
+        ins = ["-i", silent, "-i", vo_mp3]
+        fc = (f"[1:a]aresample=44100,aformat=channel_layouts=stereo,adelay={int(OFF * 1000)}:all=1,apad=whole_dur={D},highpass=f=90,"
+              f"loudnorm=I=-16:TP=-1.5:LRA=11,aresample=48000,afade=out:st={D - 1.2}:d=1.2[aout]")
+        out = out.replace(".mp4", "_no_music.mp4")
+    elif NO_VOICE:
         fc = f"[1:a]volume=1.0,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000,afade=out:st={D - 1.2}:d=1.2[aout]"
         ins = ["-i", silent, "-i", f"{D_DIR}/music.wav"]
     else:
         ins = ["-i", silent, "-i", f"{D_DIR}/music.wav", "-i", vo_mp3]
-    if not NO_VOICE:
+    if not NO_VOICE and "--no-music" not in sys.argv:
       fc = (f"[2:a]aresample=44100,aformat=channel_layouts=stereo,adelay={int(OFF * 1000)}:all=1,apad=whole_dur={D},highpass=f=90,asplit[voa][vob];"
           f"[1:a]volume=0.55[mu];[mu][vob]sidechaincompress=threshold=0.02:ratio=5:attack=40:release=450[duck];"
           f"[duck][voa]amix=inputs=2:normalize=0[mix];[mix]loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000,afade=out:st={D - 1.2}:d=1.2[aout]")
