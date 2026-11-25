@@ -28,6 +28,7 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
 .clip{overflow:hidden;padding-top:6px}
 .name{font-weight:700;font-size:136px;line-height:1.02;text-transform:uppercase;opacity:0}
 .sub{font-weight:500;font-size:34px;letter-spacing:.16em;text-transform:uppercase;margin-top:16px;opacity:0}
+.fsub{text-transform:none;letter-spacing:.02em;font-size:40px;line-height:1.4;margin-top:22px;max-width:900px}
 .rule{width:96px;height:2px;background:#fff;margin:34px 0 30px;transform-origin:left;opacity:0}
 .temps{display:flex;align-items:center;gap:44px;opacity:0}
 .tt{display:flex;flex-direction:column}

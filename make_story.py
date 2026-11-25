@@ -116,7 +116,7 @@ for i, b in enumerate(beats[:-1]):
         TL["titles"].append({"text": b["title"], "t0": t0 + 0.95, "t1": t1})
     if "stamp" in b:
         TL["stamps"].append({**b["stamp"], "t0": t0 + 0.02})
-    if "stamp" in b or b["scene"] == "thaw" or b.get("card", {}).get("type") == "place":
+    if "stamp" in b or b["scene"] == "thaw" or b.get("card", {}).get("type") in ("place", "fact"):
         hud.append(t0)
         last_stamp = i
     for em in b.get("emoji", []):

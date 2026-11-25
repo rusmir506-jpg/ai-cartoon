@@ -15,10 +15,12 @@
     });
     h += '<div class="shade ' + (c.type || '') + '"></div>';
     if (c.type === 'cover') {
-      h += '<div class="blk" style="top:740px"><div class="cg it" id="a' + i + '">' + c.kick + '</div><div class="os big" id="b' + i + '">' + c.l1 + '</div><div class="os mid" id="c' + i + '">' + c.l2 + '</div><div class="mt cap" id="d' + i + '">' + c.sub + '</div></div>';
+      h += '<div class="blk" style="top:740px"><div class="cg it" id="a' + i + '">' + c.kick + '</div><div class="os big" id="b' + i + '" style="font-size:' + (c.l1.length > 6 ? 232 : 300) + 'px">' + c.l1 + '</div><div class="os mid" id="c' + i + '">' + c.l2 + '</div><div class="mt cap" id="d' + i + '">' + c.sub + '</div></div>';
     } else if (c.type === 'place') {
       h += '<div class="blk" style="top:930px"><div class="cg num" id="n' + i + '">' + c.n + '</div><div class="clip"><div class="os name" id="nm' + i + '" style="font-size:' + (c.name.length > 11 ? 104 : 136) + 'px">' + c.name + '</div></div><div class="mt sub" id="sb' + i + '">' + c.sub + '</div><div class="rule" id="ru' + i + '"></div>' +
         '<div class="temps" id="tp' + i + '"><div class="tt"><span class="mt lab">днём</span><span class="os val" id="av' + i + '">+0°</span></div><div class="sep"></div><div class="tt"><span class="mt lab">вода</span><span class="os val" id="wv' + i + '">+0°</span></div></div></div>';
+    } else if (c.type === 'fact') {
+      h += '<div class="blk" style="top:930px"><div class="cg num" id="n' + i + '">' + c.n + '</div><div class="clip"><div class="os name" id="nm' + i + '" style="font-size:' + (c.name.length > 14 ? 100 : (c.name.length > 10 ? 118 : 136)) + 'px">' + c.name + '</div></div><div class="mt sub fsub" id="sb' + i + '">' + c.sub + '</div></div>';
     } else if (c.type === 'tips') {
       h += '<div class="blk" style="top:520px"><div class="os tt1" id="t' + i + '">' + c.title + '</div>';
       c.items.forEach(function (it, k) { h += '<div class="row" id="r' + i + '_' + k + '"><div class="cg rn">0' + (k + 1) + '</div><div><div class="os rt">' + it[0] + '</div><div class="mt rs">' + it[1] + '</div></div></div>'; });
@@ -28,7 +30,7 @@
     el.innerHTML = h; scenes.appendChild(el);
   });
   var dots = $('dots'); for (var k = 0; k < n - 1; k++) { var d = document.createElement('div'); d.className = 'dot'; d.id = 'dot' + k; dots.appendChild(d); }
-  var places = TL.beats.filter(function (b) { return b.card && b.card.type === 'place'; }).length;
+  var places = TL.beats.filter(function (b) { return b.card && (b.card.type === 'place' || b.card.type === 'fact'); }).length;
 
   function rv(id, u, delay, dy) { var e = $(id); if (!e) return; var o = out3((u - delay) / 0.6); e.style.opacity = o; e.style.transform = 'translateY(' + ((1 - o) * dy) + 'px)'; }
 
@@ -59,13 +61,14 @@
         rv('tp' + i, u, 0.95, 24); var cn = out3((u - 0.95) / 1.0);
         $('av' + i).textContent = '+' + Math.round(c.air * cn) + '°'; $('wv' + i).textContent = '+' + Math.round(c.water * cn) + '°';
       }
+      if (c.type === 'fact') { rv('n' + i, u, 0.35, 40); rv('nm' + i, u, 0.45, 170); rv('sb' + i, u, 0.75, 24); }
       if (c.type === 'tips') { rv('t' + i, u, 0.4, 40); c.items.forEach(function (it, k) { rv('r' + i + '_' + k, u, 0.75 + 0.4 * k, 40); }); }
     });
     // overlays
     var ov = 1 - clamp((t - (E - 0.15)) / 0.3); $('top').style.opacity = ov; $('dots').style.opacity = ov * clamp((t - TL.beats[1].t0) / 0.4); $('hint').style.opacity = 0;
     var cur = -1; TL.beats.forEach(function (b, i) { var nx = (i + 1 < n) ? TL.beats[i + 1].t0 : E; if (t >= b.t0 + 0.25 && t < nx) cur = i; });
     var cb = cur >= 0 ? TL.beats[cur].card : null, cnt = $('cnt');
-    if (cb && cb.type === 'place') { cnt.textContent = cb.n + ' / 0' + places; cnt.style.opacity = 1; } else cnt.style.opacity = 0;
+    if (cb && (cb.type === 'place' || cb.type === 'fact')) { cnt.textContent = cb.n + ' / 0' + places; cnt.style.opacity = 1; } else cnt.style.opacity = 0;
     for (var k2 = 0; k2 < n - 1; k2++) {
       var bt = TL.beats[k2 + 1], nt = (k2 + 2 < n) ? TL.beats[k2 + 2].t0 : E;
       var s1 = clamp((t - (bt.t0 + 0.15)) / 0.3) * (1 - clamp((t - (nt + 0.15)) / 0.3));
