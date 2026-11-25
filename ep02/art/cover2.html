@@ -1,0 +1,20 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Обложка 2</title>
+<style>html,body{margin:0;background:#000}</style>
+<script src="../../ep01/art/assets.js"></script><script src="assets2.js"></script><script src="words.js"></script><script src="anim2.js"></script></head>
+<body><div id="v"></div><script>
+const t = 4.2;
+const T = (y, txt, size, fill) => `<text x="540" y="${y}" text-anchor="middle" font-family="Inter" font-weight="900" font-size="${size}" fill="${fill}" stroke="#000" stroke-width="${size * .16}" stroke-linejoin="round" paint-order="stroke">${txt}</text>`;
+document.getElementById('v').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">${defsCommon}<defs>${SIL}
+  <linearGradient id="topfade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".9"/><stop offset="1" stop-color="#000" stop-opacity="0"/></linearGradient></defs>
+  ${bgRiver()}${ripples(t)}
+  <circle cx="540" cy="900" r="560" fill="#3d6470" opacity=".3"/>
+  ${at(540, 860, .95, giantHead({ look: 1, sniff: .5 }))}
+  ${at(600, 2060, 2.0, asya({ face: 'scared', hard: 1.55, torch: false, pose: { armL: 16, head: 8 } }))}
+  ${rain(t, { op: .4, slant: .3, n: 200 })}
+  <rect width="1080" height="640" fill="url(#topfade)"/><rect width="1080" height="1920" fill="url(#vignette)"/>
+  ${T(230, 'ГИГАНТСКИЕ', 128, PAL.eye)}${T(365, 'МУТАНТЫ', 128, PAL.eye)}
+  <rect x="300" y="410" width="480" height="78" rx="14" fill="${PAL.red}"/>
+  <text x="540" y="466" text-anchor="middle" font-family="Inter" font-weight="900" font-size="46" fill="#fff">СЕРИЯ 2 · МОСТ</text>
+  ${T(1140, 'ОН БЫЛ', 96, '#ffffff')}${T(1250, 'БОЛЬШЕ МОСТА', 96, '#ffffff')}${T(1355, 'И СМОТРЕЛ НА АСЮ', 80, PAL.eye)}
+</svg>`;
+</script></body></html>
