@@ -2,7 +2,7 @@
 """Animated-scene reel (TikTok style): python3 make_story.py formats/<name>/config.json [--regen-vo] [--no-render]
 One continuous Russian voice-over (ElevenLabs, with timestamps) drives word-by-word captions and scene cuts
 (snapped to the 120 BPM music grid). Scenes are drawn in render_story.js. Output: out/invoyage_<name>.mp4"""
-import base64, json, os, re, subprocess, sys
+import base64, json, os, re, shutil, subprocess, sys
 from PIL import Image, ImageFilter
 
 cfg_path = sys.argv[1]
@@ -106,6 +106,16 @@ for i, b in enumerate(beats[:-1]):
         cuts = [t0] + [snap(t0 + (be["t1"] - t0) * j / k) for j in range(1, k)] + [be["t1"]]
         be["shots"] = []
         for j, p in enumerate(b["photos"]):
+            if "video" in p:                                   # clip -> 30 fps frame sequence, cover-cropped to 1080x1920
+                span = cuts[j + 1] - cuts[j] + 0.7
+                d = os.path.abspath("out/tmp/story/vf_%d_%d" % (i, j))
+                shutil.rmtree(d, ignore_errors=True); os.makedirs(d)
+                subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", str(p.get("start", 0)), "-t", f"{span:.2f}", "-i", p["video"], "-an",
+                                "-vf", "fps=30,scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,eq=saturation=1.06:contrast=1.03",
+                                "-q:v", "3", f"{d}/%05d.jpg"], check=True)
+                be["shots"].append({"file": f"{d}/00001.jpg", "frames": d, "n": len(os.listdir(d)), "fps": 30, "iw": 1080, "ih": 1920,
+                                    "t0": cuts[j], "t1": cuts[j + 1], "cx0": .5, "cy0": .5, "z0": 1.0, "cx1": .5, "cy1": .5, "z1": 1.0})
+                continue
             f, (iw, ih) = prep_img(p["img"], max(p["move"][2], p["move"][5]))
             cx0, cy0, z0, cx1, cy1, z1 = p["move"]
             be["shots"].append({"file": f, "iw": iw, "ih": ih, "t0": cuts[j], "t1": cuts[j + 1], "cx0": cx0, "cy0": cy0, "z0": z0, "cx1": cx1, "cy1": cy1, "z1": z1})

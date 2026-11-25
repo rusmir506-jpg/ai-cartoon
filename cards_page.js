@@ -5,7 +5,8 @@
   var clamp = function (x, a, b) { a = a === undefined ? 0 : a; b = b === undefined ? 1 : b; return Math.min(b, Math.max(a, x)); };
   var sm = function (x) { x = clamp(x); return x * x * (3 - 2 * x); };
   var out3 = function (x) { return 1 - Math.pow(1 - clamp(x), 3); };
-  var n = TL.beats.length, E = TL.end.t0;
+  var n = TL.beats.length, E = TL.end.t0, PEND = [];
+  window.settle = function () { var q = PEND; PEND = []; return Promise.all(q); };
   var scenes = $('scenes');
   TL.beats.forEach(function (b, i) {
     var el = document.createElement('div'); el.className = 'sc'; el.id = 'sc' + i;
@@ -48,6 +49,15 @@
         var ph = $('ph' + i + '_' + j), nx = b.shots[j + 1], endS = nx ? nx.t0 + 0.45 : nextT + 0.62;
         var vis = t >= s.t0 - 0.001 && t < endS; ph.style.display = vis ? 'block' : 'none'; if (!vis) return;
         ph.style.opacity = j === 0 ? 1 : clamp((t - s.t0) / 0.45);
+        if (s.frames) {                                  // video clip: show the frame for this moment
+          var idx = Math.min(s.n, Math.max(1, Math.floor((t - s.t0) * s.fps) + 1)), im = $('pi' + i + '_' + j);
+          if (im.getAttribute('data-idx') !== String(idx)) {
+            im.setAttribute('data-idx', String(idx));
+            im.src = 'file://' + s.frames + '/' + ('00000' + idx).slice(-5) + '.jpg';
+            PEND.push(im.decode().catch(function () {}));
+          }
+          im.style.transform = 'none'; return;
+        }
         var span = Math.max(0.1, (nx ? nx.t0 : b.t1) - s.t0), uu = sm((t - s.t0) / span);
         var z = s.z0 + (s.z1 - s.z0) * uu, cx = s.cx0 + (s.cx1 - s.cx0) * uu, cy = s.cy0 + (s.cy1 - s.cy0) * uu;
         var base = Math.min(s.iw, s.ih * 9 / 16), w = base / z, hh = w * 16 / 9;

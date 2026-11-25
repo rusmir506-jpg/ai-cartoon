@@ -7,7 +7,7 @@ const fs = require('fs'), path = require('path'), { spawn } = require('child_pro
 const TL = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
 const OUT = process.argv[3], MODE = process.argv[4] || '';
 const FPS = 30, DUR = TL.duration;
-TL.beats.forEach(b => (b.shots || []).forEach(s => { s.file = path.resolve(s.file); }));
+TL.beats.forEach(b => (b.shots || []).forEach(s => { s.file = path.resolve(s.file); if (s.frames) s.frames = path.resolve(s.frames); }));
 const F = 'file://' + path.resolve(__dirname, 'assets/fonts') + '/';
 const CYR = 'U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116';
 const ff = (fam, file, w, st) => ['cyrillic', 'latin'].map(s => '@font-face{font-family:' + fam + ';font-weight:' + w + ';font-style:' + (st || 'normal') + ";src:url('" + F + file + '-' + s + '-' + w + '-' + (st || 'normal') + ".woff2') format('woff2');" + (s === 'cyrillic' ? 'unicode-range:' + CYR + ';' : '') + '}').join('');
@@ -70,7 +70,7 @@ const html = '<meta charset="utf-8"><style>' + fonts + css + '</style><div id="s
   await p.evaluate(() => document.fonts.ready);
   await p.waitForFunction(() => [...document.images].every(i => i.complete));
   if (MODE.startsWith('still:')) {
-    for (const t of MODE.slice(6).split(',')) { await p.evaluate(t => { window.FORCE = false; render(t); }, +t); await p.screenshot({ path: OUT + '_still_' + t + '.png' }); }
+    for (const t of MODE.slice(6).split(',')) { await p.evaluate(async t => { window.FORCE = false; render(t); await window.settle(); }, +t); await p.screenshot({ path: OUT + '_still_' + t + '.png' }); }
     fs.unlinkSync(tmp); await b.close(); return;
   }
   if (MODE === 'frames') {          // one clean frame per photo shot (+ tips + end card)
@@ -78,7 +78,7 @@ const html = '<meta charset="utf-8"><style>' + fonts + css + '</style><div id="s
     TL.beats.forEach(b => { if (b.shots && b.shots.length) b.shots.forEach(sh => times.push(sh.t0 + 1.9)); else times.push(b.t0 + 2.0); });
     times.push(TL.end.t0 + 2.6);
     for (let i = 0; i < times.length; i++) {
-      await p.evaluate(t => { window.FORCE = true; render(t); }, times[i]);
+      await p.evaluate(async t => { window.FORCE = true; render(t); await window.settle(); }, times[i]);
       const id = String(i + 1).padStart(2, '0');
       await p.screenshot({ path: OUT + '_' + id + '_916.png' });
       await p.screenshot({ path: OUT + '_' + id + '_45.png', clip: { x: 0, y: 285, width: 1080, height: 1350 } });
@@ -88,7 +88,7 @@ const html = '<meta charset="utf-8"><style>' + fonts + css + '</style><div id="s
   if (MODE === 'slides') {
     const times = TL.beats.map(x => x.t0 + 2.0).concat([TL.end.t0 + 2.6]);
     for (let i = 0; i < times.length; i++) {
-      await p.evaluate(t => { window.FORCE = true; render(t); }, times[i]);
+      await p.evaluate(async t => { window.FORCE = true; render(t); await window.settle(); }, times[i]);
       const id = String(i + 1).padStart(2, '0');
       await p.screenshot({ path: OUT + '_' + id + '_916.png' });
       await p.screenshot({ path: OUT + '_' + id + '_45.png', clip: { x: 0, y: 285, width: 1080, height: 1350 } });
@@ -99,7 +99,7 @@ const html = '<meta charset="utf-8"><style>' + fonts + css + '</style><div id="s
     '-c:v', 'libx264', '-preset', 'medium', '-crf', '15', '-pix_fmt', 'yuv420p', '-r', String(FPS), OUT], { stdio: ['pipe', 'inherit', 'inherit'] });
   const N = Math.round(FPS * DUR);
   for (let f = 0; f < N; f++) {
-    await p.evaluate(t => render(t), f / FPS);
+    await p.evaluate(async t => { render(t); await window.settle(); }, f / FPS);
     const buf = await p.screenshot({ type: 'jpeg', quality: 95 });
     if (!ffp.stdin.write(buf)) await new Promise(r => ffp.stdin.once('drain', r));
   }

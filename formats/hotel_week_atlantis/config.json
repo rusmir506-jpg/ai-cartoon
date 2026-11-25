@@ -26,7 +26,7 @@
             0.55,
             1.0,
             0.5,
-            0.45,
+            0.4,
             1.12
           ]
         }
@@ -49,8 +49,8 @@
             0.5,
             1.0,
             0.5,
-            0.45,
-            1.12
+            0.55,
+            1.1
           ]
         }
       ]
@@ -66,15 +66,19 @@
       },
       "photos": [
         {
-          "img": "footage/atlantis/03_pool_suite.jpg",
+          "img": "footage/atlantis/03_pool_night.jpg",
           "move": [
             0.5,
             0.55,
             1.0,
             0.5,
             0.5,
-            1.12
+            1.1
           ]
+        },
+        {
+          "video": "footage/atlantis/03b_pool_night.mov",
+          "start": 1.0
         }
       ]
     },
@@ -89,13 +93,24 @@
       },
       "photos": [
         {
-          "img": "footage/atlantis/04_restaurant.jpg",
+          "img": "footage/atlantis/04_lobby_sign.jpg",
+          "move": [
+            0.5,
+            0.4,
+            1.15,
+            0.5,
+            0.6,
+            1.0
+          ]
+        },
+        {
+          "img": "footage/atlantis/04b_lamar_dinner.jpg",
           "move": [
             0.5,
             0.55,
             1.0,
             0.5,
-            0.5,
+            0.45,
             1.12
           ]
         }
@@ -112,38 +127,53 @@
       },
       "photos": [
         {
-          "img": "footage/atlantis/05_tower.jpg",
+          "img": "footage/atlantis/05_lobby_art.jpg",
           "move": [
             0.5,
             0.5,
             1.0,
             0.5,
-            0.4,
+            0.5,
             1.12
+          ]
+        },
+        {
+          "img": "footage/atlantis/05b_room.jpg",
+          "move": [
+            0.3,
+            0.5,
+            1.0,
+            0.7,
+            0.5,
+            1.1
           ]
         }
       ]
     },
     {
-      "text": "Пятое: отель стоит на Пальме Джумейра, рукотворном острове в форме пальмы.",
+      "text": "Пятое: даже мелочи здесь особенные. Набор в ванной лежит в шкатулке с золотыми деталями, а косметика от Шопар.",
       "scene": "card",
       "card": {
         "type": "fact",
         "n": "05",
-        "name": "Остров-пальма",
-        "sub": "Пальма Джумейра — рукотворный остров в форме пальмы, на котором стоит отель."
+        "name": "Мелочи с золотом",
+        "sub": "В ванной набор в шкатулке с золотыми деталями и косметика Chopard."
       },
       "photos": [
         {
-          "img": "footage/atlantis/06_palm_view.jpg",
+          "img": "footage/atlantis/06_amenities.jpg",
           "move": [
             0.5,
             0.5,
             1.0,
             0.5,
             0.45,
-            1.12
+            1.1
           ]
+        },
+        {
+          "video": "footage/atlantis/06b_bath.mp4",
+          "start": 2.0
         }
       ]
     },
@@ -160,15 +190,8 @@
       },
       "photos": [
         {
-          "img": "footage/atlantis/07_beach.jpg",
-          "move": [
-            0.5,
-            0.5,
-            1.0,
-            0.5,
-            0.45,
-            1.12
-          ]
+          "video": "footage/atlantis/07_room_tour.mov",
+          "start": 1.0
         }
       ]
     },
