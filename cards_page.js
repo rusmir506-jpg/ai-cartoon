@@ -16,7 +16,7 @@
     });
     h += '<div class="shade ' + (c.type || '') + '"></div>';
     if (c.type === 'cover') {
-      h += '<div class="blk" style="top:740px"><div class="cg it" id="a' + i + '">' + c.kick + '</div><div class="os big" id="b' + i + '" style="font-size:' + (c.l1.length > 8 ? 176 : (c.l1.length > 6 ? 232 : 300)) + 'px">' + c.l1 + '</div><div class="os mid" id="c' + i + '">' + c.l2 + '</div><div class="mt cap" id="d' + i + '">' + c.sub + '</div></div>';
+      h += '<div class="blk" style="top:740px"><div class="cg it" id="a' + i + '">' + c.kick + '</div><div class="os big" id="b' + i + '" style="font-size:' + (c.l1.length > 8 ? 176 : (c.l1.length > 7 ? 196 : (c.l1.length > 6 ? 232 : 300))) + 'px">' + c.l1 + '</div><div class="os mid" id="c' + i + '">' + c.l2 + '</div><div class="mt cap" id="d' + i + '">' + c.sub + '</div></div>';
     } else if (c.type === 'place') {
       h += '<div class="blk" style="top:930px"><div class="cg num" id="n' + i + '">' + c.n + '</div><div class="clip"><div class="os name" id="nm' + i + '" style="font-size:' + (c.name.length > 11 ? 104 : 136) + 'px">' + c.name + '</div></div><div class="mt sub" id="sb' + i + '">' + c.sub + '</div><div class="rule" id="ru' + i + '"></div>' +
         '<div class="temps" id="tp' + i + '"><div class="tt"><span class="mt lab">днём</span><span class="os val" id="av' + i + '">+0°</span></div><div class="sep"></div><div class="tt"><span class="mt lab">вода</span><span class="os val" id="wv' + i + '">+0°</span></div></div></div>';
