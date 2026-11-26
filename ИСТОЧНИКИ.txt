@@ -1,0 +1,38 @@
+ИСТОЧНИКИ — ГИГАНТСКИЕ МУТАНТЫ, серии 1–3
+
+МУЗЫКА И ЗВУКИ — только лицензия CC0 1.0 (общественное достояние, без указания автора и без ограничений):
+https://creativecommons.org/publicdomain/zero/1.0/
+Каждый звук взят с Freesound.org; лицензия проверена на странице звука в момент скачивания (ссылка на CC0). Использованы превью-файлы (mp3 128 кбит/с).
+
+- фоновая музыка (все серии): «Orchestral Suspense Loop 1 by awrmacd» — https://freesound.org/people/awrmacd/sounds/387223/ — CC0 1.0
+- пожарная сирена: «extreme_alarm.wav by sirplus» — https://freesound.org/people/sirplus/sounds/25032/ — CC0 1.0
+- сигнал замка: «Beep 1 sec.wav by austin1234575» — https://freesound.org/people/austin1234575/sounds/213795/ — CC0 1.0
+- пузыри под водой: «SFX_UnderWater by Perel» — https://freesound.org/people/Perel/sounds/173439/ — CC0 1.0
+- треск табло: «Vintage Edison Bulb Flicker & Warm-Up Sound Effect by hipoidogs» — https://freesound.org/people/hipoidogs/sounds/866662/ — CC0 1.0
+- скрип металла (забор, решётка, вентиль): «squeak_01.wav by joedeshon» — https://freesound.org/people/joedeshon/sounds/339184/ — CC0 1.0
+- дверь / замки: «dorm door opening.wav by pagancow» — https://freesound.org/people/pagancow/sounds/15419/ — CC0 1.0
+- огонь: «Fire Crackle and Flames 002 by TheWoodlandNomad» — https://freesound.org/people/TheWoodlandNomad/sounds/363092/ — CC0 1.0
+- рык мутанта: «DRAGON_ROAR.wav by JoelAudio» — https://freesound.org/people/JoelAudio/sounds/85568/ — CC0 1.0
+- сердцебиение: «heart beat.mp3 by greyseraphim» — https://freesound.org/people/greyseraphim/sounds/21409/ — CC0 1.0
+- гул ламп: «Lights Flicker On.wav by mmaruska» — https://freesound.org/people/mmaruska/sounds/232447/ — CC0 1.0
+- зажигалка: «zippoopen.wav by DeezSoundzTho» — https://freesound.org/people/DeezSoundzTho/sounds/407428/ — CC0 1.0
+- гул насосов: «ambience 4.wav by IanStarGem» — https://freesound.org/people/IanStarGem/sounds/478812/ — CC0 1.0
+- дождь: «Heavy Rain Sound - Inu Etc.mp3 by inuetc» — https://freesound.org/people/inuetc/sounds/507902/ — CC0 1.0
+- река: «Stream River Water Up Close by jackthemurray» — https://freesound.org/people/jackthemurray/sounds/433589/ — CC0 1.0
+- рёв гиганта: «Demon_Lion_Monster_Growl_Roar by Manim8» — https://freesound.org/people/Manim8/sounds/469123/ — CC0 1.0
+- всплеск: «Big Water Splash by qubodup» — https://freesound.org/people/qubodup/sounds/442773/ — CC0 1.0
+- шипение воды / тумана: «Spray Bottle Variations by el_boss» — https://freesound.org/people/el_boss/sounds/669919/ — CC0 1.0
+- шаги: «Walking on pavement.wav by JohnsonBrandEditing» — https://freesound.org/people/JohnsonBrandEditing/sounds/244310/ — CC0 1.0
+- глухие удары, падение: «BODY FALL - V HVY - DIRT by leonelmail» — https://freesound.org/people/leonelmail/sounds/504626/ — CC0 1.0
+- скрип вентиля: «squeak_01.wav by joedeshon» — https://freesound.org/people/joedeshon/sounds/339184/ — CC0 1.0
+- вибрация телефона: «iPhone Text Sound by ukjoncollins» — https://freesound.org/people/ukjoncollins/sounds/653820/ — CC0 1.0
+- вспышка огня: «Lighter.mp3 by SomeoneCool15» — https://freesound.org/people/SomeoneCool15/sounds/423777/ — CC0 1.0
+- ветер: «winter wind 01c.aiff by klangfabrik» — https://freesound.org/people/klangfabrik/sounds/117513/ — CC0 1.0
+
+ГОЛОС: ElevenLabs (модель Eleven v3), голос «Harry». Сгенерирован ИИ.
+Бесплатный тариф ElevenLabs требует указывать ElevenLabs (например, «Голос: ElevenLabs» в описании) и не разрешает коммерческое использование; для монетизации нужен платный тариф.
+
+РИСУНКИ И АНИМАЦИЯ: нарисованы кодом (SVG) специально для сериала — ep01/art, ep02/art, ep03/art.
+ШРИФТ: Inter (SIL Open Font License).
+
+Чужая музыка не использовалась.

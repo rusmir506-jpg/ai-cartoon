@@ -1,0 +1,20 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Обложка 3</title>
+<style>html,body{margin:0;background:#000}</style>
+<script src="../../ep01/art/assets.js"></script><script src="../../ep02/art/assets2.js"></script><script src="assets3.js"></script><script src="words.js"></script><script src="anim3.js"></script></head>
+<body><div id="v"></div><script>
+const t = 2;
+const T = (y, txt, size, fill) => `<text x="540" y="${y}" text-anchor="middle" font-family="Inter" font-weight="900" font-size="${size}" fill="${fill}" stroke="#000" stroke-width="${size * .16}" stroke-linejoin="round" paint-order="stroke">${txt}</text>`;
+document.getElementById('v').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">${defsCommon}<defs>${SIL}
+  <linearGradient id="topfade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".9"/><stop offset="1" stop-color="#000" stop-opacity="0"/></linearGradient></defs>
+  ${bgLab(t, { curtain: 1 })}<rect width="1080" height="1920" fill="#000" opacity=".35"/>
+  <g transform="translate(820 900) scale(.95)">${fatherInTank(t)}</g>
+  <g opacity=".9">${at(250, 1500, 1.25, professor({ face: 'cold' }))}</g>
+  <circle cx="560" cy="1060" r="420" fill="${PAL.eyeGlow}" opacity=".08"/>
+  ${at(560, 2120, 4.1, asya({ face: 'calm', hard: 2.2, torch: false, green: 1 }))}
+  <rect width="1080" height="640" fill="url(#topfade)"/><rect width="1080" height="1920" fill="url(#vignette)"/>
+  ${T(230, 'ГИГАНТСКИЕ', 128, PAL.eye)}${T(365, 'МУТАНТЫ', 128, PAL.eye)}
+  <rect x="270" y="410" width="540" height="78" rx="14" fill="${PAL.red}"/>
+  <text x="540" y="466" text-anchor="middle" font-family="Inter" font-weight="900" font-size="46" fill="#fff">СЕРИЯ 3 · КАФЕДРА</text>
+  ${T(1560, 'ГЛАЗА У НЕЁ', 96, '#ffffff')}${T(1670, 'БЫЛИ ЗЕЛЁНЫЕ', 96, PAL.eye)}
+</svg>`;
+</script></body></html>

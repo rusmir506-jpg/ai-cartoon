@@ -1,0 +1,218 @@
+{
+ "bed": {
+  "key": "bed",
+  "query": "dark ambient drone",
+  "title": "Orchestral Suspense Loop 1 by awrmacd",
+  "page": "https://freesound.org/people/awrmacd/sounds/387223/",
+  "file": "https://cdn.freesound.org/previews/387/387223_4724550-hq.mp3",
+  "duration": 90.49,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "wind": {
+  "key": "wind",
+  "query": "wind howling",
+  "title": "winter wind 01c.aiff by klangfabrik",
+  "page": "https://freesound.org/people/klangfabrik/sounds/117513/",
+  "file": "https://cdn.freesound.org/previews/117/117513_181941-hq.mp3",
+  "duration": 392.07,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "rain": {
+  "key": "rain",
+  "query": "rain",
+  "title": "Heavy Rain Sound - Inu Etc.mp3 by inuetc",
+  "page": "https://freesound.org/people/inuetc/sounds/507902/",
+  "file": "https://cdn.freesound.org/previews/507/507902_9004329-hq.mp3",
+  "duration": 54.05,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "river": {
+  "key": "river",
+  "query": "river water flowing",
+  "title": "Stream River Water Up Close by jackthemurray",
+  "page": "https://freesound.org/people/jackthemurray/sounds/433589/",
+  "file": "https://cdn.freesound.org/previews/433/433589_5618682-hq.mp3",
+  "duration": 68.89,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "steps": {
+  "key": "steps",
+  "query": "footsteps concrete",
+  "title": "Walking on pavement.wav by JohnsonBrandEditing",
+  "page": "https://freesound.org/people/JohnsonBrandEditing/sounds/244310/",
+  "file": "https://cdn.freesound.org/previews/244/244310_3229685-hq.mp3",
+  "duration": 53.01,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "creak": {
+  "key": "creak",
+  "query": "metal creak",
+  "title": "squeak_01.wav by joedeshon",
+  "page": "https://freesound.org/people/joedeshon/sounds/339184/",
+  "file": "https://cdn.freesound.org/previews/339/339184_1218676-hq.mp3",
+  "duration": 6.84,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "door": {
+  "key": "door",
+  "query": "heavy metal door",
+  "title": "dorm door opening.wav by pagancow",
+  "page": "https://freesound.org/people/pagancow/sounds/15419/",
+  "file": "https://cdn.freesound.org/previews/15/15419_45698-hq.mp3",
+  "duration": 1.79,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "fire": {
+  "key": "fire",
+  "query": "fire crackling",
+  "title": "Fire Crackle and Flames 002 by TheWoodlandNomad",
+  "page": "https://freesound.org/people/TheWoodlandNomad/sounds/363092/",
+  "file": "https://cdn.freesound.org/previews/363/363092_6612464-hq.mp3",
+  "duration": 21.03,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "lighter": {
+  "key": "lighter",
+  "query": "lighter flick",
+  "title": "zippoopen.wav by DeezSoundzTho",
+  "page": "https://freesound.org/people/DeezSoundzTho/sounds/407428/",
+  "file": "https://cdn.freesound.org/previews/407/407428_7151065-hq.mp3",
+  "duration": 0.73,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "growl": {
+  "key": "growl",
+  "query": "monster growl",
+  "title": "DRAGON_ROAR.wav by JoelAudio",
+  "page": "https://freesound.org/people/JoelAudio/sounds/85568/",
+  "file": "https://cdn.freesound.org/previews/85/85568_1206321-hq.mp3",
+  "duration": 2.47,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "roar": {
+  "key": "roar",
+  "query": "deep monster roar",
+  "title": "Demon_Lion_Monster_Growl_Roar by Manim8",
+  "page": "https://freesound.org/people/Manim8/sounds/469123/",
+  "file": "https://cdn.freesound.org/previews/469/469123_4996003-hq.mp3",
+  "duration": 8.28,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "splash": {
+  "key": "splash",
+  "query": "big splash water",
+  "title": "Big Water Splash by qubodup",
+  "page": "https://freesound.org/people/qubodup/sounds/442773/",
+  "file": "https://cdn.freesound.org/previews/442/442773_71257-hq.mp3",
+  "duration": 2.17,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "hum": {
+  "key": "hum",
+  "query": "fluorescent light hum",
+  "title": "Lights Flicker On.wav by mmaruska",
+  "page": "https://freesound.org/people/mmaruska/sounds/232447/",
+  "file": "https://cdn.freesound.org/previews/232/232447_3046049-hq.mp3",
+  "duration": 15.0,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "buzz": {
+  "key": "buzz",
+  "query": "electric buzz flicker",
+  "title": "Vintage Edison Bulb Flicker &amp; Warm-Up Sound Effect by hipoidogs",
+  "page": "https://freesound.org/people/hipoidogs/sounds/866662/",
+  "file": "https://cdn.freesound.org/previews/866/866662_19146166-hq.mp3",
+  "duration": 5.04,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "beep": {
+  "key": "beep",
+  "query": "beep",
+  "title": "Beep 1 sec.wav by austin1234575",
+  "page": "https://freesound.org/people/austin1234575/sounds/213795/",
+  "file": "https://cdn.freesound.org/previews/213/213795_4001802-hq.mp3",
+  "duration": 1.01,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "vibrate": {
+  "key": "vibrate",
+  "query": "phone vibrate",
+  "title": "iPhone Text Sound by ukjoncollins",
+  "page": "https://freesound.org/people/ukjoncollins/sounds/653820/",
+  "file": "https://cdn.freesound.org/previews/653/653820_200878-hq.mp3",
+  "duration": 3.93,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "alarm": {
+  "key": "alarm",
+  "query": "fire alarm bell",
+  "title": "extreme_alarm.wav by sirplus",
+  "page": "https://freesound.org/people/sirplus/sounds/25032/",
+  "file": "https://cdn.freesound.org/previews/25/25032_30374-hq.mp3",
+  "duration": 7.71,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "sprinkler": {
+  "key": "sprinkler",
+  "query": "water spray hiss",
+  "title": "Spray Bottle Variations by el_boss",
+  "page": "https://freesound.org/people/el_boss/sounds/669919/",
+  "file": "https://cdn.freesound.org/previews/669/669919_9129912-hq.mp3",
+  "duration": 3.09,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "pump": {
+  "key": "pump",
+  "query": "factory ambience hum",
+  "title": "ambience 4.wav by IanStarGem",
+  "page": "https://freesound.org/people/IanStarGem/sounds/478812/",
+  "file": "https://cdn.freesound.org/previews/478/478812_4965320-hq.mp3",
+  "duration": 59.74,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "bubbles": {
+  "key": "bubbles",
+  "query": "underwater bubbles",
+  "title": "SFX_UnderWater by Perel",
+  "page": "https://freesound.org/people/Perel/sounds/173439/",
+  "file": "https://cdn.freesound.org/previews/173/173439_910681-hq.mp3",
+  "duration": 5.6,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "heartbeat": {
+  "key": "heartbeat",
+  "query": "heartbeat",
+  "title": "heart beat.mp3 by greyseraphim",
+  "page": "https://freesound.org/people/greyseraphim/sounds/21409/",
+  "file": "https://cdn.freesound.org/previews/21/21409_106798-hq.mp3",
+  "duration": 41.42,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "thud": {
+  "key": "thud",
+  "query": "body fall thud",
+  "title": "BODY FALL - V HVY - DIRT by leonelmail",
+  "page": "https://freesound.org/people/leonelmail/sounds/504626/",
+  "file": "https://cdn.freesound.org/previews/504/504626_4437257-hq.mp3",
+  "duration": 1.63,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "valve": {
+  "key": "valve",
+  "query": "metal squeak",
+  "title": "squeak_01.wav by joedeshon",
+  "page": "https://freesound.org/people/joedeshon/sounds/339184/",
+  "file": "https://cdn.freesound.org/previews/339/339184_1218676-hq.mp3",
+  "duration": 6.84,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "whoosh": {
+  "key": "whoosh",
+  "query": "fire ignition",
+  "title": "Lighter.mp3 by SomeoneCool15",
+  "page": "https://freesound.org/people/SomeoneCool15/sounds/423777/",
+  "file": "https://cdn.freesound.org/previews/423/423777_8326967-hq.mp3",
+  "duration": 0.56,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ }
+}
