@@ -1,0 +1,155 @@
+{
+  "name": "singapore_rain",
+  "renderer": "render_cards.js",
+  "style": "cards",
+  "hud": false,
+  "voice": "FGY2WhTYpPnrIDTdsKH5",
+  "model": "eleven_v3",
+  "music_script": "make_music3.py",
+  "vo_delay": 0.25,
+  "beats": [
+    {
+      "text": "Сингапур в декабре: дождь — не помеха.",
+      "scene": "card",
+      "card": {
+        "type": "cover",
+        "kick": "декабрь",
+        "l1": "СИНГАПУР",
+        "l2": "В ДОЖДЬ",
+        "sub": "как спланировать поездку"
+      },
+      "photos": [
+        {
+          "img": "footage/singapore/01_facade.jpg",
+          "move": [
+            0.5,
+            0.7,
+            1.0,
+            0.5,
+            0.35,
+            1.1
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Первое: тепло даже в дождь. Днём около тридцати градусов, а ночью около двадцати четырёх.",
+      "scene": "card",
+      "card": {
+        "type": "fact",
+        "n": "01",
+        "name": "Тепло в дождь",
+        "sub": "Днём около +30°, ночью около +24°."
+      },
+      "photos": [
+        {
+          "video": "footage/singapore/v3_terrace.mov",
+          "start": 0.5
+        },
+        {
+          "video": "footage/singapore/v6_garden.mov",
+          "start": 0
+        }
+      ]
+    },
+    {
+      "text": "Второе: декабрь здесь один из самых дождливых месяцев. Дождь идёт примерно девятнадцать дней.",
+      "scene": "card",
+      "card": {
+        "type": "fact",
+        "n": "02",
+        "name": "Много дождей",
+        "sub": "Один из самых дождливых месяцев: около 19 дней с дождём."
+      },
+      "photos": [
+        {
+          "video": "footage/singapore/v1_rain_window.mov",
+          "start": 0
+        },
+        {
+          "img": "footage/singapore/02_south_bridge_rd.jpg",
+          "move": [
+            0.5,
+            0.55,
+            1.0,
+            0.5,
+            0.5,
+            1.1
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Третье: ливни нередко идут днём. Прогулки лучше ставить на утро.",
+      "scene": "card",
+      "card": {
+        "type": "fact",
+        "n": "03",
+        "name": "Ливни днём",
+        "sub": "Нередко ливни идут во второй половине дня. Прогулки удобнее планировать на утро."
+      },
+      "photos": [
+        {
+          "video": "footage/singapore/v2_city_view.mov",
+          "start": 0
+        },
+        {
+          "video": "footage/singapore/v9_views.mov",
+          "start": 0
+        }
+      ]
+    },
+    {
+      "text": "Четвёртое: возьмите лёгкий дождевик или зонт и обувь, которая быстро сохнет.",
+      "scene": "card",
+      "card": {
+        "type": "fact",
+        "n": "04",
+        "name": "Зонт с собой",
+        "sub": "Лёгкий дождевик или зонт, обувь, которая быстро сохнет."
+      },
+      "photos": [
+        {
+          "video": "footage/singapore/v8_tree2.mov",
+          "start": 0
+        },
+        {
+          "video": "footage/singapore/v7_walkway.mov",
+          "start": 0
+        }
+      ]
+    },
+    {
+      "text": "Пятое: придумайте запасной план на случай ливня: музеи, торговые центры, крытые переходы.",
+      "scene": "card",
+      "card": {
+        "type": "fact",
+        "n": "05",
+        "name": "Запасной план",
+        "sub": "На случай ливня: музеи, торговые центры, крытые переходы."
+      },
+      "photos": [
+        {
+          "video": "footage/singapore/v4_terrace2.mov",
+          "start": 0
+        },
+        {
+          "img": "footage/singapore/03_night_underside.jpg",
+          "move": [
+            0.5,
+            0.55,
+            1.0,
+            0.5,
+            0.5,
+            1.12
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Подписывайся, чтобы не пропустить новые советы.",
+      "end": true
+    }
+  ],
+  "end_tag": "Подписывайся,<br>чтобы не пропустить<br>новые советы"
+}

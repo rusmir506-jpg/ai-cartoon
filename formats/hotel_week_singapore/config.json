@@ -1,0 +1,178 @@
+{
+  "name": "hotel_week_singapore",
+  "renderer": "render_cards.js",
+  "style": "cards",
+  "hud": false,
+  "voice": "FGY2WhTYpPnrIDTdsKH5",
+  "model": "eleven_v3",
+  "music_script": "make_music3.py",
+  "vo_delay": 0.25,
+  "beats": [
+    {
+      "text": "Отель недели: Паркроял Коллекшн Пикеринг, Сингапур.",
+      "scene": "card",
+      "card": {
+        "type": "cover",
+        "kick": "отель недели",
+        "l1": "PARKROYAL",
+        "l2": "СИНГАПУР",
+        "sub": "Collection Pickering"
+      },
+      "photos": [
+        {
+          "img": "footage/singapore/01_facade.jpg",
+          "move": [
+            0.5,
+            0.7,
+            1.0,
+            0.5,
+            0.35,
+            1.1
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Первое: отель-сад. Проект бюро Воха: здание ярусами, а на террасах растут сады.",
+      "scene": "card",
+      "card": {
+        "type": "fact",
+        "n": "01",
+        "name": "Отель-сад",
+        "sub": "Проект бюро WOHA: здание ярусами, а на террасах растут сады."
+      },
+      "photos": [
+        {
+          "img": "footage/singapore/03_night_underside.jpg",
+          "move": [
+            0.5,
+            0.55,
+            1.0,
+            0.5,
+            0.5,
+            1.12
+          ]
+        },
+        {
+          "video": "footage/singapore/v7_walkway.mov",
+          "start": 0
+        }
+      ]
+    },
+    {
+      "text": "Второе: около пятнадцати тысяч квадратных метров садов и террас.",
+      "scene": "card",
+      "card": {
+        "type": "fact",
+        "n": "02",
+        "name": "15 000 м² зелени",
+        "sub": "Около 15 000 м² садов и террас на ярусах здания."
+      },
+      "photos": [
+        {
+          "video": "footage/singapore/v3_terrace.mov",
+          "start": 0.5
+        },
+        {
+          "video": "footage/singapore/v6_garden.mov",
+          "start": 0
+        }
+      ]
+    },
+    {
+      "text": "Третье: триста шестьдесят семь номеров и люксов в здании на шестнадцать этажей. Отель открылся в две тысячи тринадцатом году.",
+      "scene": "card",
+      "card": {
+        "type": "fact",
+        "n": "03",
+        "name": "367 номеров",
+        "sub": "367 номеров и люксов, 16 этажей. Открылся в 2013 году."
+      },
+      "photos": [
+        {
+          "video": "footage/singapore/v1_rain_window.mov",
+          "start": 0
+        },
+        {
+          "img": "footage/singapore/01_facade.jpg",
+          "move": [
+            0.5,
+            0.35,
+            1.0,
+            0.5,
+            0.7,
+            1.15
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Четвёртое: отель стоит между деловым районом и Чайнатауном.",
+      "scene": "card",
+      "card": {
+        "type": "fact",
+        "n": "04",
+        "name": "На границе районов",
+        "sub": "Между деловым районом Сингапура и Чайнатауном."
+      },
+      "photos": [
+        {
+          "img": "footage/singapore/02_south_bridge_rd.jpg",
+          "move": [
+            0.5,
+            0.55,
+            1.0,
+            0.5,
+            0.5,
+            1.1
+          ]
+        },
+        {
+          "video": "footage/singapore/v2_city_view.mov",
+          "start": 0
+        }
+      ]
+    },
+    {
+      "text": "Пятое: на пятом этаже оздоровительная зона. Там спа, спортзал, бассейн и сад.",
+      "scene": "card",
+      "card": {
+        "type": "fact",
+        "n": "05",
+        "name": "Wellness на 5 этаже",
+        "sub": "На 5 этаже спа, спортзал, бассейн и сад, по данным отеля."
+      },
+      "photos": [
+        {
+          "video": "footage/singapore/v8_tree2.mov",
+          "start": 0
+        },
+        {
+          "video": "footage/singapore/v9_views.mov",
+          "start": 0
+        }
+      ]
+    },
+    {
+      "text": "А в декабре в Сингапуре тепло и дождливо: днём около тридцати градусов, а дождь идёт примерно девятнадцать дней.",
+      "scene": "card",
+      "card": {
+        "type": "fact",
+        "n": "06",
+        "name": "Декабрь: дожди",
+        "sub": "Днём около +30°, ночью около +24°. Самый дождливый месяц: около 19 дней с дождём."
+      },
+      "photos": [
+        {
+          "video": "footage/singapore/v4_terrace2.mov",
+          "start": 0
+        }
+      ]
+    },
+    {
+      "text": "Новый отель — каждую сре́ду. Подписывайся, чтобы не пропустить.",
+      "end": true
+    }
+  ],
+  "end_tag": "Новый отель<br>каждую среду.<br>Подписывайся,<br>чтобы не пропустить"
+}
