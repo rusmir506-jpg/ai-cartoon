@@ -15,7 +15,7 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#000;color:#fff}
 .wm{position:absolute;left:72px;top:118px;font-family:CG,serif;font-style:italic;font-weight:500;font-size:60px;text-shadow:0 2px 16px rgba(0,0,0,.5)}
 .t{position:absolute;left:50px;right:50px;top:1000px;text-align:center;text-shadow:0 2px 22px rgba(0,0,0,.45)}
 .k{font-family:CG,serif;font-style:italic;font-weight:500;font-size:96px;line-height:1}
-.b{font-family:OS,sans-serif;font-weight:700;font-size:${BIG.length > 6 ? 230 : 290}px;line-height:.95;text-transform:uppercase}
+.b{font-family:OS,sans-serif;font-weight:700;font-size:${BIG.length > 7 ? 196 : (BIG.length > 6 ? 230 : 290)}px;line-height:.95;text-transform:uppercase}
 .m{font-family:OS,sans-serif;font-weight:700;font-size:112px;line-height:1.02;text-transform:uppercase}
 .s{font-family:MT,sans-serif;font-weight:500;font-size:32px;letter-spacing:.2em;text-transform:uppercase;margin-top:32px}
 </style><div class="bg"></div><div class="sh"></div><div class="wm">InVoyage</div>
