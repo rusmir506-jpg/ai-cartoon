@@ -102,7 +102,7 @@ function nikita({ pose = {}, face = 'tense', lighter = false, phone = false, fla
 
 // ---------------- АСЯ ----------------
 // hard: 0..1 — насколько поднялась твёрдая кожа по левой руке (0 — нет, 0.5 — до локтя, 1 — плечо)
-function asya({ pose = {}, face = 'scared', hard = 0, torch = true, scratch = false } = {}) {
+function asya({ pose = {}, face = 'scared', hard = 0, torch = true, scratch = false, green = 0 } = {}) {
   // hard > 1: серое переходит на плечо и шею (2 — у самой шеи)
   const hk = clampN(hard - 1);
   const shoulder = hk > 0 ? `<path d="M-46 -200 Q-44 -218 -28 -224 L${(-28 + 22 * hk).toFixed(1)} ${(-226 - 4 * hk).toFixed(1)} Q${(-34 + 10 * hk).toFixed(1)} -205 -40 ${(-196 + 20 * (1 - hk)).toFixed(1)}Z" fill="${PAL.hard}"/><path d="M-42 -206 l8 -6 l7 5 l7 -6" stroke="${PAL.hardHi}" stroke-width="2" fill="none"/>` : '';
@@ -147,7 +147,7 @@ function asya({ pose = {}, face = 'scared', hard = 0, torch = true, scratch = fa
       <ellipse cx="0" cy="-258" rx="32" ry="36" fill="${PAL.skin}"/>
       <path d="M-33 -262 Q-34 -298 0 -296 Q34 -298 33 -262 Q22 -282 0 -280 Q-22 -282 -33 -262Z" fill="#4a2e1e"/>
       <path d="M-34 -262 q-6 30 -2 46 M34 -262 q6 30 2 46" stroke="#4a2e1e" stroke-width="7" fill="none" stroke-linecap="round"/>
-      ${eyes}</g>${neck}
+      ${eyes}${green > 0 ? `<g opacity="${green}"><circle cx="-11" cy="-262" r="10" fill="${PAL.eyeGlow}" opacity=".3"/><circle cx="11" cy="-262" r="10" fill="${PAL.eyeGlow}" opacity=".3"/><circle cx="-11" cy="-262" r="6.5" fill="${PAL.eye}"/><circle cx="11" cy="-262" r="6.5" fill="${PAL.eye}"/><ellipse cx="-11" cy="-262" rx="1.6" ry="5" fill="#10140a"/><ellipse cx="11" cy="-262" rx="1.6" ry="5" fill="#10140a"/></g>` : ''}</g>${neck}
     <g id="a-armR" transform="${rot(p.armR, 48, -205)}">
       <rect x="34" y="-212" width="27" height="${armLen}" rx="11" fill="${PAL.coat}"/>
       <circle cx="47" cy="-98" r="11" fill="${PAL.skin}"/>${torchG}</g>

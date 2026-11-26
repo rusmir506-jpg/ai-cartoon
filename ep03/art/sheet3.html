@@ -1,0 +1,31 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Лист серии 3</title>
+<style>html,body{margin:0;background:#07090d}</style>
+<script src="../../ep01/art/assets.js"></script><script src="../../ep02/art/assets2.js"></script><script src="assets3.js"></script></head>
+<body><div id="out"></div><script>
+const W = 1600, H = 1720;
+const label = (x, y, t, s = 22, c = '#e9e4d8', w = 700) => `<text x="${x}" y="${y}" fill="${c}" font-family="Inter" font-weight="${w}" font-size="${s}" text-anchor="middle">${t}</text>`;
+const panel = (x, y, w, h) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="16" fill="#0e141a" stroke="#1d2730" stroke-width="2"/>`;
+const at = (x, y, s, inner) => `<g transform="translate(${x} ${y}) scale(${s})">${inner}</g>`;
+const sub = (x, y, t) => label(x, y, t, 18, '#8a98a3', 600);
+const thumb = (x, y, inner, name, s = .24) => `<g transform="translate(${x} ${y})"><svg width="${1080 * s}" height="${1920 * s}" viewBox="0 0 1080 1920">${inner}</svg><rect width="${1080 * s}" height="${1920 * s}" fill="none" stroke="#2a3540" stroke-width="2"/></g>${label(x + 1080 * s / 2, y + 1920 * s + 28, name, 18)}`;
+document.getElementById('out').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">${defsCommon}
+<rect width="${W}" height="${H}" fill="#07090d"/>
+${label(W / 2, 64, 'ГИГАНТСКИЕ МУТАНТЫ', 52, '#c8ff6e', 900)}${label(W / 2, 104, 'Серия 3 «Кафедра» · новые персонажи, фоны и реквизит', 24, '#8a98a3', 600)}
+${panel(30, 140, 780, 620)}${label(420, 182, 'ПРОФЕССОР ВЕРШИНИН · зав. кафедрой', 26)}
+${at(170, 700, .9, professor({ face: 'calm' }))}${sub(170, 740, 'на портрете')}
+${at(420, 700, .9, professor({ face: 'cold', pose: { armR: -40 } }))}${sub(420, 740, 'холодный')}
+${at(670, 700, .9, professor({ face: 'shout', pose: { armL: 40, armR: -60, lean: 4 } }))}${sub(670, 740, 'кричит вслед')}
+${panel(830, 140, 740, 620)}${label(1200, 182, 'ОТЕЦ АСИ · АСЯ', 26)}
+${at(1010, 450, .42, fatherInTank(0))}${sub(1010, 740, 'в баке: серый до глаз')}
+${at(1280, 700, 1.5, asya({ face: 'calm', hard: 2, torch: false }))}${sub(1280, 740, 'серое на шее')}
+${at(1470, 700, 1.5, asya({ face: 'calm', hard: 2, torch: false, green: 1 }))}${sub(1470, 740, 'зелёные глаза')}
+${panel(30, 780, 1540, 320)}${label(800, 822, 'РЕКВИЗИТ', 26)}
+<clipPath id="aq"><rect x="60" y="840" width="340" height="200"/></clipPath><g clip-path="url(#aq)">${at(80, 850, .3, aquariumWall(0, 1))}</g>${sub(230, 1080, 'аквариумы: рыбы смотрят')}
+${at(560, 960, .7, logoReka())}${sub(560, 1080, 'знак завода на двери')}
+${at(850, 960, .8, display(['ОРЛОВ', 'ДОСТУП: ДОНОР'], 1))}${sub(850, 1080, 'табло (намёк)')}
+${at(1120, 960, 1, smokeDetector(1))}${sub(1120, 1080, 'датчик дыма')}
+<g transform="translate(1400 960)"><rect x="-50" y="-80" width="100" height="160" rx="12" fill="#5a8a8f" opacity=".55" stroke="#b9c7d2" stroke-width="5"/><rect x="-50" y="-30" width="100" height="110" rx="10" fill="${PAL.reagent}" opacity=".35"/><rect x="-36" y="-10" width="72" height="34" fill="#e9e4d8"/><text x="0" y="16" fill="#2a3138" font-family="Inter" font-weight="900" font-size="22" text-anchor="middle">№ 417</text></g>${sub(1400, 1080, 'образец № 417')}
+${label(W / 2, 1150, 'НОВЫЕ ФОНЫ (кадр 9:16)', 26)}
+${thumb(30, 1170, bgDept(), 'Кафедра', .225)}${thumb(290, 1170, bgMedFac(), 'Медфак', .225)}${thumb(550, 1170, bgCorridor(), 'Анатомичка', .225)}${thumb(810, 1170, bgBasementDoor({ lines: ['ОРЛОВ', 'ДОСТУП: ДОНОР'], on: 1 }), 'Дверь подвала', .225)}${thumb(1070, 1170, bgLab(0, { curtain: .7 }), 'Лаборатория', .225)}${thumb(1330, 1170, bgCourtyard(), 'Двор на рассвете', .225)}
+</svg>`;
+</script></body></html>
