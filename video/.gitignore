@@ -4,3 +4,5 @@ out/*
 script/vo_track.npy
 script/premaster.wav
 __pycache__/
+!out/cover.png
+!out/cover.jpg
