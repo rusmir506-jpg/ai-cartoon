@@ -18,7 +18,7 @@
     if (c.type === 'cover') {
       if (TL.style === 'greek') {
         var lets = c.l1.split('').map(function (ch, k) { return '<span class="lt" id="lt' + i + '_' + k + '">' + ch + '</span>'; }).join('');
-        h += '<div class="blk" style="top:700px;text-align:center"><div class="cg it kick" id="a' + i + '">' + c.kick + '</div><div class="os big" id="b' + i + '" style="font-size:400px;letter-spacing:.06em;opacity:1">' + lets + '</div><div class="os mid" id="c' + i + '" style="font-size:66px;letter-spacing:.14em">' + c.l2 + '</div><div class="mt cap" id="d' + i + '">' + c.sub + '</div></div>';
+        h += '<div class="blk" style="top:700px;text-align:center"><div class="cg it kick" id="a' + i + '">' + c.kick + '</div><div class="os big" id="b' + i + '" style="font-size:' + Math.min(400, Math.floor(900 / (c.l1.length * 0.68))) + 'px;letter-spacing:.06em;opacity:1">' + lets + '</div><div class="os mid" id="c' + i + '" style="font-size:' + Math.min(150, Math.floor(900 / (c.l2.length * 0.8))) + 'px;letter-spacing:.1em">' + c.l2 + '</div><div class="mt cap" id="d' + i + '">' + c.sub + '</div></div>';
       } else
       h += '<div class="blk" style="top:740px"><div class="cg it" id="a' + i + '">' + c.kick + '</div><div class="os big" id="b' + i + '" style="font-size:' + (c.l1.length > 8 ? 176 : (c.l1.length > 7 ? 196 : (c.l1.length > 6 ? 232 : 300))) + 'px">' + c.l1 + '</div><div class="os mid" id="c' + i + '">' + c.l2 + '</div><div class="mt cap" id="d' + i + '">' + c.sub + '</div></div>';
     } else if (c.type === 'place') {
@@ -72,8 +72,8 @@
       if (c.type === 'cover') {
         if (TL.style === 'greek') {
           rv('a' + i, u, 0.3, 24);
-          c.l1.split('').forEach(function (ch, k) { var e = $('lt' + i + '_' + k), o = out3((u - 0.55 - k * 0.28) / 0.7); e.style.opacity = o; e.style.transform = 'translateY(' + ((1 - o) * 70) + 'px) scale(' + (0.9 + 0.1 * o) + ')'; });
-          rv('c' + i, u, 1.6, 30); rv('d' + i, u, 2.0, 20);
+          c.l1.split('').forEach(function (ch, k) { var e = $('lt' + i + '_' + k), o = out3((u - 0.55 - k * 0.18) / 0.6); e.style.opacity = o; e.style.transform = 'translateY(' + ((1 - o) * 70) + 'px) scale(' + (0.9 + 0.1 * o) + ')'; });
+          var dl = 0.55 + c.l1.length * 0.18 + 0.2; rv('c' + i, u, dl, 30); rv('d' + i, u, dl + 0.5, 20);
         } else { rv('a' + i, u, 0.45, 30); rv('b' + i, u, 0.6, 60); rv('c' + i, u, 0.78, 40); rv('d' + i, u, 1.05, 24); }
       }
       if (c.type === 'place') {
