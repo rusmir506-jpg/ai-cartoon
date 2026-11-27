@@ -1,0 +1,693 @@
+[
+ {
+  "id": "h1",
+  "seg": "hook",
+  "cue": "он",
+  "scene": "HookBank",
+  "sfx": [
+   [
+    "boom",
+    "он"
+   ],
+   [
+    "pop",
+    "отделения"
+   ]
+  ]
+ },
+ {
+  "id": "h2",
+  "seg": "hook",
+  "cue": "а",
+  "scene": "HookPost",
+  "sfx": [
+   [
+    "whoosh",
+    "а"
+   ],
+   [
+    "notify",
+    "потом"
+   ],
+   [
+    "tick",
+    "девять"
+   ]
+  ]
+ },
+ {
+  "id": "h3",
+  "seg": "hook",
+  "cue": "продал",
+  "scene": "HookSold",
+  "sfx": [
+   [
+    "whoosh",
+    "продал"
+   ],
+   [
+    "stamp",
+    "долю"
+   ],
+   [
+    "glitch",
+    "даром"
+   ]
+  ]
+ },
+ {
+  "id": "h4",
+  "seg": "hook",
+  "cue": "это",
+  "scene": "HookTitle",
+  "sfx": [
+   [
+    "riser",
+    "олега"
+   ],
+   [
+    "impact",
+    "олега"
+   ]
+  ]
+ },
+ {
+  "id": "c1",
+  "seg": "ch1",
+  "cue": "посёлок",
+  "scene": "MapHome",
+  "chapter": [
+   1,
+   "НАЧАЛО"
+  ],
+  "sfx": [
+   [
+    "whoosh",
+    "посёлок"
+   ],
+   [
+    "pop",
+    "полысаево"
+   ],
+   [
+    "pop",
+    "кузбасс"
+   ]
+  ]
+ },
+ {
+  "id": "c2",
+  "seg": "ch1",
+  "cue": "сын",
+  "scene": "Miner",
+  "sfx": [
+   [
+    "whoosh",
+    "сын"
+   ],
+   [
+    "click",
+    "шахтёра"
+   ]
+  ]
+ },
+ {
+  "id": "c3",
+  "seg": "ch1",
+  "cue": "велоспорт",
+  "scene": "BikeArmy",
+  "sfx": [
+   [
+    "whoosh",
+    "велоспорт"
+   ],
+   [
+    "swoosh",
+    "армия"
+   ]
+  ]
+ },
+ {
+  "id": "c4",
+  "seg": "ch1",
+  "cue": "а",
+  "scene": "MapLeningrad",
+  "sfx": [
+   [
+    "whoosh",
+    "а"
+   ],
+   [
+    "pop",
+    "ленинградский"
+   ]
+  ]
+ },
+ {
+  "id": "c5",
+  "seg": "ch1",
+  "cue": "но",
+  "scene": "Trade",
+  "sfx": [
+   [
+    "whoosh",
+    "но"
+   ],
+   [
+    "click",
+    "торговля"
+   ],
+   [
+    "cash",
+    "перепродаёт"
+   ]
+  ]
+ },
+ {
+  "id": "d1",
+  "seg": "ch2",
+  "cue": "девяностые",
+  "scene": "Nineties",
+  "chapter": [
+   2,
+   "ПЕРВЫЕ ИМПЕРИИ"
+  ],
+  "sfx": [
+   [
+    "boom",
+    "девяностые"
+   ]
+  ]
+ },
+ {
+  "id": "d2",
+  "seg": "ch2",
+  "cue": "электроника",
+  "scene": "MapSingapore",
+  "sfx": [
+   [
+    "whoosh",
+    "электроника"
+   ],
+   [
+    "pop",
+    "сингапура"
+   ]
+  ]
+ },
+ {
+  "id": "d3",
+  "seg": "ch2",
+  "cue": "техношок",
+  "scene": "Technoshock",
+  "sfx": [
+   [
+    "neon",
+    "техношок"
+   ]
+  ]
+ },
+ {
+  "id": "d4",
+  "seg": "ch2",
+  "cue": "затем",
+  "scene": "Daria",
+  "sfx": [
+   [
+    "whoosh",
+    "затем"
+   ],
+   [
+    "pop",
+    "дарья"
+   ]
+  ]
+ },
+ {
+  "id": "d5",
+  "seg": "ch2",
+  "cue": "потом",
+  "scene": "Brewery",
+  "sfx": [
+   [
+    "whoosh",
+    "потом"
+   ],
+   [
+    "neon",
+    "тинькофф"
+   ]
+  ]
+ },
+ {
+  "id": "d6",
+  "seg": "ch2",
+  "cue": "в",
+  "scene": "BeerDeal",
+  "sfx": [
+   [
+    "whoosh",
+    "в"
+   ],
+   [
+    "stamp",
+    "интербрю"
+   ],
+   [
+    "cash",
+    "двухсот"
+   ]
+  ]
+ },
+ {
+  "id": "d7",
+  "seg": "ch2",
+  "cue": "его",
+  "scene": "Formula",
+  "sfx": [
+   [
+    "whoosh",
+    "его"
+   ],
+   [
+    "click",
+    "построить"
+   ],
+   [
+    "click",
+    "бренд"
+   ],
+   [
+    "stamp",
+    "пике"
+   ]
+  ]
+ },
+ {
+  "id": "e1",
+  "seg": "ch3",
+  "cue": "две",
+  "scene": "Year2006",
+  "chapter": [
+   3,
+   "БАНКОВСКАЯ РЕВОЛЮЦИЯ"
+  ],
+  "sfx": [
+   [
+    "boom",
+    "две"
+   ]
+  ]
+ },
+ {
+  "id": "e2",
+  "seg": "ch3",
+  "cue": "тиньков",
+  "scene": "Khimmash",
+  "sfx": [
+   [
+    "whoosh",
+    "тиньков"
+   ],
+   [
+    "stamp",
+    "химмашбанк"
+   ]
+  ]
+ },
+ {
+  "id": "e3",
+  "seg": "ch3",
+  "cue": "идея",
+  "scene": "NoBranches",
+  "sfx": [
+   [
+    "whoosh",
+    "идея"
+   ],
+   [
+    "glitch",
+    "отделений"
+   ]
+  ]
+ },
+ {
+  "id": "e4",
+  "seg": "ch3",
+  "cue": "карты",
+  "scene": "CardsMail",
+  "sfx": [
+   [
+    "whoosh",
+    "карты"
+   ],
+   [
+    "swoosh",
+    "почте"
+   ]
+  ]
+ },
+ {
+  "id": "e5",
+  "seg": "ch3",
+  "cue": "всё",
+  "scene": "PhoneApp",
+  "sfx": [
+   [
+    "notify",
+    "телефону"
+   ],
+   [
+    "click",
+    "приложении"
+   ]
+  ]
+ },
+ {
+  "id": "f1",
+  "seg": "ch4",
+  "cue": "две",
+  "scene": "Year2013",
+  "chapter": [
+   4,
+   "ИМПЕРИЯ"
+  ],
+  "sfx": [
+   [
+    "boom",
+    "две"
+   ]
+  ]
+ },
+ {
+  "id": "f2",
+  "seg": "ch4",
+  "cue": "ipo",
+  "scene": "MapLondon",
+  "sfx": [
+   [
+    "whoosh",
+    "ipo"
+   ],
+   [
+    "bell",
+    "лондоне"
+   ]
+  ]
+ },
+ {
+  "id": "f3",
+  "seg": "ch4",
+  "cue": "компанию",
+  "scene": "Valuation",
+  "sfx": [
+   [
+    "whoosh",
+    "компанию"
+   ],
+   [
+    "cash",
+    "миллиарда"
+   ]
+  ]
+ },
+ {
+  "id": "f4",
+  "seg": "ch4",
+  "cue": "в",
+  "n": 3,
+  "scene": "Wealth",
+  "sfx": [
+   [
+    "whoosh",
+    "в"
+   ],
+   [
+    "cash",
+    "четыре"
+   ]
+  ]
+ },
+ {
+  "id": "f5",
+  "seg": "ch4",
+  "cue": "дерзкий",
+  "scene": "Persona",
+  "sfx": [
+   [
+    "whoosh",
+    "дерзкий"
+   ],
+   [
+    "pop",
+    "громкий"
+   ],
+   [
+    "pop",
+    "лицом"
+   ]
+  ]
+ },
+ {
+  "id": "g1",
+  "seg": "ch5",
+  "cue": "а",
+  "scene": "Crash",
+  "chapter": [
+   5,
+   "ПЕРЕЛОМ"
+  ],
+  "sfx": [
+   [
+    "impact",
+    "а"
+   ],
+   [
+    "glitch",
+    "ломается"
+   ]
+  ]
+ },
+ {
+  "id": "g2",
+  "seg": "ch5",
+  "cue": "две",
+  "scene": "Diagnosis",
+  "sfx": [
+   [
+    "boom",
+    "две"
+   ],
+   [
+    "heart",
+    "острая"
+   ]
+  ]
+ },
+ {
+  "id": "g3",
+  "seg": "ch5",
+  "cue": "химиотерапия",
+  "scene": "Treatment",
+  "sfx": [
+   [
+    "whoosh",
+    "химиотерапия"
+   ],
+   [
+    "click",
+    "пересадка"
+   ]
+  ]
+ },
+ {
+  "id": "g4",
+  "seg": "ch5",
+  "cue": "апрель",
+  "scene": "WarPost",
+  "sfx": [
+   [
+    "whoosh",
+    "апрель"
+   ],
+   [
+    "notify",
+    "публично"
+   ],
+   [
+    "glitch",
+    "безумной"
+   ]
+  ]
+ },
+ {
+  "id": "g5",
+  "seg": "ch5",
+  "cue": "через",
+  "scene": "NineDays",
+  "sfx": [
+   [
+    "tick",
+    "через"
+   ],
+   [
+    "tick",
+    "девять"
+   ],
+   [
+    "tick",
+    "дней"
+   ]
+  ]
+ },
+ {
+  "id": "g6",
+  "seg": "ch5",
+  "cue": "тридцать",
+  "scene": "StakeSale",
+  "sfx": [
+   [
+    "whoosh",
+    "тридцать"
+   ],
+   [
+    "swoosh",
+    "уходят"
+   ],
+   [
+    "stamp",
+    "потанина"
+   ]
+  ]
+ },
+ {
+  "id": "g7",
+  "seg": "ch5",
+  "cue": "цену",
+  "scene": "Redacted",
+  "sfx": [
+   [
+    "whoosh",
+    "цену"
+   ],
+   [
+    "stamp",
+    "раскрыли"
+   ]
+  ]
+ },
+ {
+  "id": "g8",
+  "seg": "ch5",
+  "cue": "тиньков",
+  "scene": "ThreePercent",
+  "sfx": [
+   [
+    "whoosh",
+    "тиньков"
+   ],
+   [
+    "impact",
+    "трёх"
+   ],
+   [
+    "lock",
+    "нельзя"
+   ]
+  ]
+ },
+ {
+  "id": "k1",
+  "seg": "ch6",
+  "cue": "в",
+  "scene": "Passport",
+  "chapter": [
+   6,
+   "НОВАЯ ЖИЗНЬ"
+  ],
+  "sfx": [
+   [
+    "whoosh",
+    "в"
+   ],
+   [
+    "stamp",
+    "гражданства"
+   ]
+  ]
+ },
+ {
+  "id": "k2",
+  "seg": "ch6",
+  "cue": "в",
+  "n": 2,
+  "scene": "Rebrand",
+  "sfx": [
+   [
+    "whoosh",
+    "в"
+   ],
+   [
+    "glitch",
+    "фамилию"
+   ],
+   [
+    "impact",
+    "т-банк"
+   ]
+  ]
+ },
+ {
+  "id": "k3",
+  "seg": "ch6",
+  "cue": "а",
+  "scene": "MapMexico",
+  "sfx": [
+   [
+    "whoosh",
+    "а"
+   ],
+   [
+    "pop",
+    "мексике"
+   ]
+  ]
+ },
+ {
+  "id": "k4",
+  "seg": "ch6",
+  "cue": "plata",
+  "scene": "Plata",
+  "sfx": [
+   [
+    "pop",
+    "plata"
+   ],
+   [
+    "click",
+    "консультирует"
+   ]
+  ]
+ },
+ {
+  "id": "k5",
+  "seg": "ch6",
+  "cue": "он",
+  "scene": "Finale",
+  "sfx": [
+   [
+    "riser",
+    "формулу"
+   ],
+   [
+    "impact",
+    "формулу"
+   ],
+   [
+    "boom",
+    "создала"
+   ]
+  ],
+  "n": 2
+ }
+]

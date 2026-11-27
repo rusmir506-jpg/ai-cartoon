@@ -1,0 +1,16 @@
+import "@fontsource/unbounded/cyrillic-500.css";
+import "@fontsource/unbounded/cyrillic-700.css";
+import "@fontsource/unbounded/cyrillic-900.css";
+import "@fontsource/unbounded/latin-500.css";
+import "@fontsource/unbounded/latin-700.css";
+import "@fontsource/unbounded/latin-900.css";
+import "@fontsource/inter/cyrillic-500.css";
+import "@fontsource/inter/cyrillic-700.css";
+import "@fontsource/inter/cyrillic-800.css";
+import "@fontsource/inter/latin-500.css";
+import "@fontsource/inter/latin-700.css";
+import "@fontsource/inter/latin-800.css";
+import "@fontsource/jetbrains-mono/cyrillic-500.css";
+import "@fontsource/jetbrains-mono/cyrillic-700.css";
+import "@fontsource/jetbrains-mono/latin-500.css";
+import "@fontsource/jetbrains-mono/latin-700.css";

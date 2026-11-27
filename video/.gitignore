@@ -1,0 +1,6 @@
+node_modules/
+out/*
+!out/tinkov_documentary.mp4
+script/vo_track.npy
+script/premaster.wav
+__pycache__/
