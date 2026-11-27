@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><title>Лист персонажей и фонов</title>
+<style>
+  body{margin:0;background:#0e1218;color:#dfe6ee;font-family:Inter,sans-serif;width:2400px}
+  h1{font:900 64px Inter;margin:40px 60px 6px;letter-spacing:1px}
+  .sub{font:500 28px 'JetBrains Mono';color:#8fa0b4;margin:0 60px 30px}
+  .row{display:flex;gap:30px;margin:0 60px 40px;align-items:flex-start}
+  .card{background:#151b24;border:1px solid #273140;padding:16px}
+  .card h3{font:800 30px Inter;margin:12px 4px 2px}
+  .card p{font:500 22px 'JetBrains Mono';color:#8fa0b4;margin:4px}
+  svg{display:block}
+  .sec{font:800 36px Inter;margin:10px 60px 18px;color:#f2b56b}
+</style>
+<script src="lib.js"></script></head><body>
+<h1>ВСЕ ЛЮДИ ИСЧЕЗЛИ · Серия 1 «Автопилот»</h1>
+<div class="sub">лист персонажей и фонов · стиль «Кино-2D» · без контура · свет делит лицо пополам · полосы старого экрана</div>
+<div class="sec">ГЕРОИ</div>
+<div class="row" id="chars"></div>
+<div class="sec">ФОНЫ И МЕСТА (кадр 9:16)</div>
+<div class="row" id="bgs"></div>
+<div class="sec">ПРИМЕР ГОТОВОГО КАДРА</div>
+<div class="row" id="sample"></div>
+<script>
+const A = ART;
+function svg(w, h, vb, inner, fx = true, vw = 600, vh = 800) {
+  return `<svg width="${w}" height="${h}" viewBox="${vb}" xmlns="http://www.w3.org/2000/svg"><defs>${A.defsCommon()}</defs>${inner}${fx ? A.screenFx(vw, vh) : ''}</svg>`;
+}
+function portraitBg(lamp = -1) {
+  const lx = lamp < 0 ? 60 : 540;
+  return `<rect width="600" height="800" fill="#1e2632"/>
+    <rect x="${lamp < 0 ? 380 : 40}" y="60" width="180" height="520" fill="#2a3442"/>
+    <rect x="${lamp < 0 ? 380 : 40}" y="60" width="180" height="300" fill="#4a5564"/>
+    <circle cx="${lx}" cy="200" r="260" fill="#f2b56b" opacity="0.16" filter="url(#soft30)"/>`;
+}
+function card(title, note, inner) { return `<div class="card">${inner}<h3>${title}</h3><p>${note}</p></div>`; }
+
+const chars = document.getElementById('chars');
+chars.innerHTML =
+  card('Света, 15', 'худи с завязками · рация на одну волну (папа — диспетчер) · никогда не врёт',
+    svg(600, 800, '0 0 600 800', portraitBg() + A.sveta({ radio: true, radioLit: true, look: { x: 0.3, y: 0 } }))) +
+  `<div style="display:grid;grid-template-columns:300px 300px;gap:16px">` +
+    card('просыпается', 'глаза закрыты', svg(300, 400, '0 0 600 800', portraitBg() + A.sveta({ eyes: 0 }))) +
+    card('страх', 'брови вверх, рот приоткрыт', svg(300, 400, '0 0 600 800', portraitBg() + A.sveta({ eyes: 1.25, brows: 1, mouthOpen: 0.6, look: { x: -0.6, y: 0.2 } }))) +
+    card('решимость', 'хмурится, свет справа', svg(300, 400, '0 0 600 800', portraitBg(1) + A.sveta({ brows: -1, lamp: 1, look: { x: 0.4, y: 0 } }))) +
+    card('в рацию', '«Нас двое. Мы живы»', svg(300, 400, '0 0 600 800', portraitBg() + A.sveta({ radio: true, radioLit: true, mouthOpen: 0.4, look: { x: 0, y: 0.6 } }))) +
+  `</div>` +
+  card('Курьер, ~30', 'огромная сумка «ЕДА·24» · шапка · считает минуты · вёз заказ «на борт, рейс 5:40»',
+    svg(600, 800, '0 0 600 800', portraitBg() + A.courier({ look: { x: -0.3, y: 0 } }))) +
+  `<div style="display:grid;grid-template-columns:300px;gap:16px">` +
+    card('спит', 'в проходе за сумкой', svg(300, 400, '0 0 600 800', portraitBg(1) + A.courier({ eyes: 0, lamp: 1 }))) +
+    card('тревога', 'смотрит на часы', svg(300, 400, '0 0 600 800', portraitBg() + A.courier({ brows: 1, mouthOpen: 0.3, look: { x: 0.5, y: 0.6 } }))) +
+  `</div>`;
+
+const bgs = [
+  ['Зал ожидания', '05:40 · флешбэк · лампа и штора', (t) => A.bgHall(t) + A.plates({ where: 'ЗАЛ ОЖИДАНИЯ', when: '05:40' })],
+  ['Пустой салон', 'табло мигает · шторки', (t) => A.bgCabin(t) + A.plates({ where: 'БОРТ', when: '??:??' })],
+  ['Иллюминатор', 'город без огней', (t) => A.bgWindow(t) + A.plates({ where: 'БОРТ', when: '??:??' })],
+  ['Дверь кабины', 'AUTOPILOT · штора камбуза', (t) => A.bgCockpitDoor(t) + A.plates({ where: 'БОРТ', when: '??:??', timer: '01:58' })],
+  ['Экран в кресле', 'время тает · «домофон» серии', (t) => A.bgSeatScreen(t, 41) + A.plates({ where: 'БОРТ', when: '??:??', timer: '00:41', timerAlarm: true })],
+  ['Люк в полу', 'финал: рука', (t) => A.bgHatch(t, 1, 1) + A.plates({ where: 'БОРТ', when: '??:??', timer: '00:39', timerAlarm: true })],
+];
+document.getElementById('bgs').innerHTML = bgs.map(([t, n, f]) =>
+  card(t, n, svg(340, 604, '0 0 1080 1920', f(0.3), true, 1080, 1920))).join('');
+
+// пример кадра: Света в салоне + плашки + субтитры
+const words = 'Просыпаешься в самолёте. В салоне больше никого.'.split(' ');
+const frame = A.bgCabin(0.1) +
+  `<rect width="1080" height="1920" fill="#0b0f14" opacity="0.25"/>` +
+  `<g transform="translate(15,430) scale(1.75)">${A.sveta({ eyes: 1.1, brows: 0.6, look: { x: -0.5, y: 0 } })}</g>` +
+  A.plates({ where: 'БОРТ', when: '??:??' }) + A.subtitle(words, 4, ['салон', 'никого']);
+document.getElementById('sample').innerHTML =
+  card('Кадр 1', 'крупный план по пояс · жёлтым — ключевые слова · плашки ГДЕ/КОГДА/таймер',
+    svg(540, 960, '0 0 1080 1920', frame, true, 1080, 1920)) +
+  `<div class="card" style="width:1100px"><h3>Правила стиля</h3>
+   <p>• реалистичные пропорции, планы по пояс, без чёрного контура</p>
+   <p>• одна половина лица в тёплом свете лампы, другая — в холодной тени</p>
+   <p>• глаза миндалевидные с веками; нос и скулы — только тенью</p>
+   <p>• сине-серая гамма + один тёплый источник</p>
+   <p>• по всему кадру — тонкие горизонтальные полосы, зерно, виньетка</p>
+   <p>• плашки: зелёная «ГДЕ», жёлтая «КОГДА», таймер (краснеет, когда топлива мало)</p>
+   <p>• субтитры по словам снизу, ключевые слова — жёлтым</p>
+   <p>• вместо прихожей/домофона в этой серии: зал ожидания, штора иллюминатора,<br>&nbsp;&nbsp;дверь кабины, экран в спинке кресла</p></div>`;
+</script></body></html>
