@@ -1,4 +1,4 @@
-ИСТОЧНИКИ — ГИГАНТСКИЕ МУТАНТЫ, серии 1–3
+ИСТОЧНИКИ — ГИГАНТСКИЕ МУТАНТЫ, серии 1–4
 
 МУЗЫКА И ЗВУКИ — только лицензия CC0 1.0 (общественное достояние, без указания автора и без ограничений):
 https://creativecommons.org/publicdomain/zero/1.0/
@@ -9,13 +9,16 @@ https://creativecommons.org/publicdomain/zero/1.0/
 - сигнал замка: «Beep 1 sec.wav by austin1234575» — https://freesound.org/people/austin1234575/sounds/213795/ — CC0 1.0
 - пузыри под водой: «SFX_UnderWater by Perel» — https://freesound.org/people/Perel/sounds/173439/ — CC0 1.0
 - треск табло: «Vintage Edison Bulb Flicker & Warm-Up Sound Effect by hipoidogs» — https://freesound.org/people/hipoidogs/sounds/866662/ — CC0 1.0
-- скрип металла (забор, решётка, вентиль): «squeak_01.wav by joedeshon» — https://freesound.org/people/joedeshon/sounds/339184/ — CC0 1.0
+- дверь машины (серия 4): «car door close.wav by monotraum» — https://freesound.org/people/monotraum/sounds/208695/ — CC0 1.0
+- скрип металла (забор, решётка, мост): «squeak_01.wav by joedeshon» — https://freesound.org/people/joedeshon/sounds/339184/ — CC0 1.0
 - дверь / замки: «dorm door opening.wav by pagancow» — https://freesound.org/people/pagancow/sounds/15419/ — CC0 1.0
+- мотор машин (серия 4): «Car Starting and Accelerating by jackthemurray» — https://freesound.org/people/jackthemurray/sounds/433584/ — CC0 1.0
 - огонь: «Fire Crackle and Flames 002 by TheWoodlandNomad» — https://freesound.org/people/TheWoodlandNomad/sounds/363092/ — CC0 1.0
 - рык мутанта: «DRAGON_ROAR.wav by JoelAudio» — https://freesound.org/people/JoelAudio/sounds/85568/ — CC0 1.0
 - сердцебиение: «heart beat.mp3 by greyseraphim» — https://freesound.org/people/greyseraphim/sounds/21409/ — CC0 1.0
 - гул ламп: «Lights Flicker On.wav by mmaruska» — https://freesound.org/people/mmaruska/sounds/232447/ — CC0 1.0
 - зажигалка: «zippoopen.wav by DeezSoundzTho» — https://freesound.org/people/DeezSoundzTho/sounds/407428/ — CC0 1.0
+- колыбельная (музыкальная шкатулка, серия 4): «Music Box Lullaby Clip by AudioBitsAndBytes» — https://freesound.org/people/AudioBitsAndBytes/sounds/163644/ — CC0 1.0
 - гул насосов: «ambience 4.wav by IanStarGem» — https://freesound.org/people/IanStarGem/sounds/478812/ — CC0 1.0
 - дождь: «Heavy Rain Sound - Inu Etc.mp3 by inuetc» — https://freesound.org/people/inuetc/sounds/507902/ — CC0 1.0
 - река: «Stream River Water Up Close by jackthemurray» — https://freesound.org/people/jackthemurray/sounds/433589/ — CC0 1.0
@@ -32,7 +35,7 @@ https://creativecommons.org/publicdomain/zero/1.0/
 ГОЛОС: ElevenLabs (модель Eleven v3), голос «Harry». Сгенерирован ИИ.
 Бесплатный тариф ElevenLabs требует указывать ElevenLabs (например, «Голос: ElevenLabs» в описании) и не разрешает коммерческое использование; для монетизации нужен платный тариф.
 
-РИСУНКИ И АНИМАЦИЯ: нарисованы кодом (SVG) специально для сериала — ep01/art, ep02/art, ep03/art.
+РИСУНКИ И АНИМАЦИЯ: нарисованы кодом (SVG) специально для сериала — ep01/art … ep04/art.
 ШРИФТ: Inter (SIL Open Font License).
 
 Чужая музыка не использовалась.
