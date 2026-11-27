@@ -33,6 +33,9 @@ WANT = {
     'heartbeat': ('heartbeat slow', 3, 60),
     'scratch':   ('claw scratch', .3, 8),
     'thud':      ('body fall thud', .3, 6),
+    'lullaby':   ('music box lullaby', 8, 120),
+    'engine':    ('car engine idle', 3, 60),
+    'cardoor':   ('car door close', .3, 4),
 }
 
 def get(url):

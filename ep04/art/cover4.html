@@ -1,0 +1,19 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Обложка 4</title>
+<style>html,body{margin:0;background:#000}</style>
+<script src="../../ep01/art/assets.js"></script><script src="../../ep02/art/assets2.js"></script><script src="../../ep03/art/assets3.js"></script><script src="assets4.js"></script><script src="words.js"></script><script src="anim4.js"></script></head>
+<body><div id="v"></div><script>
+const t = 1.3; globalThis.__T = t;
+const T = (y, txt, size, fill) => `<text x="540" y="${y}" text-anchor="middle" font-family="Inter" font-weight="900" font-size="${size}" fill="${fill}" stroke="#000" stroke-width="${size * .16}" stroke-linejoin="round" paint-order="stroke">${txt}</text>`;
+document.getElementById('v').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">${defsCommon}<defs>${SIL}
+  <linearGradient id="topfade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".9"/><stop offset="1" stop-color="#000" stop-opacity="0"/></linearGradient></defs>
+  <g transform="translate(540 1100) scale(1.15) translate(-540 -1100)">${bgRiver()}${dusk(.35)}${waterEyes(t, 1, .3)}
+  ${[330, 560, 790].map(x => `<g transform="translate(${x} 752) scale(.5)">${car(1)}</g>`).join('')}</g>
+  <g transform="translate(540 1180)">${soundRings(t, 1, { max: 700, speed: .5 })}</g>
+  ${at(540, 2250, 4.3, asya({ face: 'sing', hard: 2.7, torch: false }))}
+  <rect width="1080" height="640" fill="url(#topfade)"/><rect width="1080" height="1920" fill="url(#vignette)"/>
+  ${T(230, 'ГИГАНТСКИЕ', 128, PAL.eye)}${T(365, 'МУТАНТЫ', 128, PAL.eye)}
+  <rect x="210" y="410" width="660" height="78" rx="14" fill="${PAL.red}"/>
+  <text x="540" y="466" text-anchor="middle" font-family="Inter" font-weight="900" font-size="46" fill="#fff">СЕРИЯ 4 · КОЛЫБЕЛЬНАЯ</text>
+  ${T(1560, 'РЕКА ЗОВЁТ ЕЁ', 92, '#ffffff')}${T(1670, 'ПО ИМЕНИ', 92, PAL.eye)}
+</svg>`;
+</script></body></html>

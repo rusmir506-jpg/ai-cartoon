@@ -214,5 +214,32 @@
   "file": "https://cdn.freesound.org/previews/423/423777_8326967-hq.mp3",
   "duration": 0.56,
   "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "lullaby": {
+  "key": "lullaby",
+  "query": "music box lullaby",
+  "title": "Music Box Lullaby Clip by AudioBitsAndBytes",
+  "page": "https://freesound.org/people/AudioBitsAndBytes/sounds/163644/",
+  "file": "https://cdn.freesound.org/previews/163/163644_1060482-hq.mp3",
+  "duration": 45.43,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "engine": {
+  "key": "engine",
+  "query": "car engine idle",
+  "title": "Car Starting and Accelerating by jackthemurray",
+  "page": "https://freesound.org/people/jackthemurray/sounds/433584/",
+  "file": "https://cdn.freesound.org/previews/433/433584_5618682-hq.mp3",
+  "duration": 21.43,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
+ },
+ "cardoor": {
+  "key": "cardoor",
+  "query": "car door close",
+  "title": "car door close.wav by monotraum",
+  "page": "https://freesound.org/people/monotraum/sounds/208695/",
+  "file": "https://cdn.freesound.org/previews/208/208695_1756543-hq.mp3",
+  "duration": 0.57,
+  "license": "CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)"
  }
 }

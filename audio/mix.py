@@ -96,6 +96,22 @@ elif EP == 3:
     sfx('growl', W(18, 'них'), SFX_LUFS - 8, length=2, fo=1)
     amb('heartbeat', W(18, 'зелён') - .3, TOTAL - .3, AMB_LUFS + 4, .3, 1)
 
+elif EP == 4:
+    amb('river', 0, LE[3], AMB_LUFS - 3); amb('wind', 0, LE[0], AMB_LUFS - 4)
+    sfx('heartbeat', W(0, 'имени') - .3, AMB_LUFS + 2, length=3, fo=1)
+    amb('river', LS[4], LE[4], AMB_LUFS - 2); amb('steps', W(4, 'повела'), LE[4], AMB_LUFS + 2, .2, .3)
+    amb('hum', LS[5], LE[5], AMB_LUFS - 4)
+    amb('river', LS[6], TOTAL - .5, AMB_LUFS - 2)
+    sfx('creak', W(6, 'заскрип'), SFX_LUFS - 3, length=2.5, fo=.8); sfx('bubbles', W(6, 'открывались'), SFX_LUFS - 6, length=2)
+    sfx('lighter', W(7, 'щёлкнул')); sfx('growl', W(7, 'пугал'), SFX_LUFS - 7, length=2, fo=.8)
+    amb('steps', LS[8] + .2, W(8, 'встала') + .3, AMB_LUFS, .1, .3); sfx('growl', W(8, 'рекой'), SFX_LUFS - 5)
+    amb('lullaby', W(9, 'запела'), LE[12], AMB_LUFS + 3, 1.0, 1.5)
+    sfx('thud', W(10, 'легла') + .3, SFX_LUFS - 6)
+    sfx('splash', W(13, 'вылила') + .5, SFX_LUFS - 8, length=1.2)
+    sfx('bubbles', LS[15], SFX_LUFS - 6, length=3, fo=1)
+    amb('engine', LS[16], LE[16], AMB_LUFS + 1, .8, .4); sfx('cardoor', W(17, 'вышел') - .2, SFX_LUFS - 3)
+    amb('heartbeat', W(17, 'улыбнулся') - .3, TOTAL - .3, AMB_LUFS + 4, .3, 1)
+
 # ---- голос: −16 LUFS ----
 voice = WORK / f'voice{EP}.wav'
 run('ffmpeg', '-loglevel', 'error', '-y', '-i', str(EPD / 'voice_harry.mp3'), '-af', f'loudnorm=I={VOICE_LUFS}:TP=-2:LRA=11,aresample=44100', '-ac', '2', str(voice))
@@ -123,7 +139,7 @@ m = json.loads(st[st.rindex('{'):st.rindex('}') + 1])
 fin = WORK / f'final{EP}.wav'
 run('ffmpeg', '-loglevel', 'error', '-y', '-i', str(pre), '-af',
     f"loudnorm=I=-14:TP=-1.5:LRA=11:measured_I={m['input_i']}:measured_TP={m['input_tp']}:measured_LRA={m['input_lra']}:measured_thresh={m['input_thresh']}:offset={m['target_offset']}:linear=true,aresample=44100", str(fin))
-names = {1: 'Завод', 2: 'Мост', 3: 'Кафедра'}
+names = {1: 'Завод', 2: 'Мост', 3: 'Кафедра', 4: 'Колыбельная'}
 out = EPD / f'ГИГАНТСКИЕ_МУТАНТЫ_серия_{EP}_{names[EP]}.mp4'
 run('ffmpeg', '-loglevel', 'error', '-y', '-i', str(VIDEO), '-i', str(fin), '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-t', f'{TOTAL}', '-movflags', '+faststart', str(out))
 chk = subprocess.run(['ffmpeg', '-hide_banner', '-i', str(out), '-af', 'loudnorm=print_format=json', '-f', 'null', '-'], capture_output=True, text=True).stderr
