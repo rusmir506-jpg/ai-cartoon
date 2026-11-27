@@ -38,8 +38,9 @@ export const Rebrand: React.FC = () => {
           {letters.map((l, i) => {
             const k = i === 0 ? 0 : lerp(f, fam + i * 2, fam + i * 2 + 14);
             const jitter = k > 0 && k < 1 ? (rnd(i + f) - 0.5) * 30 : 0;
+            const center = i === 0 ? lerp(f, fam + 16, fam + 34) * 330 : 0;
             return (
-              <div key={i} style={{ opacity: 1 - k, transform: `translate(${jitter}px, ${k * (200 + rnd(i) * 300)}px) rotate(${k * (rnd(i + 1) - 0.5) * 120}deg)`, filter: k > 0 ? `blur(${k * 8}px)` : undefined }}>
+              <div key={i} style={{ opacity: 1 - k, transform: `translate(${jitter + center}px, ${k * (200 + rnd(i) * 300)}px) rotate(${k * (rnd(i + 1) - 0.5) * 120}deg)`, filter: k > 0 ? `blur(${k * 8}px)` : undefined }}>
                 <Neon size={104} color={i === 0 ? C.gold : C.cyan}>{l}</Neon>
               </div>
             );
@@ -143,7 +144,7 @@ export const Finale: React.FC = () => {
       </Abs>
       {/* end card */}
       {f > end + 6 && (
-        <div style={{ position: "absolute", inset: 0, background: `rgba(3,4,12,${0.97 * lerp(f, end + 6, end + 22)})` }}>
+        <div style={{ position: "absolute", inset: 0, background: `rgba(3,4,12,${lerp(f, end + 6, end + 22)})` }}>
           <Abs x={540} y={700}><Pop at={end + 14}><Neon size={120} color={C.cyan}>ОЛЕГ</Neon></Pop></Abs>
           <Abs x={540} y={850}><Pop at={end + 18}><Neon size={110} color={C.gold}>ТИНЬКОВ</Neon></Pop></Abs>
           <Abs x={540} y={980}><Pop at={end + 26}><Label size={26} color="#fff">ИСТОРИЯ ОДНОЙ ИМПЕРИИ</Label></Pop></Abs>

@@ -73,7 +73,7 @@ export const Wealth: React.FC = () => {
         <Pop at={0}>
           <Card color={C.gold} w={940} pad={34} style={{ textAlign: "center" }}>
             <Label size={26} color={C.gold}>СОСТОЯНИЕ · ОЦЕНКА FORBES · 2021</Label>
-            <div style={{ marginTop: 16 }}><Counter from={0} to={4.7} at={n - 6} dur={34} size={108} color={C.gold} fmt={(v) => `$${v.toFixed(1).replace(".", ",")} МЛРД`} /></div>
+            <div style={{ marginTop: 16 }}><Counter from={0} to={4.7} at={8} dur={n + 20} size={108} color={C.gold} fmt={(v) => `$${v.toFixed(1).replace(".", ",")} МЛРД`} /></div>
           </Card>
         </Pop>
       </Abs>
