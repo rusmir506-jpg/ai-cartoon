@@ -3,7 +3,7 @@
 One continuous Russian voice-over (ElevenLabs, with timestamps) drives word-by-word captions and scene cuts
 (snapped to the 120 BPM music grid). Scenes are drawn in render_story.js. Output: out/invoyage_<name>.mp4"""
 import base64, json, os, re, shutil, subprocess, sys
-from PIL import Image, ImageFilter
+from PIL import Image, ImageFilter, ImageOps
 
 cfg_path = sys.argv[1]
 C = json.load(open(cfg_path))
@@ -72,7 +72,7 @@ starts = [0.0] + [snap(first[i] - 0.12) for i in range(1, nb - 1)] + [E]
 D = round(max(E + 4.0, vo_dur + OFF + 0.8), 2)
 
 def prep_img(img, zmax):
-    im = Image.open(img).convert("RGB")
+    im = ImageOps.exif_transpose(Image.open(img)).convert("RGB")      # honour phone rotation (EXIF)
     w0, h0 = im.size
     ww = min(w0, h0 * 9 / 16)
     f = min(3.0, max(1.0, 1080 * zmax / ww))

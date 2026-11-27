@@ -12,6 +12,7 @@ const F = 'file://' + path.resolve(__dirname, 'assets/fonts') + '/';
 const CYR = 'U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116';
 const ff = (fam, file, w, st) => ['cyrillic', 'latin'].map(s => '@font-face{font-family:' + fam + ';font-weight:' + w + ';font-style:' + (st || 'normal') + ";src:url('" + F + file + '-' + s + '-' + w + '-' + (st || 'normal') + ".woff2') format('woff2');" + (s === 'cyrillic' ? 'unicode-range:' + CYR + ';' : '') + '}').join('');
 const fonts = ff('OS', 'oswald', 500) + ff('OS', 'oswald', 600) + ff('OS', 'oswald', 700) + ff('MT', 'montserrat', 400) + ff('MT', 'montserrat', 500) + ff('MT', 'montserrat', 600) + ff('CG', 'cormorant-garamond', 500) + ff('CG', 'cormorant-garamond', 500, 'italic') + ff('CG', 'cormorant-garamond', 600);
+const greekFonts = ff('FR', 'forum', 400) + ff('TS', 'tenor-sans', 400);
 const LOGO = 'file://' + path.resolve(__dirname, 'assets/invoyage_logo.jpg');
 const css = `*{margin:0;padding:0;box-sizing:border-box}
 html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
@@ -54,7 +55,26 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
 #end{position:absolute;inset:0;z-index:30;display:none;background:radial-gradient(ellipse 75% 60% at 50% 45%,#fff 0%,#fbfcfc 45%,#f0f4f5 100%)}
 #end img{position:absolute;left:35px;top:360px;width:1010px;mix-blend-mode:multiply;opacity:0;-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 62%,transparent 100%)}
 #etag{position:absolute;left:70px;right:70px;top:1180px;text-align:center;font-family:CG,serif;font-style:italic;font-weight:500;font-size:70px;line-height:1.2;color:#1F7480;opacity:0}`;
-const html = '<meta charset="utf-8"><style>' + fonts + css + '</style><div id="scenes"></div>' +
+const MEA = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'><path d='M1 29V1H29V22H9V9H20' fill='none' stroke='white' stroke-width='2.6'/></svg>\")";
+const GREEKCSS = `
+.greek .os,.greek .cg{font-family:FR,serif!important;font-weight:400!important;font-style:normal!important}
+.greek .mt{font-family:TS,sans-serif!important}
+.greek .shade{background:linear-gradient(180deg,rgba(4,38,86,.55) 0%,rgba(0,0,0,0) 24%,rgba(0,0,0,0) 38%,rgba(3,34,80,.8) 76%,rgba(3,30,70,.9) 100%)}
+.greek .name,.greek .big,.greek .mid{font-weight:400!important;letter-spacing:.1em;text-transform:uppercase}
+.greek .name{font-size:96px!important;line-height:1.08}
+.greek .num{font-size:130px;letter-spacing:.04em;color:#9fe3f2;opacity:0}
+.greek .fsub,.greek .sub,.greek .cap{text-transform:uppercase;letter-spacing:.12em;font-size:30px;line-height:1.55}
+.greek .fsub::before{content:'';display:block;width:420px;height:40px;margin:8px 0 24px;background:${MEA} repeat-x;background-size:40px 40px;opacity:.95}
+.greek .shade.cover{background:linear-gradient(180deg,rgba(4,38,86,.6) 0%,rgba(4,38,86,.3) 28%,rgba(3,34,80,.66) 52%,rgba(3,30,70,.92) 100%)}
+.greek .kick{text-shadow:0 2px 14px rgba(0,0,0,.6)}
+.greek .kick,.greek #a0{font-size:34px;letter-spacing:.3em;text-transform:uppercase}
+.greek .wm{font-style:normal;font-size:40px;letter-spacing:.34em;text-transform:uppercase}
+.greek .cnt{letter-spacing:.3em}
+.gframe{position:absolute;inset:34px;border:2px solid rgba(255,255,255,.7);pointer-events:none}
+.greek .lt{display:inline-block;opacity:0}
+.greek #etag{font-family:FR,serif!important;font-style:normal!important;text-transform:uppercase;letter-spacing:.14em;font-size:50px;color:#1A6FB8}
+`;
+const html = '<meta charset="utf-8"><style>' + fonts + (TL.style === 'greek' ? greekFonts : '') + css + (TL.style === 'greek' ? GREEKCSS : '') + '</style><body class="' + (TL.style === 'greek' ? 'greek' : '') + '"><div id="scenes"></div>' +
   '<div id="top"><div class="cg wm">InVoyage</div><div class="mt cnt" id="cnt"></div></div><div id="dots"></div>' +
   '<div id="hint" class="mt">листай<svg width="40" height="22" viewBox="0 0 40 22" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M2 11h34M26 2l10 9-10 9"/></svg></div>' +
   '<div id="end"><img id="elogo" src="' + LOGO + '"><div id="etag">' + TL.end.tag + '</div></div>' +

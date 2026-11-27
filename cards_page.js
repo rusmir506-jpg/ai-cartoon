@@ -16,6 +16,10 @@
     });
     h += '<div class="shade ' + (c.type || '') + '"></div>';
     if (c.type === 'cover') {
+      if (TL.style === 'greek') {
+        var lets = c.l1.split('').map(function (ch, k) { return '<span class="lt" id="lt' + i + '_' + k + '">' + ch + '</span>'; }).join('');
+        h += '<div class="blk" style="top:700px;text-align:center"><div class="cg it kick" id="a' + i + '">' + c.kick + '</div><div class="os big" id="b' + i + '" style="font-size:400px;letter-spacing:.06em;opacity:1">' + lets + '</div><div class="os mid" id="c' + i + '" style="font-size:66px;letter-spacing:.14em">' + c.l2 + '</div><div class="mt cap" id="d' + i + '">' + c.sub + '</div></div>';
+      } else
       h += '<div class="blk" style="top:740px"><div class="cg it" id="a' + i + '">' + c.kick + '</div><div class="os big" id="b' + i + '" style="font-size:' + (c.l1.length > 8 ? 176 : (c.l1.length > 7 ? 196 : (c.l1.length > 6 ? 232 : 300))) + 'px">' + c.l1 + '</div><div class="os mid" id="c' + i + '">' + c.l2 + '</div><div class="mt cap" id="d' + i + '">' + c.sub + '</div></div>';
     } else if (c.type === 'place') {
       h += '<div class="blk" style="top:930px"><div class="cg num" id="n' + i + '">' + c.n + '</div><div class="clip"><div class="os name" id="nm' + i + '" style="font-size:' + (c.name.length > 11 ? 104 : 136) + 'px">' + c.name + '</div></div><div class="mt sub" id="sb' + i + '">' + c.sub + '</div><div class="rule" id="ru' + i + '"></div>' +
@@ -27,6 +31,7 @@
       c.items.forEach(function (it, k) { h += '<div class="row" id="r' + i + '_' + k + '"><div class="cg rn">0' + (k + 1) + '</div><div><div class="os rt">' + it[0] + '</div><div class="mt rs">' + it[1] + '</div></div></div>'; });
       h += '</div>';
     }
+    if (TL.style === 'greek') h += '<div class="gframe"></div>';
     h += '<div class="dim" id="dim' + i + '"></div>';
     el.innerHTML = h; scenes.appendChild(el);
   });
@@ -64,7 +69,13 @@
         var px = clamp(cx * s.iw - w / 2, 0, s.iw - w), py = clamp(cy * s.ih - hh / 2, 0, s.ih - hh), k = 1080 / w;
         $('pi' + i + '_' + j).style.transform = 'scale(' + k + ') translate(' + (-px) + 'px,' + (-py) + 'px)';
       });
-      if (c.type === 'cover') { rv('a' + i, u, 0.45, 30); rv('b' + i, u, 0.6, 60); rv('c' + i, u, 0.78, 40); rv('d' + i, u, 1.05, 24); }
+      if (c.type === 'cover') {
+        if (TL.style === 'greek') {
+          rv('a' + i, u, 0.3, 24);
+          c.l1.split('').forEach(function (ch, k) { var e = $('lt' + i + '_' + k), o = out3((u - 0.55 - k * 0.28) / 0.7); e.style.opacity = o; e.style.transform = 'translateY(' + ((1 - o) * 70) + 'px) scale(' + (0.9 + 0.1 * o) + ')'; });
+          rv('c' + i, u, 1.6, 30); rv('d' + i, u, 2.0, 20);
+        } else { rv('a' + i, u, 0.45, 30); rv('b' + i, u, 0.6, 60); rv('c' + i, u, 0.78, 40); rv('d' + i, u, 1.05, 24); }
+      }
       if (c.type === 'place') {
         rv('n' + i, u, 0.35, 40); rv('nm' + i, u, 0.45, 170); rv('sb' + i, u, 0.72, 24);
         var ru = $('ru' + i), ro = out3((u - 0.85) / 0.5); ru.style.opacity = ro; ru.style.transform = 'scaleX(' + ro + ')';
