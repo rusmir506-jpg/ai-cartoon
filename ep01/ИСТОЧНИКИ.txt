@@ -1,0 +1,59 @@
+ИСТОЧНИКИ — «ВСЕ ЛЮДИ ИСЧЕЗЛИ», серия 1 «Автопилот»
+
+ЗВУКИ — все с лицензией CC0 1.0 (Creative Commons Zero, общественное достояние):
+https://creativecommons.org/publicdomain/zero/1.0/
+Лицензия проверена на странице каждого звука. Указание автора не обязательно, но мы его указываем.
+Использованы превью-файлы (MP3) с freesound.org. Чужой музыки в ролике нет.
+
+1. «Drone Like Growling Pad for Dark Ambient» — автор bassimat
+   https://freesound.org/people/bassimat/sounds/845391/
+   Лицензия: CC0 1.0. Где в ролике: мрачный фон под всей серией (зациклен, приглушены верха).
+   Файл: ep01/sound/cc0/drone.mp3
+
+2. «Airplane cabin ambience / atmosphere Airbus A330-300» — автор FillSoko
+   https://freesound.org/people/FillSoko/sounds/456092/
+   Лицензия: CC0 1.0. Где в ролике: гул салона на борту (оставлены только частоты ниже 300 Гц — без голосов).
+   Файл: ep01/sound/cc0/cabin.mp3
+
+3. «Wind howling» — автор paf60
+   https://freesound.org/people/paf60/sounds/767148/
+   Лицензия: CC0 1.0. Где в ролике: ветер в сцене с иллюминатором.
+   Файл: ep01/sound/cc0/wind.mp3
+
+4. «Radio static.aif» — автор carroll27
+   https://freesound.org/people/carroll27/sounds/151903/
+   Лицензия: CC0 1.0. Где в ролике: щелчки рации и шипение эфира.
+   Файл: ep01/sound/cc0/static.mp3
+
+5. «heavy_breathing_1.wav» — автор ShaneF91
+   https://freesound.org/people/ShaneF91/sounds/386573/
+   Лицензия: CC0 1.0. Где в ролике: «чужое дыхание» в рации (обработано как радиоголос).
+   Файл: ep01/sound/cc0/breath.mp3
+
+6. «Opening and closing a small metal hatch» — автор Irolan
+   https://freesound.org/people/Irolan/sounds/488221/
+   Лицензия: CC0 1.0. Где в ролике: скрип открывающегося люка в полу.
+   Файл: ep01/sound/cc0/hatch.mp3
+
+7. «Door Handle Rattle_Quiet_Near_Mono.wav» — автор _stubb
+   https://freesound.org/people/_stubb/sounds/406229/
+   Лицензия: CC0 1.0. Где в ролике: дёрганье ручки двери кабины.
+   Файл: ep01/sound/cc0/handle.mp3
+
+8. «Footsteps Carpet» — автор LewisEmmott5
+   https://freesound.org/people/LewisEmmott5/sounds/732573/
+   Лицензия: CC0 1.0. Где в ролике: шаги по ковру в проходе.
+   Файл: ep01/sound/cc0/steps.mp3
+
+9. «Airplane Seat belt Chime» — автор Sirkoto51
+   https://freesound.org/people/Sirkoto51/sounds/331680/
+   Лицензия: CC0 1.0. Где в ролике: сигнал «пристегните ремни» в начале.
+   Файл: ep01/sound/cc0/chime.mp3
+
+ГОЛОС
+ElevenLabs (elevenlabs.io), модель eleven_v3, встроенный голос «Jessica».
+Бесплатный тариф ElevenLabs требует указывать ElevenLabs в описании и не разрешает коммерческое использование —
+поэтому в описании ролика стоит «Озвучка: ElevenLabs». Для монетизации нужен платный тариф.
+
+ГРАФИКА И АНИМАЦИЯ
+Нарисованы с нуля кодом (SVG) специально для сериала: ep01/art/. Шрифты: Inter, JetBrains Mono (SIL Open Font License).
