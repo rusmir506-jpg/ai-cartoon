@@ -19,9 +19,9 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#04264f;color:#f
 .b{font-family:FR;font-size:${size}px;line-height:1.05;letter-spacing:.06em;text-transform:uppercase;margin-top:12px}
 .m{font-family:FR;font-size:${Math.min(150, Math.floor(900 / (L2.length * 0.8)))}px;letter-spacing:.1em;text-transform:uppercase;line-height:1.1}
 .mea{width:480px;height:40px;margin:26px auto 22px;background:${MEA} repeat-x;background-size:40px 40px;opacity:.95}
-.s{font-family:TS;font-size:30px;letter-spacing:.14em;text-transform:uppercase;line-height:1.5}
+.s{margin-top:34px;font-family:TS;font-size:30px;letter-spacing:.14em;text-transform:uppercase;line-height:1.5}
 </style><div class="bg"></div><div class="sh"></div><div class="fr"></div><div class="wm">InVoyage</div>
-<div class="t"><div class="k">${KICK}</div><div class="b">${TITLE}</div><div class="m">${L2}</div><div class="mea"></div><div class="s">${CAP}</div></div>`;
+<div class="t"><div class="k">${KICK}</div><div class="b">${TITLE}</div><div class="m">${L2}</div><div class="s">${CAP}</div></div>`;
 (async () => {
   const b = await chromium.launch();
   const p = await b.newPage({ viewport: { width: 1080, height: 1920 } });
