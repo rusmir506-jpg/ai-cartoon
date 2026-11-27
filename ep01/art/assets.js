@@ -125,7 +125,11 @@ function asya({ pose = {}, face = 'scared', hard = 0, torch = true, scratch = fa
     return s;
   })() : '';
   const scr = scratch ? `<path d="M-58 -140 l20 -14 M-58 -130 l20 -14" stroke="${PAL.red}" stroke-width="3" stroke-linecap="round"/>` : '';
-  const eyes = face === 'scared'
+  const ck = clampN((hard - 2.2) / .6);
+  const cheek = ck > 0 ? [[-22, -236], [-27, -246], [-17, -226], [-31, -254], [-12, -222], [-34, -244]].map(([x, y], i) => ck > i / 6 ? `<path d="M${x} ${y - 5} l5 5 l-5 5 l-5 -5Z" fill="${PAL.hard}" stroke="${PAL.hardSh}" stroke-width="1.2"/>` : '').join('') : '';
+  const eyes = face === 'sing'
+    ? `<path d="M-17 -262 q6 4 12 0 M5 -262 q6 4 12 0" stroke="#111" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M-20 -274 l12 -1 M20 -274 l-12 -1" stroke="#3b2a1c" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="0" cy="-243" rx="5" ry="${(5 + 2 * Math.sin((typeof __T !== 'undefined' ? __T : 0) * 7)).toFixed(1)}" fill="#3a1d1a"/>`
+    : face === 'scared'
     ? `<circle cx="-11" cy="-262" r="6" fill="#f4efe6"/><circle cx="11" cy="-262" r="6" fill="#f4efe6"/><circle cx="-11" cy="-261" r="3.2" fill="#111"/><circle cx="11" cy="-261" r="3.2" fill="#111"/>
        <path d="M-20 -276 l12 -3 M20 -276 l-12 -3" stroke="#3b2a1c" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="0" cy="-242" rx="5" ry="6" fill="#3a1d1a"/>`
     : `<circle cx="-11" cy="-261" r="4" fill="#111"/><circle cx="11" cy="-261" r="4" fill="#111"/>
@@ -147,7 +151,7 @@ function asya({ pose = {}, face = 'scared', hard = 0, torch = true, scratch = fa
       <ellipse cx="0" cy="-258" rx="32" ry="36" fill="${PAL.skin}"/>
       <path d="M-33 -262 Q-34 -298 0 -296 Q34 -298 33 -262 Q22 -282 0 -280 Q-22 -282 -33 -262Z" fill="#4a2e1e"/>
       <path d="M-34 -262 q-6 30 -2 46 M34 -262 q6 30 2 46" stroke="#4a2e1e" stroke-width="7" fill="none" stroke-linecap="round"/>
-      ${eyes}${green > 0 ? `<g opacity="${green}"><circle cx="-11" cy="-262" r="10" fill="${PAL.eyeGlow}" opacity=".3"/><circle cx="11" cy="-262" r="10" fill="${PAL.eyeGlow}" opacity=".3"/><circle cx="-11" cy="-262" r="6.5" fill="${PAL.eye}"/><circle cx="11" cy="-262" r="6.5" fill="${PAL.eye}"/><ellipse cx="-11" cy="-262" rx="1.6" ry="5" fill="#10140a"/><ellipse cx="11" cy="-262" rx="1.6" ry="5" fill="#10140a"/></g>` : ''}</g>${neck}
+      ${eyes}${cheek}${green > 0 ? `<g opacity="${green}"><circle cx="-11" cy="-262" r="10" fill="${PAL.eyeGlow}" opacity=".3"/><circle cx="11" cy="-262" r="10" fill="${PAL.eyeGlow}" opacity=".3"/><circle cx="-11" cy="-262" r="6.5" fill="${PAL.eye}"/><circle cx="11" cy="-262" r="6.5" fill="${PAL.eye}"/><ellipse cx="-11" cy="-262" rx="1.6" ry="5" fill="#10140a"/><ellipse cx="11" cy="-262" rx="1.6" ry="5" fill="#10140a"/></g>` : ''}</g>${neck}
     <g id="a-armR" transform="${rot(p.armR, 48, -205)}">
       <rect x="34" y="-212" width="27" height="${armLen}" rx="11" fill="${PAL.coat}"/>
       <circle cx="47" cy="-98" r="11" fill="${PAL.skin}"/>${torchG}</g>
