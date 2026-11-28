@@ -1,3 +1,4 @@
+import os
 #!/usr/bin/env python3
 """Animated-scene reel (TikTok style): python3 make_story.py formats/<name>/config.json [--regen-vo] [--no-render]
 One continuous Russian voice-over (ElevenLabs, with timestamps) drives word-by-word captions and scene cuts
@@ -83,7 +84,7 @@ def prep_img(img, zmax):
     return out, im.size
 
 
-TL = {"style": C.get("style", ""), "theme": C.get("theme", ""), "duration": D, "words": words, "beats": [], "bigs": [], "titles": [], "emojis": [], "stamps": [],
+TL = {"style": C.get("style", ""), "theme": C.get("theme", ""), "bg": (os.path.abspath(C["bg"]) if C.get("bg") else ""), "duration": D, "words": words, "beats": [], "bigs": [], "titles": [], "emojis": [], "stamps": [],
       "end": {"t0": E, "tag": C.get("end_tag", "Подписывайся")}}
 hud = []
 last_stamp = 0
