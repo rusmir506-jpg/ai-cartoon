@@ -20,10 +20,10 @@
       },
       "photos": [
         {
-          "img": "library/2026-11-28/batch1_03.jpg",
+          "img": "library/2026-11-28/batch3_03.jpg",
           "move": [
             0.5,
-            0.5,
+            0.45,
             1.0,
             0.5,
             0.55,
@@ -43,18 +43,18 @@
       },
       "photos": [
         {
-          "img": "library/2026-11-28/batch2_04.jpg",
+          "img": "library/2026-11-28/batch2_16.jpg",
           "move": [
             0.5,
-            0.55,
+            0.5,
             1.0,
             0.5,
-            0.4,
+            0.5,
             1.1
           ]
         },
         {
-          "img": "library/2026-11-28/batch2_05.jpg",
+          "img": "library/2026-11-28/batch2_15.jpg",
           "move": [
             0.5,
             0.5,
@@ -77,7 +77,7 @@
       },
       "photos": [
         {
-          "img": "library/2026-11-28/batch2_15.jpg",
+          "img": "library/2026-11-28/batch2_13.jpg",
           "move": [
             0.5,
             0.5,
@@ -88,13 +88,13 @@
           ]
         },
         {
-          "img": "library/2026-11-28/batch2_16.jpg",
+          "img": "library/2026-11-28/batch2_12.jpg",
           "move": [
             0.5,
             0.5,
             1.0,
             0.5,
-            0.55,
+            0.5,
             1.1
           ]
         }
@@ -111,25 +111,25 @@
       },
       "photos": [
         {
-          "img": "library/2026-11-28/batch3_03.jpg",
+          "img": "library/2026-11-28/batch2_07.jpg",
           "move": [
             0.5,
-            0.45,
+            0.55,
             1.0,
             0.5,
-            0.55,
+            0.5,
             1.1
           ]
         },
         {
-          "img": "library/2026-11-28/batch1_08.jpg",
+          "img": "library/2026-11-28/batch1_03.jpg",
           "move": [
             0.5,
-            0.55,
+            0.5,
             1.0,
             0.5,
-            0.5,
-            1.12
+            0.55,
+            1.1
           ]
         }
       ]
@@ -145,21 +145,21 @@
       },
       "photos": [
         {
-          "img": "library/2026-11-28/batch2_10.jpg",
+          "img": "library/2026-11-28/batch1_14.jpg",
           "move": [
             0.5,
-            0.55,
+            0.5,
             1.0,
             0.5,
-            0.5,
+            0.45,
             1.1
           ]
         },
         {
-          "img": "library/2026-11-28/batch1_07.jpg",
+          "img": "library/2026-11-28/batch2_04.jpg",
           "move": [
             0.5,
-            0.6,
+            0.5,
             1.0,
             0.5,
             0.4,
@@ -179,24 +179,24 @@
       },
       "photos": [
         {
-          "img": "library/2026-11-28/batch3_01.jpg",
+          "img": "library/2026-11-28/batch1_08.jpg",
           "move": [
             0.5,
-            0.5,
+            0.55,
             1.0,
             0.5,
-            0.55,
+            0.5,
             1.1
           ]
         },
         {
-          "img": "library/2026-11-28/batch2_02.jpg",
+          "img": "library/2026-11-28/batch2_05.jpg",
           "move": [
             0.5,
-            0.55,
+            0.5,
             1.0,
             0.5,
-            0.5,
+            0.55,
             1.1
           ]
         }

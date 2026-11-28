@@ -79,6 +79,7 @@ const NOTESCSS = `
 .luxe .shade{background:linear-gradient(180deg,rgba(0,0,0,.42) 0%,rgba(0,0,0,0) 24%,rgba(0,0,0,0) 46%,rgba(0,0,0,.72) 100%)}
 .luxe .shade.cover{background:linear-gradient(180deg,rgba(6,40,48,.5) 0%,rgba(6,40,48,.28) 32%,rgba(6,40,48,.78) 100%)}
 .luxe #hint,.luxe #dots{display:none}
+.luxe .ph img{filter:sepia(.14) saturate(.94) contrast(1.05) brightness(1.03)!important}
 .luxe .wm{font-family:CG,serif;font-style:italic;font-size:56px}
 .luxe .cnt{font-family:MT,sans-serif;letter-spacing:.3em}
 .lpanel{position:absolute;left:64px;right:64px;top:1000px;padding:56px 60px 54px;background:rgba(12,12,12,.5);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border:1.5px solid rgba(201,165,92,.8);color:#F6F1E7;opacity:0}
