@@ -83,7 +83,7 @@ def prep_img(img, zmax):
     return out, im.size
 
 
-TL = {"style": C.get("style", ""), "duration": D, "words": words, "beats": [], "bigs": [], "titles": [], "emojis": [], "stamps": [],
+TL = {"style": C.get("style", ""), "theme": C.get("theme", ""), "duration": D, "words": words, "beats": [], "bigs": [], "titles": [], "emojis": [], "stamps": [],
       "end": {"t0": E, "tag": C.get("end_tag", "Подписывайся")}}
 hud = []
 last_stamp = 0

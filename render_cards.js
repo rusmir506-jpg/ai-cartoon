@@ -85,6 +85,22 @@ const NOTESCSS = `
 .anim .g{fill:none;stroke:#C9A55C;stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
 .anim .w{fill:none;stroke:#F6F1E7;stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
 .lpanel.low{top:1230px}
+.light .sc{background:#F7F4EE}
+.light .abg{background:radial-gradient(ellipse 80% 42% at 50% 36%,rgba(10,186,181,.15),rgba(255,255,255,0) 70%),linear-gradient(180deg,#FCFBF8,#EAF2F0)}
+.light .anim .g{stroke:#0ABAB5}
+.light .anim .w{stroke:#1E3A3D}
+.light .shade.fact{display:none}
+.light .dim{background:#fff}
+.light .lpanel{background:rgba(255,255,255,.94);-webkit-backdrop-filter:none;backdrop-filter:none;border:1.5px solid rgba(10,186,181,.75);color:#1E3A3D;box-shadow:0 20px 50px rgba(30,58,61,.13)}
+.light .lnum{color:#0ABAB5}
+.light .lline{background:#0ABAB5}
+.light .lsub{color:rgba(30,58,61,.8)}
+.light .tick path{stroke:#0ABAB5}
+.light .cb{background:rgba(30,58,61,.2)}
+.light .cb i{background:#0ABAB5}
+.light .nk{color:#9BE3DC}
+.light .n5 svg ellipse{stroke:#9BE3DC}
+.light .nw span{border-color:#9BE3DC}
 .luxe .ph img{filter:sepia(.14) saturate(.94) contrast(1.05) brightness(1.03)!important}
 .luxe .wm{font-family:CG,serif;font-style:italic;font-size:56px}
 .luxe .cnt{font-family:MT,sans-serif;letter-spacing:.3em}
@@ -108,7 +124,7 @@ const NOTESCSS = `
 .luxe .nw span{display:inline-block;padding:20px 0 20px .3em;border-top:2px solid #C9A55C;border-bottom:2px solid #C9A55C}
 .luxe .n2{font-family:CG,serif;font-style:italic;font-weight:500;font-size:84px;color:#F6F1E7;text-shadow:0 3px 18px rgba(0,0,0,.5);opacity:0;margin-top:26px}
 `;
-const BODYCLS = (TL.style === 'greek' || TL.style === 'luxe') ? TL.style : '';
+const BODYCLS = ((TL.style === 'greek' || TL.style === 'luxe') ? TL.style : '') + (TL.theme ? ' ' + TL.theme : '');
 const html = '<meta charset="utf-8"><style>' + fonts + (TL.style === 'greek' ? greekFonts : '') + (TL.style === 'luxe' ? notesFonts : '') + css + (TL.style === 'greek' ? GREEKCSS : '') + (TL.style === 'luxe' ? NOTESCSS : '') + '</style><body class="' + BODYCLS + '"><div id="scenes"></div><div id="chk"></div>' +
   '<div id="top"><div class="cg wm">InVoyage</div><div class="mt cnt" id="cnt"></div></div><div id="dots"></div>' +
   '<div id="hint" class="mt">листай<svg width="40" height="22" viewBox="0 0 40 22" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M2 11h34M26 2l10 9-10 9"/></svg></div>' +

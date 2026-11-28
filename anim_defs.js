@@ -4,7 +4,10 @@
   var clamp = function (x, a, b) { a = a === undefined ? 0 : a; b = b === undefined ? 1 : b; return Math.min(b, Math.max(a, x)); };
   var out3 = function (x) { return 1 - Math.pow(1 - clamp(x), 3); };
   var lerp = function (a, b, t) { return a + (b - a) * t; };
-  var GOLD = '#C9A55C', IV = '#F6F1E7';
+  var LIGHT = !!(window.TL && window.TL.theme === 'light');
+  var GOLD = LIGHT ? '#0ABAB5' : '#C9A55C', IV = LIGHT ? '#1E3A3D' : '#F6F1E7', BG = LIGHT ? '#F7F4EE' : '#141210';
+  var FA = function (a) { return LIGHT ? 'rgba(10,186,181,' + a + ')' : 'rgba(246,241,231,' + a + ')'; };
+  var GA = function (a) { return LIGHT ? 'rgba(10,186,181,' + a + ')' : 'rgba(201,165,92,' + a + ')'; };
   function prep(root) {
     root.querySelectorAll('.dr').forEach(function (e) {
       var L = 0; try { L = e.getTotalLength(); } catch (x) {}
@@ -26,15 +29,15 @@
     });
   }
   var cloud = 'M700 300 H900 a55 55 0 0 0 5 -108 a85 85 0 0 0 -160 -20 a65 65 0 0 0 -45 128 Z';
-  var docCopy = '<rect x="-150" y="-210" width="300" height="420" rx="26" fill="rgba(246,241,231,.14)" stroke="' + IV + '" stroke-width="7"/>' +
+  var docCopy = '<rect x="-150" y="-210" width="300" height="420" rx="26" fill="' + FA('.14') + '" stroke="' + IV + '" stroke-width="7"/>' +
     '<circle cx="0" cy="-70" r="62" fill="none" stroke="' + GOLD + '" stroke-width="7"/><path d="M-80 40 H80 M-80 90 H80 M-80 140 H10" stroke="' + GOLD + '" stroke-width="7" fill="none" stroke-linecap="round"/>';
   var dots = '';
   for (var j = 0; j < 4; j++) for (var i = 0; i < 5; i++)
-    dots += '<circle class="fi" data-d="' + (0.9 + 0.06 * (j * 5 + i)).toFixed(2) + '" data-s=".2" cx="' + (360 + 90 * i) + '" cy="' + (450 + 75 * j) + '" r="9" fill="rgba(246,241,231,.6)"/>';
+    dots += '<circle class="fi" data-d="' + (0.9 + 0.06 * (j * 5 + i)).toFixed(2) + '" data-s=".2" cx="' + (360 + 90 * i) + '" cy="' + (450 + 75 * j) + '" r="9" fill="' + FA('.6') + '"/>';
   var H = [380, 230, 420, 330, 400], bars = '', lab = '';
   for (var b = 0; b < 5; b++) {
-    bars += '<rect id="b' + b + '" x="' + (190 + 150 * b) + '" y="800" width="100" height="0" rx="10" fill="rgba(246,241,231,.22)" stroke="' + IV + '" stroke-width="3"/>';
-    lab += '<circle class="fi" data-d="' + (0.3 + 0.12 * b) + '" data-s=".2" cx="' + (240 + 150 * b) + '" cy="850" r="8" fill="rgba(246,241,231,.7)"/>';
+    bars += '<rect id="b' + b + '" x="' + (190 + 150 * b) + '" y="800" width="100" height="0" rx="10" fill="' + FA('.22') + '" stroke="' + IV + '" stroke-width="3"/>';
+    lab += '<circle class="fi" data-d="' + (0.3 + 0.12 * b) + '" data-s=".2" cx="' + (240 + 150 * b) + '" cy="850" r="8" fill="' + FA('.7') + '"/>';
   }
   var tshirt = 'M-52 -48 L-22 -62 Q0 -44 22 -62 L52 -48 L78 -12 L52 6 L40 -8 V56 H-40 V-8 L-52 6 L-78 -12 Z';
   window.ANIMH = { prep: prep, run: run };
@@ -85,7 +88,7 @@
         for (var i = 0; i < 5; i++) {
           var g = out3((u - 0.4 - i * 0.18) / 0.7), h = H[i] * g, r = root.querySelector('#b' + i);
           r.setAttribute('y', 800 - h); r.setAttribute('height', h);
-          r.setAttribute('fill', u > 3.2 ? (i === 1 ? 'rgba(201,165,92,.92)' : 'rgba(246,241,231,.11)') : 'rgba(246,241,231,.22)');
+          r.setAttribute('fill', u > 3.2 ? (i === 1 ? '' + GA('.92') + '' : '' + FA('.11') + '') : '' + FA('.22') + '');
           r.setAttribute('stroke', u > 3.2 && i === 1 ? GOLD : IV);
         }
         var p = out3((u - 2.3) / 1.1), pl = root.querySelector('#plane');
@@ -104,7 +107,7 @@
         '<path class="g dr" data-d="3.4" data-t=".9" d="M820 280 a95 95 0 0 1 130 0 M842 308 a62 62 0 0 1 86 0 M862 336 a30 30 0 0 1 46 0"/>' +
         '<circle class="fi" data-d="3.6" data-s=".2" cx="885" cy="366" r="8" fill="' + GOLD + '"/>' +
         '<path class="w dr" data-d="4.0" data-t=".5" style="stroke-width:7px" d="M808 215 L964 410"/>' +
-        '<g class="fi" data-d="4.4" data-y="-180"><path d="M540 650 C510 620 496 600 496 580 A44 44 0 1 1 584 580 C584 600 570 620 540 650 Z" fill="' + GOLD + '"/><circle cx="540" cy="580" r="15" fill="#141210"/></g>' +
+        '<g class="fi" data-d="4.4" data-y="-180"><path d="M540 650 C510 620 496 600 496 580 A44 44 0 1 1 584 580 C584 600 570 620 540 650 Z" fill="' + GOLD + '"/><circle cx="540" cy="580" r="15" fill="' + BG + '"/></g>' +
         '<circle id="pr" cx="540" cy="650" r="10" fill="none" stroke="' + GOLD + '" stroke-width="3" opacity="0"/>',
       upd: function (root, u) {
         root.querySelector('#pb').setAttribute('width', 280 * clamp((u - 1.6) / 1.6));
