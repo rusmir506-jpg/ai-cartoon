@@ -76,12 +76,12 @@ const GREEKCSS = `
 .greek #etag{font-family:FR,serif!important;font-style:normal!important;text-transform:uppercase;letter-spacing:.14em;font-size:50px;color:#1A6FB8}
 `;
 const NOTESCSS = `
-.luxe .shade{background:linear-gradient(180deg,rgba(6,40,48,.5) 0%,rgba(6,40,48,0) 24%,rgba(6,40,48,0) 44%,rgba(6,40,48,.84) 100%)}
+.luxe .shade{background:linear-gradient(180deg,rgba(0,0,0,.42) 0%,rgba(0,0,0,0) 24%,rgba(0,0,0,0) 46%,rgba(0,0,0,.72) 100%)}
 .luxe .shade.cover{background:linear-gradient(180deg,rgba(6,40,48,.5) 0%,rgba(6,40,48,.28) 32%,rgba(6,40,48,.78) 100%)}
 .luxe #hint,.luxe #dots{display:none}
 .luxe .wm{font-family:CG,serif;font-style:italic;font-size:56px}
 .luxe .cnt{font-family:MT,sans-serif;letter-spacing:.3em}
-.lpanel{position:absolute;left:64px;right:64px;top:1000px;padding:56px 60px 54px;background:rgba(8,44,52,.5);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border:1.5px solid rgba(201,165,92,.8);color:#F6F1E7;opacity:0}
+.lpanel{position:absolute;left:64px;right:64px;top:1000px;padding:56px 60px 54px;background:rgba(12,12,12,.5);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border:1.5px solid rgba(201,165,92,.8);color:#F6F1E7;opacity:0}
 .lnum{font-family:CG,serif;font-style:italic;font-weight:500;font-size:86px;color:#C9A55C;line-height:1}
 .lline{width:88px;height:2px;background:#C9A55C;margin:20px 0 28px}
 .ltitle{font-family:CG,serif;font-weight:600;font-size:82px;line-height:1.04;letter-spacing:.005em}
