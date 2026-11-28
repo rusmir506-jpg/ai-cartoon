@@ -20,13 +20,13 @@
       },
       "photos": [
         {
-          "img": "footage/december/maldives_sunset.jpg",
+          "img": "footage/lifehacks/03.jpg",
           "move": [
             0.5,
-            0.55,
+            0.5,
             1.0,
             0.5,
-            0.45,
+            0.55,
             1.12
           ]
         }
@@ -43,13 +43,24 @@
       },
       "photos": [
         {
-          "img": "footage/december/phuket_bay.jpg",
+          "img": "footage/lifehacks/07.jpg",
           "move": [
             0.5,
             0.5,
             1.0,
             0.5,
             0.55,
+            1.1
+          ]
+        },
+        {
+          "img": "footage/lifehacks/14.jpg",
+          "move": [
+            0.5,
+            0.5,
+            1.0,
+            0.5,
+            0.45,
             1.1
           ]
         }
@@ -66,13 +77,24 @@
       },
       "photos": [
         {
-          "img": "footage/december/srilanka_drone.jpg",
+          "img": "footage/lifehacks/05.jpg",
           "move": [
             0.5,
-            0.6,
+            0.55,
             1.0,
             0.5,
             0.5,
+            1.1
+          ]
+        },
+        {
+          "img": "footage/lifehacks/04.jpg",
+          "move": [
+            0.5,
+            0.5,
+            1.0,
+            0.5,
+            0.55,
             1.1
           ]
         }
@@ -89,10 +111,21 @@
       },
       "photos": [
         {
-          "img": "footage/december/maldives_jetty.jpg",
+          "img": "footage/lifehacks/12.jpg",
           "move": [
             0.5,
             0.55,
+            1.0,
+            0.5,
+            0.45,
+            1.1
+          ]
+        },
+        {
+          "img": "footage/lifehacks/06.jpg",
+          "move": [
+            0.5,
+            0.5,
             1.0,
             0.5,
             0.5,
@@ -112,13 +145,24 @@
       },
       "photos": [
         {
-          "img": "footage/december/srilanka_balcony.jpg",
+          "img": "footage/lifehacks/08.jpg",
+          "move": [
+            0.5,
+            0.55,
+            1.0,
+            0.5,
+            0.5,
+            1.12
+          ]
+        },
+        {
+          "img": "footage/lifehacks/10.jpg",
           "move": [
             0.5,
             0.5,
             1.0,
             0.5,
-            0.5,
+            0.55,
             1.1
           ]
         }
@@ -135,13 +179,24 @@
       },
       "photos": [
         {
-          "img": "footage/december/phuket_beach.jpg",
+          "img": "footage/lifehacks/02.jpg",
           "move": [
             0.5,
             0.5,
             1.0,
             0.5,
-            0.55,
+            0.5,
+            1.12
+          ]
+        },
+        {
+          "img": "footage/lifehacks/16.jpg",
+          "move": [
+            0.5,
+            0.5,
+            1.0,
+            0.5,
+            0.5,
             1.1
           ]
         }
