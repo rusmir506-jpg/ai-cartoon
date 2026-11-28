@@ -5,9 +5,9 @@
   var out3 = function (x) { return 1 - Math.pow(1 - clamp(x), 3); };
   var lerp = function (a, b, t) { return a + (b - a) * t; };
   var LIGHT = !!(window.TL && window.TL.theme === 'light');
-  var GOLD = LIGHT ? '#0ABAB5' : '#C9A55C', IV = LIGHT ? '#1E3A3D' : '#F6F1E7', BG = LIGHT ? '#F7F4EE' : '#141210';
-  var FA = function (a) { return LIGHT ? 'rgba(10,186,181,' + a + ')' : 'rgba(246,241,231,' + a + ')'; };
-  var GA = function (a) { return LIGHT ? 'rgba(10,186,181,' + a + ')' : 'rgba(201,165,92,' + a + ')'; };
+  var GOLD = LIGHT ? '#35A59E' : '#C9A55C', IV = LIGHT ? '#2A3F41' : '#F6F1E7', BG = LIGHT ? '#E8E3D8' : '#141210';
+  var FA = function (a) { return LIGHT ? 'rgba(53,165,158,' + a + ')' : 'rgba(246,241,231,' + a + ')'; };
+  var GA = function (a) { return LIGHT ? 'rgba(53,165,158,' + a + ')' : 'rgba(201,165,92,' + a + ')'; };
   function prep(root) {
     root.querySelectorAll('.dr').forEach(function (e) {
       var L = 0; try { L = e.getTotalLength(); } catch (x) {}

@@ -85,27 +85,29 @@ const NOTESCSS = `
 .anim .g{fill:none;stroke:#C9A55C;stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
 .anim .w{fill:none;stroke:#F6F1E7;stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
 .lpanel.low{top:1230px}
-.light .sc{background:#F7F4EE}
-.light .abg{background:radial-gradient(ellipse 80% 42% at 50% 36%,rgba(10,186,181,.15),rgba(255,255,255,0) 70%),linear-gradient(180deg,#FCFBF8,#EAF2F0)}
-.light .anim .g{stroke:#0ABAB5}
-.light .anim .w{stroke:#1E3A3D}
+.light .sc{background:#E8E3D8}
+.light .abg{background:radial-gradient(ellipse 80% 42% at 50% 36%,rgba(53,165,158,.15),rgba(232,227,216,0) 70%),linear-gradient(180deg,#EDE8DE,#DDD8CC)}
+.light .anim .g{stroke:#35A59E}
+.light .anim .w{stroke:#2A3F41}
 .light .shade.fact{display:none}
-.light .dim{background:#fff}
-.light .lpanel{background:rgba(255,255,255,.94);-webkit-backdrop-filter:none;backdrop-filter:none;border:1.5px solid rgba(10,186,181,.75);color:#1E3A3D;box-shadow:0 20px 50px rgba(30,58,61,.13)}
-.light .lnum{color:#0ABAB5}
-.light .lline{background:#0ABAB5}
-.light .lsub{color:rgba(30,58,61,.8)}
-.light .tick path{stroke:#0ABAB5}
-.light .cb{background:rgba(30,58,61,.2)}
-.light .cb i{background:#0ABAB5}
-.light .shade.cover{background:linear-gradient(180deg,rgba(0,0,0,.34) 0%,rgba(0,0,0,0) 22%,rgba(247,244,238,0) 26%,rgba(247,244,238,.82) 50%,rgba(247,244,238,.97) 72%,rgba(247,244,238,1) 100%)!important}
-.light .nk,.light #a0{color:#0A9E99!important;text-shadow:none!important}
-.light .n5{color:#1E3A3D!important;text-shadow:none!important}
-.light .n5 svg ellipse{stroke:#0ABAB5!important}
-.light .nw{color:#1E3A3D!important}
-.light .nw span{border-color:#0ABAB5!important}
-.light .n2{color:#1E3A3D!important;text-shadow:none!important}
+.light .dim{background:#E8E3D8}
+.light .lpanel{background:rgba(246,243,236,.93);-webkit-backdrop-filter:none;backdrop-filter:none;border:1.5px solid rgba(53,165,158,.75);color:#2A3F41;box-shadow:0 20px 50px rgba(42,63,65,.13)}
+.light .lnum{color:#35A59E}
+.light .lline{background:#35A59E}
+.light .lsub{color:rgba(42,63,65,.8)}
+.light .tick path{stroke:#35A59E}
+.light .cb{background:rgba(42,63,65,.2)}
+.light .cb i{background:#35A59E}
+.light .shade.cover{background:linear-gradient(180deg,rgba(0,0,0,.34) 0%,rgba(0,0,0,0) 22%,rgba(232,227,216,0) 26%,rgba(232,227,216,.62) 50%,rgba(232,227,216,.93) 72%,rgba(232,227,216,1) 100%)!important}
+.light .nk,.light #a0{color:#1B7771!important;font-weight:600!important;text-shadow:none!important}
+.light .n5{color:#2A3F41!important;text-shadow:none!important}
+.light .n5 svg ellipse{stroke:#35A59E!important}
+.light .nw{color:#2A3F41!important}
+.light .nw span{border-color:#35A59E!important}
+.light .n2{color:#2A3F41!important;text-shadow:none!important}
 .light .blk{top:760px!important}
+.light #end{background:radial-gradient(ellipse 75% 60% at 50% 45%,#F1EDE3 0%,#E8E3D8 60%,#DDD8CC 100%)}
+.light #etag{color:#2A8F89}
 .luxe .ph img{filter:sepia(.14) saturate(.94) contrast(1.05) brightness(1.03)!important}
 .luxe .wm{font-family:CG,serif;font-style:italic;font-size:56px}
 .luxe .cnt{font-family:MT,sans-serif;letter-spacing:.3em}

@@ -113,7 +113,7 @@
     }
     var cur = -1; TL.beats.forEach(function (b, i) { var nx = (i + 1 < n) ? TL.beats[i + 1].t0 : E; if (t >= b.t0 + 0.25 && t < nx) cur = i; });
     var cb = cur >= 0 ? TL.beats[cur].card : null, cnt = $('cnt');
-    $('top').style.color = (TL.theme === 'light' && cb && cb.anim) ? '#1E3A3D' : '#fff'; $('top').style.textShadow = (TL.theme === 'light' && cb && cb.anim) ? 'none' : '';
+    $('top').style.color = (TL.theme === 'light' && cb && cb.anim) ? '#2A3F41' : '#fff'; $('top').style.textShadow = (TL.theme === 'light' && cb && cb.anim) ? 'none' : '';
     if (cb && (cb.type === 'place' || cb.type === 'fact')) { cnt.textContent = cb.n + ' / 0' + places; cnt.style.opacity = 1; } else cnt.style.opacity = 0;
     for (var k2 = 0; k2 < n - 1; k2++) {
       var bt = TL.beats[k2 + 1], nt = (k2 + 2 < n) ? TL.beats[k2 + 2].t0 : E;
