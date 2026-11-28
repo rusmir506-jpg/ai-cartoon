@@ -12,6 +12,7 @@ const F = 'file://' + path.resolve(__dirname, 'assets/fonts') + '/';
 const CYR = 'U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116';
 const ff = (fam, file, w, st) => ['cyrillic', 'latin'].map(s => '@font-face{font-family:' + fam + ';font-weight:' + w + ';font-style:' + (st || 'normal') + ";src:url('" + F + file + '-' + s + '-' + w + '-' + (st || 'normal') + ".woff2') format('woff2');" + (s === 'cyrillic' ? 'unicode-range:' + CYR + ';' : '') + '}').join('');
 const fonts = ff('OS', 'oswald', 500) + ff('OS', 'oswald', 600) + ff('OS', 'oswald', 700) + ff('MT', 'montserrat', 400) + ff('MT', 'montserrat', 500) + ff('MT', 'montserrat', 600) + ff('CG', 'cormorant-garamond', 500) + ff('CG', 'cormorant-garamond', 500, 'italic') + ff('CG', 'cormorant-garamond', 600);
+const notesFonts = ff('MS', 'marck-script', 400);
 const greekFonts = ff('FR', 'forum', 400) + ff('TS', 'tenor-sans', 400);
 const LOGO = 'file://' + path.resolve(__dirname, 'assets/invoyage_logo.jpg');
 const css = `*{margin:0;padding:0;box-sizing:border-box}
@@ -74,7 +75,33 @@ const GREEKCSS = `
 .greek .lt{display:inline-block;opacity:0}
 .greek #etag{font-family:FR,serif!important;font-style:normal!important;text-transform:uppercase;letter-spacing:.14em;font-size:50px;color:#1A6FB8}
 `;
-const html = '<meta charset="utf-8"><style>' + fonts + (TL.style === 'greek' ? greekFonts : '') + css + (TL.style === 'greek' ? GREEKCSS : '') + '</style><body class="' + (TL.style === 'greek' ? 'greek' : '') + '"><div id="scenes"></div>' +
+const NOTESCSS = `
+.notes .shade{background:linear-gradient(180deg,rgba(0,0,0,.42) 0%,rgba(0,0,0,0) 22%,rgba(0,0,0,0) 50%,rgba(0,0,0,.45) 100%)}
+.notes .shade.cover{background:linear-gradient(180deg,rgba(0,0,0,.4) 0%,rgba(0,0,0,.18) 30%,rgba(0,0,0,.62) 100%)}
+.notes #hint,.notes #dots{display:none}
+.note{position:absolute;left:64px;right:84px;top:880px;padding:100px 52px 56px;background:#FFF6DC;color:#16323a;box-shadow:0 30px 60px rgba(0,0,0,.42);opacity:0;transform-origin:50% 0;background-image:repeating-linear-gradient(0deg,rgba(255,246,220,0) 0,rgba(255,246,220,0) 62px,rgba(31,116,128,.13) 63px,rgba(255,246,220,0) 64px)}
+.tape{position:absolute;left:50%;top:-34px;width:230px;height:70px;margin-left:-115px;background:rgba(255,214,102,.82);transform:rotate(-3deg);box-shadow:0 4px 10px rgba(0,0,0,.2)}
+.nnum{position:absolute;left:-36px;top:-56px;width:132px;height:132px;border-radius:66px;background:#E8483F;color:#fff;font-family:OS,sans-serif;font-weight:700;font-size:84px;line-height:120px;text-align:center;box-shadow:0 10px 24px rgba(0,0,0,.35);border:6px solid #fff}
+.ntitle{font-family:MS,cursive;font-size:98px;line-height:1.12;margin-top:10px}
+.ntitle span{background:linear-gradient(transparent 52%,#FFE25A 52%,#FFE25A 92%,transparent 92%);padding:0 12px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.nsub{font-family:MT,sans-serif;font-weight:500;font-size:38px;line-height:1.4;margin-top:26px;color:#2c4a50;padding-right:90px}
+.tick{position:absolute;right:26px;bottom:20px;width:116px;height:116px}
+.tick path{fill:none;stroke:#2FB561;stroke-width:12;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:130;stroke-dashoffset:130}
+.sticker{position:absolute;right:56px;top:690px;font-family:'Noto Color Emoji';font-size:190px;line-height:1;opacity:0;filter:drop-shadow(0 12px 18px rgba(0,0,0,.45))}
+#chk{position:absolute;left:72px;right:72px;top:214px;display:none;gap:14px;z-index:50;opacity:0}
+.notes #chk{display:flex}
+.cb{flex:1;height:14px;border-radius:7px;background:rgba(255,255,255,.38);position:relative;overflow:hidden}
+.cb i{position:absolute;left:0;top:0;bottom:0;border-radius:7px;background:#FFE25A;width:0}
+.notes .nk{font-family:MS,cursive;font-size:88px;color:#fff;text-shadow:0 3px 18px rgba(0,0,0,.65);opacity:0}
+.notes .n5{position:relative;display:inline-block;font-family:OS,sans-serif;font-weight:700;font-size:430px;line-height:1;color:#fff;text-shadow:0 8px 30px rgba(0,0,0,.45);opacity:0;padding:0 30px}
+.notes .n5 svg{position:absolute;left:-50px;top:-20px;width:calc(100% + 100px);height:calc(100% + 40px);overflow:visible}
+.notes .n5 svg ellipse{fill:none;stroke:#FFE25A;stroke-width:12;stroke-linecap:round}
+.notes .nw{font-family:OS,sans-serif;font-weight:700;font-size:150px;line-height:1.05;text-transform:uppercase;opacity:0;margin-top:10px}
+.notes .nw span{background:linear-gradient(transparent 55%,#E8483F 55%,#E8483F 92%,transparent 92%);padding:0 16px;color:#fff;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.notes .n2{font-family:MS,cursive;font-size:92px;color:#fff;text-shadow:0 3px 18px rgba(0,0,0,.65);opacity:0;margin-top:14px}
+`;
+const BODYCLS = (TL.style === 'greek' || TL.style === 'notes') ? TL.style : '';
+const html = '<meta charset="utf-8"><style>' + fonts + (TL.style === 'greek' ? greekFonts : '') + (TL.style === 'notes' ? notesFonts : '') + css + (TL.style === 'greek' ? GREEKCSS : '') + (TL.style === 'notes' ? NOTESCSS : '') + '</style><body class="' + BODYCLS + '"><div id="scenes"></div><div id="chk"></div>' +
   '<div id="top"><div class="cg wm">InVoyage</div><div class="mt cnt" id="cnt"></div></div><div id="dots"></div>' +
   '<div id="hint" class="mt">листай<svg width="40" height="22" viewBox="0 0 40 22" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M2 11h34M26 2l10 9-10 9"/></svg></div>' +
   '<div id="end"><img id="elogo" src="' + LOGO + '"><div id="etag">' + TL.end.tag + '</div></div>' +
