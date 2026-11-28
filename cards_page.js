@@ -15,11 +15,11 @@
       h += '<div class="ph' + (c.type === 'tips' ? ' blur' : '') + '" id="ph' + i + '_' + j + '"><img id="pi' + i + '_' + j + '" src="file://' + s.file + '" style="width:' + s.iw + 'px;height:' + s.ih + 'px"></div>';
     });
     h += '<div class="shade ' + (c.type || '') + '"></div>';
-    if (c.type === 'cover' && TL.style === 'notes') {
+    if (c.type === 'cover' && TL.style === 'luxe') {
       var parts = c.l1.split(' '), num = parts.shift(), word = parts.join(' ');
       h += '<div class="blk" style="top:560px;text-align:center"><div class="nk" id="a' + i + '">' + c.kick + '</div><div class="n5" id="b' + i + '">' + num + '<svg viewBox="0 0 300 400" preserveAspectRatio="none"><ellipse id="el' + i + '" cx="150" cy="200" rx="142" ry="192"/></svg></div><div class="nw" id="c' + i + '"><span>' + word + '</span></div><div class="n2" id="d' + i + '">' + c.l2 + '</div></div>';
-    } else if (c.type === 'fact' && TL.style === 'notes') {
-      h += '<div class="note" id="nt' + i + '"><div class="tape"></div><div class="nnum">' + parseInt(c.n, 10) + '</div><div class="ntitle"><span>' + c.name + '</span></div><div class="nsub">' + c.sub + '</div><svg class="tick" viewBox="0 0 100 100"><path id="tk' + i + '" d="M14 56 L40 82 L88 20"/></svg></div><div class="sticker" id="sk' + i + '">' + (c.icon || '') + '</div>';
+    } else if (c.type === 'fact' && TL.style === 'luxe') {
+      h += '<div class="lpanel" id="nt' + i + '"><div class="lnum">0' + parseInt(c.n, 10) + '</div><div class="lline"></div><div class="ltitle">' + c.name + '</div><div class="lsub">' + c.sub + '</div><svg class="tick" viewBox="0 0 100 100"><path id="tk' + i + '" d="M16 54 L40 78 L86 22"/></svg></div>';
     } else
     if (c.type === 'cover') {
       if (TL.style === 'greek') {
@@ -75,17 +75,16 @@
         var px = clamp(cx * s.iw - w / 2, 0, s.iw - w), py = clamp(cy * s.ih - hh / 2, 0, s.ih - hh), k = 1080 / w;
         $('pi' + i + '_' + j).style.transform = 'scale(' + k + ') translate(' + (-px) + 'px,' + (-py) + 'px)';
       });
-      if (TL.style === 'notes' && c.type === 'cover') {
+      if (TL.style === 'luxe' && c.type === 'cover') {
         rv('a' + i, u, 0.3, 24); rv('b' + i, u, 0.55, 80); rv('c' + i, u, 1.35, 40); rv('d' + i, u, 1.85, 24);
         var el = $('el' + i); if (el) { var dr = out3((u - 0.95) / 0.7); el.style.strokeDasharray = '1060'; el.style.strokeDashoffset = String((1 - dr) * 1060); }
-      } else if (TL.style === 'notes' && c.type === 'fact') {
-        var o1 = out3((u - 0.35) / 0.55), nt = $('nt' + i), sk = $('sk' + i), sp = out3((u - 0.9) / 0.5), tk = clamp((u - 1.7) / 0.5);
-        nt.style.opacity = clamp((u - 0.35) / 0.12);
-        nt.style.transform = 'translateY(' + ((1 - o1) * -460) + 'px) rotate(' + (-2.5 + (1 - o1) * 9 + Math.sin(t * 1.6) * 0.35) + 'deg)';
-        sk.style.opacity = sp; sk.style.transform = 'scale(' + (0.4 + 0.6 * sp) + ') rotate(' + (10 - 10 * sp + Math.sin(t * 2) * 3) + 'deg)';
+      } else if (TL.style === 'luxe' && c.type === 'fact') {
+        var o1 = out3((u - 0.35) / 0.6), nt = $('nt' + i), tk = clamp((u - 1.7) / 0.5);
+        nt.style.opacity = o1;
+        nt.style.transform = 'translateY(' + ((1 - o1) * 80) + 'px)';
         $('tk' + i).style.strokeDashoffset = String((1 - tk) * 130);
       }
-      if (c.type === 'cover' && TL.style !== 'notes') {
+      if (c.type === 'cover' && TL.style !== 'luxe') {
         if (TL.style === 'greek') {
           rv('a' + i, u, 0.3, 24);
           c.l1.split('').forEach(function (ch, k) { var e = $('lt' + i + '_' + k), o = out3((u - 0.55 - k * 0.18) / 0.6); e.style.opacity = o; e.style.transform = 'translateY(' + ((1 - o) * 70) + 'px) scale(' + (0.9 + 0.1 * o) + ')'; });
@@ -103,7 +102,7 @@
     });
     // overlays
     var ov = 1 - clamp((t - (E - 0.15)) / 0.3); $('top').style.opacity = ov; $('dots').style.opacity = ov * clamp((t - TL.beats[1].t0) / 0.4); $('hint').style.opacity = 0;
-    if (TL.style === 'notes') {                      // checklist at the top: one bar per tip, filled when its tick is drawn
+    if (TL.style === 'luxe') {                      // checklist at the top: one bar per tip, filled when its tick is drawn
       var fb = []; TL.beats.forEach(function (b, i) { if (b.card && (b.card.type === 'fact' || b.card.type === 'place')) fb.push(i); });
       var chk = $('chk');
       if (!chk.children.length) fb.forEach(function () { var d = document.createElement('div'); d.className = 'cb'; d.innerHTML = '<i></i>'; chk.appendChild(d); });
