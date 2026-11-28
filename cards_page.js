@@ -19,7 +19,8 @@
       var parts = c.l1.split(' '), num = parts.shift(), word = parts.join(' ');
       h += '<div class="blk" style="top:560px;text-align:center"><div class="nk" id="a' + i + '">' + c.kick + '</div><div class="n5" id="b' + i + '">' + num + '<svg viewBox="0 0 300 400" preserveAspectRatio="none"><ellipse id="el' + i + '" cx="150" cy="200" rx="142" ry="192"/></svg></div><div class="nw" id="c' + i + '"><span>' + word + '</span></div><div class="n2" id="d' + i + '">' + c.l2 + '</div></div>';
     } else if (c.type === 'fact' && TL.style === 'luxe') {
-      h += '<div class="lpanel" id="nt' + i + '"><div class="lnum">0' + parseInt(c.n, 10) + '</div><div class="lline"></div><div class="ltitle">' + c.name + '</div><div class="lsub">' + c.sub + '</div><svg class="tick" viewBox="0 0 100 100"><path id="tk' + i + '" d="M16 54 L40 78 L86 22"/></svg></div>';
+      if (c.anim && window.ANIM[c.anim]) h += '<div class="abg"></div><svg class="anim" id="an' + i + '" viewBox="0 0 1080 1080">' + window.ANIM[c.anim].svg + '</svg>';
+      h += '<div class="lpanel' + (c.anim ? ' low' : '') + '" id="nt' + i + '"><div class="lnum">0' + parseInt(c.n, 10) + '</div><div class="lline"></div><div class="ltitle">' + c.name + '</div><div class="lsub">' + c.sub + '</div><svg class="tick" viewBox="0 0 100 100"><path id="tk' + i + '" d="M16 54 L40 78 L86 22"/></svg></div>';
     } else
     if (c.type === 'cover') {
       if (TL.style === 'greek') {
@@ -82,6 +83,7 @@
         var o1 = out3((u - 0.35) / 0.6), nt = $('nt' + i), tk = clamp((u - 1.7) / 0.5);
         nt.style.opacity = o1;
         nt.style.transform = 'translateY(' + ((1 - o1) * 80) + 'px)';
+        if (c.anim && window.ANIM[c.anim]) { var ar = $('an' + i); if (!el._p) { window.ANIMH.prep(ar); el._p = 1; } window.ANIMH.run(ar, u); window.ANIM[c.anim].upd(ar, u); }
         $('tk' + i).style.strokeDashoffset = String((1 - tk) * 130);
       }
       if (c.type === 'cover' && TL.style !== 'luxe') {

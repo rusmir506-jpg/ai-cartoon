@@ -79,6 +79,12 @@ const NOTESCSS = `
 .luxe .shade{background:linear-gradient(180deg,rgba(0,0,0,.42) 0%,rgba(0,0,0,0) 24%,rgba(0,0,0,0) 46%,rgba(0,0,0,.72) 100%)}
 .luxe .shade.cover{background:linear-gradient(180deg,rgba(6,40,48,.5) 0%,rgba(6,40,48,.28) 32%,rgba(6,40,48,.78) 100%)}
 .luxe #hint,.luxe #dots{display:none}
+.luxe .sc{background:#141210}
+.abg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 42% at 50% 36%,rgba(201,165,92,.17),rgba(0,0,0,0) 70%),linear-gradient(180deg,#191715,#0d0c0b)}
+.anim{position:absolute;left:0;top:250px;width:1080px;height:1080px;overflow:visible}
+.anim .g{fill:none;stroke:#C9A55C;stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+.anim .w{fill:none;stroke:#F6F1E7;stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+.lpanel.low{top:1230px}
 .luxe .ph img{filter:sepia(.14) saturate(.94) contrast(1.05) brightness(1.03)!important}
 .luxe .wm{font-family:CG,serif;font-style:italic;font-size:56px}
 .luxe .cnt{font-family:MT,sans-serif;letter-spacing:.3em}
@@ -107,7 +113,7 @@ const html = '<meta charset="utf-8"><style>' + fonts + (TL.style === 'greek' ? g
   '<div id="top"><div class="cg wm">InVoyage</div><div class="mt cnt" id="cnt"></div></div><div id="dots"></div>' +
   '<div id="hint" class="mt">листай<svg width="40" height="22" viewBox="0 0 40 22" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M2 11h34M26 2l10 9-10 9"/></svg></div>' +
   '<div id="end"><img id="elogo" src="' + LOGO + '"><div id="etag">' + TL.end.tag + '</div></div>' +
-  '<script>window.TL=' + JSON.stringify(TL) + ';</script><script>' + fs.readFileSync(path.resolve(__dirname, 'cards_page.js'), 'utf8') + '</script>';
+  '<script>window.TL=' + JSON.stringify(TL) + ';</script><script>' + fs.readFileSync(path.resolve(__dirname, 'anim_defs.js'), 'utf8') + '</script><script>' + fs.readFileSync(path.resolve(__dirname, 'cards_page.js'), 'utf8') + '</script>';
 (async () => {
   const b = await chromium.launch();
   const p = await b.newPage({ viewport: { width: 1080, height: 1920 } });
