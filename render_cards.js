@@ -124,7 +124,7 @@ const NOTESCSS = `
 .cb i{position:absolute;left:0;top:0;bottom:0;background:#C9A55C;width:0}
 .luxe .nk,.luxe #a0{font-size:28px!important;line-height:1.4}
 .luxe .nk{font-family:MT,sans-serif;font-weight:500;font-size:30px;letter-spacing:.42em;text-transform:uppercase;color:#C9A55C;text-shadow:0 2px 14px rgba(0,0,0,.5);opacity:0;margin-right:-.42em}
-.luxe .n5{position:relative;display:inline-block;font-family:CG,serif;font-weight:600;font-size:440px;line-height:1;color:#F6F1E7;text-shadow:0 8px 30px rgba(0,0,0,.4);opacity:0;padding:0 36px;margin-top:6px}
+.luxe .n5{position:relative;display:inline-block;font-family:MT,sans-serif;font-weight:500;font-size:380px;line-height:1;color:#F6F1E7;text-shadow:0 8px 30px rgba(0,0,0,.4);opacity:0;padding:0 36px;margin-top:6px}
 .luxe .n5 svg{position:absolute;left:-30px;top:30px;width:calc(100% + 60px);height:calc(100% - 20px);overflow:visible}
 .luxe .n5 svg ellipse{fill:none;stroke:#C9A55C;stroke-width:2.5;vector-effect:non-scaling-stroke}
 .luxe .nw{font-family:MT,sans-serif;font-weight:600;font-size:66px;line-height:1.1;letter-spacing:.3em;text-transform:uppercase;color:#F6F1E7;opacity:0;margin-top:14px;margin-right:-.3em}
