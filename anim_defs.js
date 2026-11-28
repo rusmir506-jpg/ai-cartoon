@@ -129,6 +129,67 @@
         '<text class="fi" data-d="4.2" data-y="8" x="880" y="420" text-anchor="middle" font-family="CG,serif" font-style="italic" font-size="60" fill="' + IV + '">24 часа</text>' +
         '<path class="g dr" data-d="4.6" data-t=".5" d="M646 820 l26 26 l52 -56"/>',
       upd: function () {}
+    },
+    insure: {
+      svg: '<path class="w dr" data-d=".1" data-t="1.3" d="M540 150 L780 240 V500 C780 680 660 800 540 880 C420 800 300 680 300 500 V240 Z"/>' +
+        '<path class="g dr" data-d="1.4" data-t=".8" d="M440 500 l72 72 l128 -150"/>' +
+        '<path class="g dr" data-d="2.4" data-t=".6" d="M850 200 v110 M795 255 h110"/>' +
+        '<rect class="w dr" data-d="3.0" data-t=".8" x="760" y="700" width="190" height="150" rx="18"/>' +
+        '<path class="g dr" data-d="3.6" data-t=".6" d="M795 750 H915 M795 790 H915 M795 825 H860"/>' +
+        '<path class="g dr" data-d="4.3" data-t=".5" d="M120 760 h110 M120 800 h70"/>',
+      upd: function () {}
+    },
+    cards: {
+      svg: '<rect class="w dr" data-d=".1" data-t="1.0" x="250" y="170" width="580" height="320" rx="36"/>' +
+        '<path class="g dr" data-d=".9" data-t=".6" d="M250 270 H830"/>' +
+        '<rect class="g dr" data-d="1.3" data-t=".6" x="305" y="345" width="92" height="72" rx="14"/>' +
+        '<text class="fi" data-d="1.7" data-y="8" x="760" y="440" text-anchor="end" font-family="CG,serif" font-style="italic" font-size="50" fill="' + IV + '">банк 1</text>' +
+        '<rect class="w dr" data-d="2.2" data-t="1.0" x="250" y="590" width="580" height="320" rx="36"/>' +
+        '<path class="g dr" data-d="3.0" data-t=".6" d="M250 690 H830"/>' +
+        '<rect class="g dr" data-d="3.4" data-t=".6" x="305" y="765" width="92" height="72" rx="14"/>' +
+        '<text class="fi" data-d="3.8" data-y="8" x="760" y="860" text-anchor="end" font-family="CG,serif" font-style="italic" font-size="50" fill="' + IV + '">банк 2</text>' +
+        '<path class="g dr" data-d="4.4" data-t=".6" d="M900 380 l30 30 l56 -64"/>' +
+        '<path class="g dr" data-d="4.9" data-t=".6" d="M900 800 l30 30 l56 -64"/>',
+      upd: function () {}
+    },
+    tracker: {
+      svg: '<rect class="w dr" data-d=".1" data-t="1.1" x="320" y="400" width="440" height="520" rx="50"/>' +
+        '<path class="w dr" data-d=".7" data-t=".7" d="M470 400 V340 a24 24 0 0 1 24 -24 H586 a24 24 0 0 1 24 24 V400"/>' +
+        '<circle class="g dr" data-d="1.6" data-t=".8" cx="540" cy="680" r="68"/>' +
+        '<circle class="fi" data-d="2.4" data-s=".2" cx="540" cy="680" r="16" fill="' + GOLD + '"/>' +
+        '<path class="g dr" data-d="3.0" data-t=".8" d="M845 560 a105 105 0 0 1 0 150 M885 520 a165 165 0 0 1 0 230"/>' +
+        '<g class="fi" data-d="3.8" data-y="-120"><path d="M880 250 C850 220 836 200 836 180 A44 44 0 1 1 924 180 C924 200 910 220 880 250 Z" fill="' + GOLD + '"/><circle cx="880" cy="180" r="15" fill="' + BG + '"/></g>' +
+        '<circle id="pr" cx="540" cy="680" r="10" fill="none" stroke="' + GOLD + '" stroke-width="3" opacity="0"/>',
+      upd: function (root, u) {
+        var pr = root.querySelector('#pr');
+        if (u < 3.0) { pr.setAttribute('opacity', 0); return; }
+        var k = ((u - 3.0) % 1.5) / 1.5;
+        pr.setAttribute('r', 70 + 70 * k); pr.setAttribute('opacity', 0.8 * (1 - k));
+      }
+    },
+    power: {
+      svg: '<rect class="w dr" data-d=".1" data-t="1.1" x="330" y="300" width="420" height="520" rx="50"/>' +
+        '<path class="g dr" data-d=".9" data-t=".7" d="M540 300 v-50 a36 36 0 0 1 36 -36 H730"/>' +
+        '<path class="g dr" data-d="1.5" data-t=".9" d="M565 400 L470 590 H545 L515 730 L625 520 H550 Z"/>' +
+        '<rect class="fi" data-d="2.6" data-s=".4" x="390" y="765" width="80" height="22" rx="8" fill="' + GOLD + '"/>' +
+        '<rect class="fi" data-d="2.9" data-s=".4" x="500" y="765" width="80" height="22" rx="8" fill="' + GOLD + '"/>' +
+        '<rect class="fi" data-d="3.2" data-s=".4" x="610" y="765" width="80" height="22" rx="8" fill="' + GOLD + '"/>' +
+        '<text class="fi" data-d="3.7" data-y="8" x="540" y="930" text-anchor="middle" font-family="CG,serif" font-style="italic" font-size="56" fill="' + IV + '">только в ручной клади</text>',
+      upd: function () {}
+    },
+    list: {
+      svg: '<rect class="w dr" data-d=".1" data-t="1.2" x="330" y="200" width="420" height="680" rx="40"/>' +
+        '<path class="w dr" data-d=".9" data-t=".5" d="M450 200 v-44 h180 v44"/>' +
+        '<rect class="g dr" data-d="1.2" data-t=".5" x="395" y="330" width="62" height="62" rx="12"/>' +
+        '<path class="w dr" data-d="1.4" data-t=".6" d="M495 361 H690"/>' +
+        '<path class="g dr" data-d="2.0" data-t=".5" d="M406 362 l18 20 l34 -46"/>' +
+        '<rect class="g dr" data-d="2.2" data-t=".5" x="395" y="480" width="62" height="62" rx="12"/>' +
+        '<path class="w dr" data-d="2.4" data-t=".6" d="M495 511 H690"/>' +
+        '<path class="g dr" data-d="3.0" data-t=".5" d="M406 512 l18 20 l34 -46"/>' +
+        '<rect class="g dr" data-d="3.2" data-t=".5" x="395" y="630" width="62" height="62" rx="12"/>' +
+        '<path class="w dr" data-d="3.4" data-t=".6" d="M495 661 H640"/>' +
+        '<path class="g dr" data-d="4.0" data-t=".5" d="M406 662 l18 20 l34 -46"/>',
+      upd: function () {}
     }
   };
 })();

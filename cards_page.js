@@ -20,7 +20,7 @@
       h += '<div class="blk" style="top:560px;text-align:center"><div class="nk" id="a' + i + '">' + c.kick + '</div><div class="n5" id="b' + i + '">' + num + '<svg viewBox="0 0 300 400" preserveAspectRatio="none"><ellipse id="el' + i + '" cx="150" cy="200" rx="142" ry="192"/></svg></div><div class="nw" id="c' + i + '"><span>' + word + '</span></div><div class="n2" id="d' + i + '">' + c.l2 + '</div></div>';
     } else if (c.type === 'fact' && TL.style === 'luxe') {
       if (c.anim && window.ANIM[c.anim]) h += '<div class="abg"' + (TL.bg ? ' style="background:linear-gradient(180deg,rgba(12,20,26,.55),rgba(10,16,22,.85)),url(file://' + TL.bg + ') 38% 40%/cover"' : '') + '></div><svg class="anim" id="an' + i + '" viewBox="0 0 1080 1080">' + window.ANIM[c.anim].svg + '</svg>';
-      h += '<div class="lpanel' + (c.anim ? ' low' : '') + '" id="nt' + i + '"><div class="lnum">0' + parseInt(c.n, 10) + '</div><div class="lline"></div><div class="ltitle">' + c.name + '</div><div class="lsub">' + c.sub + '</div><svg class="tick" viewBox="0 0 100 100"><path id="tk' + i + '" d="M16 54 L40 78 L86 22"/></svg></div>';
+      h += '<div class="lpanel' + (c.anim ? ' low' : '') + '" id="nt' + i + '"><div class="lnum">' + ('0' + parseInt(c.n, 10)).slice(-2) + '</div><div class="lline"></div><div class="ltitle">' + c.name + '</div><div class="lsub">' + c.sub + '</div><svg class="tick" viewBox="0 0 100 100"><path id="tk' + i + '" d="M16 54 L40 78 L86 22"/></svg></div>';
     } else
     if (c.type === 'cover') {
       if (TL.style === 'greek') {
