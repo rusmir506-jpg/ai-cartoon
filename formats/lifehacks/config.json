@@ -88,13 +88,13 @@
           ]
         },
         {
-          "img": "library/2026-11-28/batch2_12.jpg",
+          "img": "footage/kas/01_street_bougainvillea.png",
           "move": [
             0.5,
-            0.5,
+            0.55,
             1.0,
             0.5,
-            0.5,
+            0.45,
             1.1
           ]
         }
@@ -145,24 +145,24 @@
       },
       "photos": [
         {
-          "img": "library/2026-11-28/batch1_14.jpg",
+          "img": "footage/december/phuket_bay.jpg",
           "move": [
             0.5,
             0.5,
             1.0,
             0.5,
-            0.45,
+            0.55,
             1.1
           ]
         },
         {
-          "img": "library/2026-11-28/batch2_04.jpg",
+          "img": "footage/december/maldives_jetty.jpg",
           "move": [
             0.5,
-            0.5,
+            0.55,
             1.0,
             0.5,
-            0.4,
+            0.5,
             1.1
           ]
         }
@@ -179,10 +179,10 @@
       },
       "photos": [
         {
-          "img": "library/2026-11-28/batch1_08.jpg",
+          "img": "footage/december/srilanka_drone.jpg",
           "move": [
             0.5,
-            0.55,
+            0.6,
             1.0,
             0.5,
             0.5,
@@ -190,10 +190,10 @@
           ]
         },
         {
-          "img": "library/2026-11-28/batch2_05.jpg",
+          "img": "footage/kas/02_beach.png",
           "move": [
             0.5,
-            0.5,
+            0.45,
             1.0,
             0.5,
             0.55,
