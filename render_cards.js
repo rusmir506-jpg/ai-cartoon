@@ -98,9 +98,14 @@ const NOTESCSS = `
 .light .tick path{stroke:#0ABAB5}
 .light .cb{background:rgba(30,58,61,.2)}
 .light .cb i{background:#0ABAB5}
-.light .nk{color:#9BE3DC}
-.light .n5 svg ellipse{stroke:#9BE3DC}
-.light .nw span{border-color:#9BE3DC}
+.light .shade.cover{background:linear-gradient(180deg,rgba(0,0,0,.34) 0%,rgba(0,0,0,0) 22%,rgba(247,244,238,0) 26%,rgba(247,244,238,.82) 50%,rgba(247,244,238,.97) 72%,rgba(247,244,238,1) 100%)!important}
+.light .nk,.light #a0{color:#0A9E99!important;text-shadow:none!important}
+.light .n5{color:#1E3A3D!important;text-shadow:none!important}
+.light .n5 svg ellipse{stroke:#0ABAB5!important}
+.light .nw{color:#1E3A3D!important}
+.light .nw span{border-color:#0ABAB5!important}
+.light .n2{color:#1E3A3D!important;text-shadow:none!important}
+.light .blk{top:760px!important}
 .luxe .ph img{filter:sepia(.14) saturate(.94) contrast(1.05) brightness(1.03)!important}
 .luxe .wm{font-family:CG,serif;font-style:italic;font-size:56px}
 .luxe .cnt{font-family:MT,sans-serif;letter-spacing:.3em}
